@@ -8,13 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		92018BC51FA983D7006AF351 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92018BC41FA983D7006AF351 /* AppDelegate.swift */; };
-		92018BC71FA983D7006AF351 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92018BC61FA983D7006AF351 /* FirstViewController.swift */; };
-		92018BC91FA983D7006AF351 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92018BC81FA983D7006AF351 /* SecondViewController.swift */; };
 		92018BCC1FA983D7006AF351 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92018BCA1FA983D7006AF351 /* Main.storyboard */; };
 		92018BCE1FA983D7006AF351 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92018BCD1FA983D7006AF351 /* Assets.xcassets */; };
 		92018BD11FA983D7006AF351 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92018BCF1FA983D7006AF351 /* LaunchScreen.storyboard */; };
 		92018BDC1FA983D7006AF351 /* SimplicityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92018BDB1FA983D7006AF351 /* SimplicityTests.swift */; };
 		92018BE71FA983D7006AF351 /* SimplicityUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92018BE61FA983D7006AF351 /* SimplicityUITests.swift */; };
+		92018BF91FA9922A006AF351 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92018BF81FA9922A006AF351 /* TabBarController.swift */; };
+		92018BFB1FA9924C006AF351 /* OverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92018BFA1FA9924C006AF351 /* OverviewViewController.swift */; };
+		92018BFD1FA99275006AF351 /* TransactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92018BFC1FA99275006AF351 /* TransactionsViewController.swift */; };
+		92018BFF1FA99824006AF351 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92018BFE1FA99824006AF351 /* AddViewController.swift */; };
+		92018C011FA99862006AF351 /* ReceiptsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92018C001FA99862006AF351 /* ReceiptsViewController.swift */; };
+		92018C031FA998A4006AF351 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92018C021FA998A4006AF351 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,8 +41,6 @@
 /* Begin PBXFileReference section */
 		92018BC11FA983D7006AF351 /* Simplicity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Simplicity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92018BC41FA983D7006AF351 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		92018BC61FA983D7006AF351 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		92018BC81FA983D7006AF351 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		92018BCB1FA983D7006AF351 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		92018BCD1FA983D7006AF351 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		92018BD01FA983D7006AF351 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +51,12 @@
 		92018BE21FA983D7006AF351 /* SimplicityUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimplicityUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		92018BE61FA983D7006AF351 /* SimplicityUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplicityUITests.swift; sourceTree = "<group>"; };
 		92018BE81FA983D7006AF351 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		92018BF81FA9922A006AF351 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		92018BFA1FA9924C006AF351 /* OverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewViewController.swift; sourceTree = "<group>"; };
+		92018BFC1FA99275006AF351 /* TransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewController.swift; sourceTree = "<group>"; };
+		92018BFE1FA99824006AF351 /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
+		92018C001FA99862006AF351 /* ReceiptsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptsViewController.swift; sourceTree = "<group>"; };
+		92018C021FA998A4006AF351 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,8 +134,12 @@
 		92018BF41FA98991006AF351 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				92018BC61FA983D7006AF351 /* FirstViewController.swift */,
-				92018BC81FA983D7006AF351 /* SecondViewController.swift */,
+				92018BF81FA9922A006AF351 /* TabBarController.swift */,
+				92018BFA1FA9924C006AF351 /* OverviewViewController.swift */,
+				92018BFC1FA99275006AF351 /* TransactionsViewController.swift */,
+				92018BFE1FA99824006AF351 /* AddViewController.swift */,
+				92018C001FA99862006AF351 /* ReceiptsViewController.swift */,
+				92018C021FA998A4006AF351 /* SettingsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -278,9 +290,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92018BC91FA983D7006AF351 /* SecondViewController.swift in Sources */,
+				92018BFF1FA99824006AF351 /* AddViewController.swift in Sources */,
+				92018C011FA99862006AF351 /* ReceiptsViewController.swift in Sources */,
+				92018C031FA998A4006AF351 /* SettingsViewController.swift in Sources */,
+				92018BFD1FA99275006AF351 /* TransactionsViewController.swift in Sources */,
 				92018BC51FA983D7006AF351 /* AppDelegate.swift in Sources */,
-				92018BC71FA983D7006AF351 /* FirstViewController.swift in Sources */,
+				92018BF91FA9922A006AF351 /* TabBarController.swift in Sources */,
+				92018BFB1FA9924C006AF351 /* OverviewViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
