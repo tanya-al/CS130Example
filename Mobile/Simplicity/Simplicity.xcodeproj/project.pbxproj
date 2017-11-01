@@ -19,6 +19,7 @@
 		92018BFF1FA99824006AF351 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92018BFE1FA99824006AF351 /* AddViewController.swift */; };
 		92018C011FA99862006AF351 /* ReceiptsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92018C001FA99862006AF351 /* ReceiptsViewController.swift */; };
 		92018C031FA998A4006AF351 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92018C021FA998A4006AF351 /* SettingsViewController.swift */; };
+		92018C061FA99AF6006AF351 /* MainNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92018C051FA99AF6006AF351 /* MainNavigationBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		92018BFE1FA99824006AF351 /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		92018C001FA99862006AF351 /* ReceiptsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptsViewController.swift; sourceTree = "<group>"; };
 		92018C021FA998A4006AF351 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		92018C051FA99AF6006AF351 /* MainNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				92018BF41FA98991006AF351 /* Controllers */,
+				92018C041FA99A0D006AF351 /* Views */,
 				92018BF51FA98A13006AF351 /* SupportFiles */,
 			);
 			path = Simplicity;
@@ -154,6 +157,14 @@
 				92018BD21FA983D7006AF351 /* Info.plist */,
 			);
 			path = SupportFiles;
+			sourceTree = "<group>";
+		};
+		92018C041FA99A0D006AF351 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				92018C051FA99AF6006AF351 /* MainNavigationBar.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -294,6 +305,7 @@
 				92018C011FA99862006AF351 /* ReceiptsViewController.swift in Sources */,
 				92018C031FA998A4006AF351 /* SettingsViewController.swift in Sources */,
 				92018BFD1FA99275006AF351 /* TransactionsViewController.swift in Sources */,
+				92018C061FA99AF6006AF351 /* MainNavigationBar.swift in Sources */,
 				92018BC51FA983D7006AF351 /* AppDelegate.swift in Sources */,
 				92018BF91FA9922A006AF351 /* TabBarController.swift in Sources */,
 				92018BFB1FA9924C006AF351 /* OverviewViewController.swift in Sources */,

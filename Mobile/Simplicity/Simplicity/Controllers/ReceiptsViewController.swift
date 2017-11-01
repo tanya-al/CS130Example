@@ -17,12 +17,8 @@ class ReceiptsViewController: UIViewController {
         view.backgroundColor = UIColor.white
         self.title = "Receipts"
         
-        let dummyLabel = UILabel()
-        dummyLabel.text = "Receipts"
-        dummyLabel.frame = CGRect(x: 100, y: 100, width: 200, height: 200)
-        dummyLabel.textAlignment = .center
-        dummyLabel.font=UIFont.systemFont(ofSize: 22)
-        view.addSubview(dummyLabel)
+        let mainNavigationBar = MainNavigationBar(frame: view.frame, title: "Receipts")
+        view.addSubview(mainNavigationBar)
     }
     
     override func didReceiveMemoryWarning() {
