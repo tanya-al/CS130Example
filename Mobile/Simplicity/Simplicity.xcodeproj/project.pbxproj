@@ -99,13 +99,8 @@
 		92018BC31FA983D7006AF351 /* Simplicity */ = {
 			isa = PBXGroup;
 			children = (
-				92018BC41FA983D7006AF351 /* AppDelegate.swift */,
-				92018BC61FA983D7006AF351 /* FirstViewController.swift */,
-				92018BC81FA983D7006AF351 /* SecondViewController.swift */,
-				92018BCA1FA983D7006AF351 /* Main.storyboard */,
-				92018BCD1FA983D7006AF351 /* Assets.xcassets */,
-				92018BCF1FA983D7006AF351 /* LaunchScreen.storyboard */,
-				92018BD21FA983D7006AF351 /* Info.plist */,
+				92018BF41FA98991006AF351 /* Controllers */,
+				92018BF51FA98A13006AF351 /* SupportFiles */,
 			);
 			path = Simplicity;
 			sourceTree = "<group>";
@@ -126,6 +121,27 @@
 				92018BE81FA983D7006AF351 /* Info.plist */,
 			);
 			path = SimplicityUITests;
+			sourceTree = "<group>";
+		};
+		92018BF41FA98991006AF351 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				92018BC61FA983D7006AF351 /* FirstViewController.swift */,
+				92018BC81FA983D7006AF351 /* SecondViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		92018BF51FA98A13006AF351 /* SupportFiles */ = {
+			isa = PBXGroup;
+			children = (
+				92018BC41FA983D7006AF351 /* AppDelegate.swift */,
+				92018BCA1FA983D7006AF351 /* Main.storyboard */,
+				92018BCD1FA983D7006AF351 /* Assets.xcassets */,
+				92018BCF1FA983D7006AF351 /* LaunchScreen.storyboard */,
+				92018BD21FA983D7006AF351 /* Info.plist */,
+			);
+			path = SupportFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -432,7 +448,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XL5FU698JV;
-				INFOPLIST_FILE = Simplicity/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Simplicity/SupportFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.LikeX4Y.Simplicity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -447,7 +463,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XL5FU698JV;
-				INFOPLIST_FILE = Simplicity/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Simplicity/SupportFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.LikeX4Y.Simplicity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
