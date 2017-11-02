@@ -2,7 +2,19 @@
 
 Directory for iOS code.
 
-## Version support
+## Getting started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites
+
+You will need [Xcode](https://developer.apple.com/xcode/) and the Simulator. You can download Xcode from the App Store on your Mac. It comes with the Simulator as well as all necessary SDKs.
+
+### Apple Developer Account
+
+Register for an Apple Developer Account [here](https://developer.apple.com/account/). It will give you access to latest updates as well as documentations. You can use your iCloud account, if you already have one.
+
+### Version support
 
 This project is using Swift 4.0 targeting iOS 11.0.
 
@@ -18,4 +30,11 @@ This project is using Swift 4.0 targeting iOS 11.0.
 ## Contribution
 - Create new branch off `master`
 - Make sure code compile, build, and run successfully
-- Make pull request back to `master`
+- Make pull request back to `master`, linking any issue/feature associated with the pull request, if any
+
+## Helps and Resources
+- [Xcode and Swift Resources](https://developer.apple.com/swift/resources/)
+- [Apple Developer Documentation](https://developer.apple.com/documentation)
+- Get familiar with the [iOS App Life Cycle](https://developer.apple.com/library/content/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/TheAppLifeCycle/TheAppLifeCycle.html
+)
+- UCLA [Lynda.com](https://oit.ucla.edu/lynda-com) iOS and Swift courses
