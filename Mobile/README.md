@@ -9,7 +9,12 @@ Directory for iOS code.
     │   ├── Views                       # Custom UIViews
     │   └── SupportFiles                # AppDelegate, Assets, Info.plist, etc.
     ├── SimplicityTests
-    └── SimplicityUITests
+    ├── SimplicityUITests
+    ├── Pods                            # Cocoapods dependencies
+    ├── Podfile
+    ├── Podfile.lock
+    ├── Simplicity.xcodeproj
+    └── Simplicity.xcworkspace          # Open Xcode from here
 
 ## Getting started
 
@@ -26,6 +31,10 @@ You need to register for an Apple Developer Account [here](https://developer.app
 ### Version support
 
 This project is using Swift 4.0 targeting iOS 11.0.
+
+### Cocoapods
+
+This project use [Cocoapods](https://cocoapods.org/) to manage dependencies. Unless you need to add new dependencies, you _shouldn't_ need to install Cocoapods.
 
 ### Setup
 
