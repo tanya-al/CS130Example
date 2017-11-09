@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D04B07E448C2BEB74905189 /* Pods_Simplicity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A5AA80BD93280883C4A3B44 /* Pods_Simplicity.framework */; };
 		92018BC51FA983D7006AF351 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92018BC41FA983D7006AF351 /* AppDelegate.swift */; };
 		92018BCC1FA983D7006AF351 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92018BCA1FA983D7006AF351 /* Main.storyboard */; };
 		92018BCE1FA983D7006AF351 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92018BCD1FA983D7006AF351 /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 		92018C011FA99862006AF351 /* ReceiptsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92018C001FA99862006AF351 /* ReceiptsViewController.swift */; };
 		92018C031FA998A4006AF351 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92018C021FA998A4006AF351 /* SettingsViewController.swift */; };
 		92018C061FA99AF6006AF351 /* MainNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92018C051FA99AF6006AF351 /* MainNavigationBar.swift */; };
+		927316F91FABB794004E6DBC /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927316F81FABB794004E6DBC /* RequestManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		25B4CFE9E2903DD3DCC277A2 /* Pods-Simplicity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simplicity.release.xcconfig"; path = "Pods/Target Support Files/Pods-Simplicity/Pods-Simplicity.release.xcconfig"; sourceTree = "<group>"; };
+		5A5AA80BD93280883C4A3B44 /* Pods_Simplicity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Simplicity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		92018BC11FA983D7006AF351 /* Simplicity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Simplicity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92018BC41FA983D7006AF351 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92018BCB1FA983D7006AF351 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -59,6 +63,8 @@
 		92018C001FA99862006AF351 /* ReceiptsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptsViewController.swift; sourceTree = "<group>"; };
 		92018C021FA998A4006AF351 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		92018C051FA99AF6006AF351 /* MainNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationBar.swift; sourceTree = "<group>"; };
+		927316F81FABB794004E6DBC /* RequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
+		AF3658F84728A7341FBF8EAA /* Pods-Simplicity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simplicity.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Simplicity/Pods-Simplicity.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D04B07E448C2BEB74905189 /* Pods_Simplicity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +93,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2B1735AF40953E80793BB9A5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5A5AA80BD93280883C4A3B44 /* Pods_Simplicity.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		75CE74FC82731AC67581A1E8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AF3658F84728A7341FBF8EAA /* Pods-Simplicity.debug.xcconfig */,
+				25B4CFE9E2903DD3DCC277A2 /* Pods-Simplicity.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		92018BB81FA983D7006AF351 = {
 			isa = PBXGroup;
 			children = (
@@ -93,6 +117,8 @@
 				92018BDA1FA983D7006AF351 /* SimplicityTests */,
 				92018BE51FA983D7006AF351 /* SimplicityUITests */,
 				92018BC21FA983D7006AF351 /* Products */,
+				75CE74FC82731AC67581A1E8 /* Pods */,
+				2B1735AF40953E80793BB9A5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -110,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				92018BF41FA98991006AF351 /* Controllers */,
+				927316F71FABB769004E6DBC /* Managers */,
 				92018C041FA99A0D006AF351 /* Views */,
 				92018BF51FA98A13006AF351 /* SupportFiles */,
 			);
@@ -167,6 +194,15 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		927316F71FABB769004E6DBC /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				927316F81FABB794004E6DBC /* RequestManager.swift */,
+			);
+			name = Managers;
+			path = Simplicity/Managers;
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -174,9 +210,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 92018BEB1FA983D7006AF351 /* Build configuration list for PBXNativeTarget "Simplicity" */;
 			buildPhases = (
+				1F3D96D8B76840B04C0F9670 /* [CP] Check Pods Manifest.lock */,
 				92018BBD1FA983D7006AF351 /* Sources */,
 				92018BBE1FA983D7006AF351 /* Frameworks */,
 				92018BBF1FA983D7006AF351 /* Resources */,
+				D0889A3C316A31AD22FB539C /* [CP] Embed Pods Frameworks */,
+				61262B676B07267C27DD0AE4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -296,6 +335,60 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1F3D96D8B76840B04C0F9670 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Simplicity-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		61262B676B07267C27DD0AE4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Simplicity/Pods-Simplicity-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D0889A3C316A31AD22FB539C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Simplicity/Pods-Simplicity-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Simplicity/Pods-Simplicity-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		92018BBD1FA983D7006AF351 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -307,6 +400,7 @@
 				92018BFD1FA99275006AF351 /* TransactionsViewController.swift in Sources */,
 				92018C061FA99AF6006AF351 /* MainNavigationBar.swift in Sources */,
 				92018BC51FA983D7006AF351 /* AppDelegate.swift in Sources */,
+				927316F91FABB794004E6DBC /* RequestManager.swift in Sources */,
 				92018BF91FA9922A006AF351 /* TabBarController.swift in Sources */,
 				92018BFB1FA9924C006AF351 /* OverviewViewController.swift in Sources */,
 			);
@@ -472,10 +566,11 @@
 		};
 		92018BEC1FA983D7006AF351 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AF3658F84728A7341FBF8EAA /* Pods-Simplicity.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XL5FU698JV;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Simplicity/SupportFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.LikeX4Y.Simplicity;
@@ -487,10 +582,11 @@
 		};
 		92018BED1FA983D7006AF351 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 25B4CFE9E2903DD3DCC277A2 /* Pods-Simplicity.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XL5FU698JV;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Simplicity/SupportFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.LikeX4Y.Simplicity;
