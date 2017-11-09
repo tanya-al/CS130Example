@@ -9,7 +9,7 @@
 import UIKit
 
 class MainNavigationBar: UIView {
-    
+
     // MARK: Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,7 +22,7 @@ class MainNavigationBar: UIView {
     init(frame: CGRect, title: String) {
         super.init(frame: frame)
         
-        self.backgroundColor = UIColor(displayP3Red: 144/256, green: 216/256, blue: 93/256, alpha: 100)
+        self.backgroundColor = UIColor(displayP3Red: 134/256, green: 182/256, blue: 81/256, alpha: 100)
         self.frame = CGRect(x: 0, y: 0, width: frame.width, height: 64)
         
         let label = UILabel()
@@ -34,4 +34,3 @@ class MainNavigationBar: UIView {
         self.addSubview(label)
     }
 }
-
