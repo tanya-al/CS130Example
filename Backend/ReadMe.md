@@ -10,8 +10,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 What things you need to install the software and how to install them
 
+If you do not have virtualenv, try
+
 ```
-Give examples
+pip install virtualenv
 ```
 
 ### Installing
@@ -21,9 +23,23 @@ A step by step series of examples that tell you have to get a development env ru
 Say what the step will be
 
 ```
-Give the example
+source venv/bin/activate
 ```
 
+To say the server locally on you machine,
+
+```
+export FLASK_APP=server_routes.py
+flask run
+```
+
+Then you can go to localhost:5000
+
+To quit the virtual environment,
+
+```
+dectivate
+```
 And repeat
 
 ```
