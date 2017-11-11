@@ -14,6 +14,10 @@ class RequestManager: NSObject {
     static let sharedInstance = RequestManager()    // singleton
     static let getPostsEndpoint = "/posts/"
     
+    private override init() {
+        super.init()
+    }
+    
     func getPostWithId(postId: Int, onSuccess: @escaping(JSON) -> Void, onFailure: @escaping(Error) -> Void){
         let url: String = baseURL + RequestManager.getPostsEndpoint + String(postId)
         let request: NSMutableURLRequest = NSMutableURLRequest(url: NSURL(string: url)! as URL)
