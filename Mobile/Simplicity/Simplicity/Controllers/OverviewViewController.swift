@@ -11,6 +11,26 @@ import Charts
 
 class OverviewViewController: UIViewController {
     
+    let VIEW_CARD_MARGIN: CGFloat = 10
+    let PIE_CHART_VIEW_CARD_HEIGHT: CGFloat = 250
+    let LINE_CHART_VIEW_CARD_HEIGHT: CGFloat = 250
+    let TEST_CHART_VIEW_CARD_HEIGHT: CGFloat = 250
+    
+    // MARK: Properties
+    var scrollView: UIScrollView?
+    var pieChartViewCard: UIView?
+    var lineChartViewCard: UIView?
+    var testViewCard: UIView?
+    
+    // MARK: Initialization
+    override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -21,7 +41,40 @@ class OverviewViewController: UIViewController {
         let mainNavigationBar = MainNavigationBar(frame: view.frame, title: "Overview")
         view.addSubview(mainNavigationBar)
         
-        setOverviewPieChart()
+        scrollView = UIScrollView(frame: CGRect(x: 0,
+                                                y: mainNavigationBar.frame.height,
+                                            width: self.view.frame.width,
+                                           height: self.view.frame.height - mainNavigationBar.frame.height))
+        scrollView!.backgroundColor = UIColor(displayP3Red: 237/255, green: 237/255, blue: 237/255, alpha: 100/100)
+        self.view.addSubview(scrollView!)
+        
+        pieChartViewCard = UIView(frame: CGRect(x: VIEW_CARD_MARGIN,
+                                                y: VIEW_CARD_MARGIN,
+                                            width: scrollView!.frame.width - VIEW_CARD_MARGIN * 2,
+                                           height: PIE_CHART_VIEW_CARD_HEIGHT))
+        pieChartViewCard!.backgroundColor = UIColor.white
+        scrollView!.addSubview(pieChartViewCard!)
+        
+        lineChartViewCard = UIView(frame: CGRect(x: VIEW_CARD_MARGIN,
+                                                 y: PIE_CHART_VIEW_CARD_HEIGHT + VIEW_CARD_MARGIN * 2,
+                                             width: scrollView!.frame.width - VIEW_CARD_MARGIN * 2,
+                                            height: LINE_CHART_VIEW_CARD_HEIGHT))
+        lineChartViewCard!.backgroundColor = UIColor.white
+        scrollView?.addSubview(lineChartViewCard!)
+        
+        testViewCard = UIView(frame: CGRect(x: VIEW_CARD_MARGIN,
+                                            y: PIE_CHART_VIEW_CARD_HEIGHT + LINE_CHART_VIEW_CARD_HEIGHT +  VIEW_CARD_MARGIN * 3,
+                                        width: scrollView!.frame.width - VIEW_CARD_MARGIN * 2,
+                                       height: TEST_CHART_VIEW_CARD_HEIGHT))
+        testViewCard!.backgroundColor = UIColor.white
+        scrollView?.addSubview(testViewCard!)
+        
+        
+        // update scrollView content height
+        scrollView!.contentSize = CGSize(width: scrollView!.contentSize.width,
+                                        height: PIE_CHART_VIEW_CARD_HEIGHT + LINE_CHART_VIEW_CARD_HEIGHT + TEST_CHART_VIEW_CARD_HEIGHT + VIEW_CARD_MARGIN * 4)
+        
+        //setOverviewPieChart()
     }
     
     override func didReceiveMemoryWarning() {
