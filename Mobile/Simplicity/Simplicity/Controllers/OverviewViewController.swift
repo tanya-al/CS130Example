@@ -16,14 +16,25 @@ class OverviewViewController: UIViewController {
     let LINE_CHART_VIEW_CARD_HEIGHT: CGFloat = 250
     let TEST_CHART_VIEW_CARD_HEIGHT: CGFloat = 250
     
+    let PIE_CHART_HEIGHT: CGFloat = 150
+    
     // MARK: Properties
     var scrollView: UIScrollView?
     var pieChartViewCard: UIView?
     var lineChartViewCard: UIView?
     var testViewCard: UIView?
     
+    var pieChartColors: [UIColor]
+    
     // MARK: Initialization
     override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        pieChartColors = []
+        pieChartColors.append(UIColor(displayP3Red: 219/255, green: 159/255, blue: 86/255, alpha: 100/100))
+        pieChartColors.append(UIColor(displayP3Red: 199/255, green: 95/255, blue: 79/255, alpha: 100/100))
+        pieChartColors.append(UIColor(displayP3Red: 97/255, green: 152/255, blue: 206/255, alpha: 100/100))
+        pieChartColors.append(UIColor(displayP3Red: 105/255, green: 163/255, blue: 109/255, alpha: 100/100))
+        pieChartColors.append(UIColor(displayP3Red: 223/255, green: 189/255, blue: 97/255, alpha: 100/100))
+        
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
@@ -74,7 +85,7 @@ class OverviewViewController: UIViewController {
         scrollView!.contentSize = CGSize(width: scrollView!.contentSize.width,
                                         height: PIE_CHART_VIEW_CARD_HEIGHT + LINE_CHART_VIEW_CARD_HEIGHT + TEST_CHART_VIEW_CARD_HEIGHT + VIEW_CARD_MARGIN * 4)
         
-        //setOverviewPieChart()
+        setOverviewPieChart()
     }
     
     override func didReceiveMemoryWarning() {
@@ -84,7 +95,7 @@ class OverviewViewController: UIViewController {
     
     func setOverviewPieChart() {
         
-        let pieChartView = PieChartView(frame: self.view.frame)
+        let pieChartView = PieChartView(frame: pieChartViewCard!.frame)
         let overviews = DataManager.sharedInstance.getOverviews()
         var dataEntries: [PieChartDataEntry] = []
         
@@ -95,16 +106,7 @@ class OverviewViewController: UIViewController {
         
         let pieChartDataSet = PieChartDataSet(values: dataEntries, label: "Overview")
         
-        var colors: [UIColor] = []
-        for _ in 0..<overviews.count {
-            let red = Double(arc4random_uniform(256))
-            let green = Double(arc4random_uniform(256))
-            let blue = Double(arc4random_uniform(256))
-            let color = UIColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
-            colors.append(color)
-        }
-        
-        pieChartDataSet.colors = colors
+        pieChartDataSet.colors = pieChartColors
         pieChartView.data = PieChartData(dataSet: pieChartDataSet)
         pieChartView.noDataText = "No data available"
         
@@ -114,7 +116,7 @@ class OverviewViewController: UIViewController {
         pieChartView.centerText = "Pie Chart"
         pieChartView.holeRadiusPercent = 0.4
         pieChartView.transparentCircleColor = UIColor.clear
-        self.view.addSubview(pieChartView)
+        pieChartViewCard!.addSubview(pieChartView)
     }
     
 }

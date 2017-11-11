@@ -35,7 +35,10 @@ class DataManager: NSObject {
             // TODO: get overviews from RequestManager
             _overviews = []
             _overviews?.append(Overview(category: "category 1", amount: 30, percentage: 60)!)
-            _overviews?.append(Overview(category: "category 1", amount: 20, percentage: 40)!)
+            _overviews?.append(Overview(category: "category 1", amount: 20, percentage: 20)!)
+            _overviews?.append(Overview(category: "category 1", amount: 20, percentage: 20)!)
+            _overviews?.append(Overview(category: "category 1", amount: 20, percentage: 20)!)
+            _overviews?.append(Overview(category: "category 1", amount: 20, percentage: 20)!)
         }
         
         return _overviews!
