@@ -13,6 +13,7 @@ class DataManager: NSObject {
     static let sharedInstance = DataManager()
     
     private var _transactions: [Transaction]?
+    private var _overviews: [Overview]?
     
     private override init() {
         super.init()
@@ -27,6 +28,17 @@ class DataManager: NSObject {
         }
         
         return _transactions!
+    }
+    
+    func getOverviews() -> [Overview] {
+        if (_overviews == nil) {
+            // TODO: get overviews from RequestManager
+            _overviews = []
+            _overviews?.append(Overview(category: "category 1", amount: 30, percentage: 60)!)
+            _overviews?.append(Overview(category: "category 1", amount: 20, percentage: 40)!)
+        }
+        
+        return _overviews!
     }
     
 }
