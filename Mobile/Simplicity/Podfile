@@ -3,6 +3,7 @@ use_frameworks!
 
 target 'Simplicity' do
 	pod 'SwiftyJSON'
+	pod 'Charts'
 end
 
 workspace 'Simplicity'

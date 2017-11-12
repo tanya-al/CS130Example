@@ -34,8 +34,11 @@ class DataManager: NSObject {
         if (_overviews == nil) {
             // TODO: get overviews from RequestManager
             _overviews = []
-            _overviews?.append(Overview(category: "category 1", amount: 30, percentage: 60)!)
-            _overviews?.append(Overview(category: "category 1", amount: 20, percentage: 40)!)
+            _overviews?.append(Overview(category: "Restaurant", amount: 60, percentage: 30)!)
+            _overviews?.append(Overview(category: "Transportation", amount: 40, percentage: 20)!)
+            _overviews?.append(Overview(category: "Textbook", amount: 30, percentage: 15)!)
+            _overviews?.append(Overview(category: "Grocery", amount: 40, percentage: 20)!)
+            _overviews?.append(Overview(category: "Other", amount: 30, percentage: 15)!)
         }
         
         return _overviews!
