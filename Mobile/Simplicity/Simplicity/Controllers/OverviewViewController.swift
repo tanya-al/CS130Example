@@ -12,15 +12,18 @@ import Charts
 class OverviewViewController: UIViewController {
     
     let VIEW_CARD_MARGIN: CGFloat = 10
-    let PIE_CHART_VIEW_CARD_HEIGHT: CGFloat = 250
+    let OVERVIEW_VIEW_CARD_HEIGHT: CGFloat = 250
     let LINE_CHART_VIEW_CARD_HEIGHT: CGFloat = 250
     let TEST_CHART_VIEW_CARD_HEIGHT: CGFloat = 250
     
+    let VIEW_CARD_LABEL_MARGIN: CGFloat = 15
+    
     let PIE_CHART_HEIGHT: CGFloat = 150
+    let PIE_CHART_MARGIN: CGFloat = 5
     
     // MARK: Properties
     var scrollView: UIScrollView?
-    var pieChartViewCard: UIView?
+    var overviewViewCard: UIView?
     var lineChartViewCard: UIView?
     var testViewCard: UIView?
     
@@ -47,11 +50,12 @@ class OverviewViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         view.backgroundColor = UIColor.white
-        self.title = "Overview"
+        self.title = "Home"
         
-        let mainNavigationBar = MainNavigationBar(frame: view.frame, title: "Overview")
+        let mainNavigationBar = MainNavigationBar(frame: view.frame, title: "Home")
         view.addSubview(mainNavigationBar)
         
+        // initialize scrollView
         scrollView = UIScrollView(frame: CGRect(x: 0,
                                                 y: mainNavigationBar.frame.height,
                                             width: self.view.frame.width,
@@ -59,22 +63,18 @@ class OverviewViewController: UIViewController {
         scrollView!.backgroundColor = UIColor(displayP3Red: 237/255, green: 237/255, blue: 237/255, alpha: 100/100)
         self.view.addSubview(scrollView!)
         
-        pieChartViewCard = UIView(frame: CGRect(x: VIEW_CARD_MARGIN,
-                                                y: VIEW_CARD_MARGIN,
-                                            width: scrollView!.frame.width - VIEW_CARD_MARGIN * 2,
-                                           height: PIE_CHART_VIEW_CARD_HEIGHT))
-        pieChartViewCard!.backgroundColor = UIColor.white
-        scrollView!.addSubview(pieChartViewCard!)
+        // add view cards
+        populateOverviewViewCard()
         
         lineChartViewCard = UIView(frame: CGRect(x: VIEW_CARD_MARGIN,
-                                                 y: PIE_CHART_VIEW_CARD_HEIGHT + VIEW_CARD_MARGIN * 2,
+                                                 y: OVERVIEW_VIEW_CARD_HEIGHT + VIEW_CARD_MARGIN * 2,
                                              width: scrollView!.frame.width - VIEW_CARD_MARGIN * 2,
                                             height: LINE_CHART_VIEW_CARD_HEIGHT))
         lineChartViewCard!.backgroundColor = UIColor.white
         scrollView?.addSubview(lineChartViewCard!)
         
         testViewCard = UIView(frame: CGRect(x: VIEW_CARD_MARGIN,
-                                            y: PIE_CHART_VIEW_CARD_HEIGHT + LINE_CHART_VIEW_CARD_HEIGHT +  VIEW_CARD_MARGIN * 3,
+                                            y: OVERVIEW_VIEW_CARD_HEIGHT + LINE_CHART_VIEW_CARD_HEIGHT +  VIEW_CARD_MARGIN * 3,
                                         width: scrollView!.frame.width - VIEW_CARD_MARGIN * 2,
                                        height: TEST_CHART_VIEW_CARD_HEIGHT))
         testViewCard!.backgroundColor = UIColor.white
@@ -83,9 +83,8 @@ class OverviewViewController: UIViewController {
         
         // update scrollView content height
         scrollView!.contentSize = CGSize(width: scrollView!.contentSize.width,
-                                        height: PIE_CHART_VIEW_CARD_HEIGHT + LINE_CHART_VIEW_CARD_HEIGHT + TEST_CHART_VIEW_CARD_HEIGHT + VIEW_CARD_MARGIN * 4)
+                                        height: OVERVIEW_VIEW_CARD_HEIGHT + LINE_CHART_VIEW_CARD_HEIGHT + TEST_CHART_VIEW_CARD_HEIGHT + VIEW_CARD_MARGIN * 4)
         
-        setOverviewPieChart()
     }
     
     override func didReceiveMemoryWarning() {
@@ -93,9 +92,25 @@ class OverviewViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func setOverviewPieChart() {
+    func populateOverviewViewCard() {
         
-        let pieChartView = PieChartView(frame: pieChartViewCard!.frame)
+        // initialize overviewViewCard
+        overviewViewCard = UIView(frame: CGRect(x: VIEW_CARD_MARGIN,
+                                                y: VIEW_CARD_MARGIN,
+                                                width: scrollView!.frame.width - VIEW_CARD_MARGIN * 2,
+                                                height: OVERVIEW_VIEW_CARD_HEIGHT))
+        overviewViewCard!.backgroundColor = UIColor.white
+        scrollView!.addSubview(overviewViewCard!)
+        
+        // title
+        let title = UILabel(frame: CGRect(x: VIEW_CARD_LABEL_MARGIN, y: VIEW_CARD_LABEL_MARGIN, width: 0, height: 0))
+        title.text = "Overview"
+        title.textColor = UIColor.black
+        title.font = UIFont(name: "Avenir", size: 24)
+        title.sizeToFit()
+        overviewViewCard!.addSubview(title)
+        
+        // pie chart
         let overviews = DataManager.sharedInstance.getOverviews()
         var dataEntries: [PieChartDataEntry] = []
         
@@ -104,19 +119,39 @@ class OverviewViewController: UIViewController {
             dataEntries.append(dataEntry)
         }
         
-        let pieChartDataSet = PieChartDataSet(values: dataEntries, label: "Overview")
+        let pieChartDataSet = PieChartDataSet(values: dataEntries, label: "")
+        
+        // add "%" to label
+        let formatter = NumberFormatter()
+        formatter.numberStyle = NumberFormatter.Style.percent
+        formatter.maximumFractionDigits = 1
+        formatter.multiplier = 1.0
+        pieChartDataSet.valueFormatter = DefaultValueFormatter(formatter:formatter)
         
         pieChartDataSet.colors = pieChartColors
+        pieChartDataSet.sliceSpace = 1
+        pieChartDataSet.selectionShift = 5
+        
+        // initialize pieChartView, negative x position to move chart left
+        let pieChartView = PieChartView(frame: CGRect(x: -110,
+                                                      y: title.frame.height + VIEW_CARD_LABEL_MARGIN + PIE_CHART_MARGIN,
+                                                  width: overviewViewCard!.frame.width + 110,
+                                                 height: overviewViewCard!.frame.height - title.frame.height - VIEW_CARD_LABEL_MARGIN - PIE_CHART_MARGIN * 2))
+        
         pieChartView.data = PieChartData(dataSet: pieChartDataSet)
         pieChartView.noDataText = "No data available"
-        
-        let d = Description()
-        d.text = "iOSCharts.io"
-        pieChartView.chartDescription = d
-        pieChartView.centerText = "Pie Chart"
         pieChartView.holeRadiusPercent = 0.4
-        pieChartView.transparentCircleColor = UIColor.clear
-        pieChartViewCard!.addSubview(pieChartView)
+        pieChartView.transparentCircleRadiusPercent = 0.48
+        pieChartView.drawEntryLabelsEnabled = false
+        pieChartView.drawCenterTextEnabled = false
+        pieChartView.chartDescription?.text = ""
+        
+        // customize legend
+        pieChartView.legend.orientation = Legend.Orientation.vertical
+        pieChartView.legend.xOffset = 350
+        pieChartView.legend.yOffset = 110
+
+        overviewViewCard!.addSubview(pieChartView)
     }
     
 }
