@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2BDC34DD1FBA758D00C6AFA9 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC34DC1FBA758D00C6AFA9 /* CameraViewController.swift */; };
 		3D04B07E448C2BEB74905189 /* Pods_Simplicity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A5AA80BD93280883C4A3B44 /* Pods_Simplicity.framework */; };
 		92018BC51FA983D7006AF351 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92018BC41FA983D7006AF351 /* AppDelegate.swift */; };
 		92018BCC1FA983D7006AF351 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92018BCA1FA983D7006AF351 /* Main.storyboard */; };
@@ -51,6 +52,7 @@
 
 /* Begin PBXFileReference section */
 		25B4CFE9E2903DD3DCC277A2 /* Pods-Simplicity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simplicity.release.xcconfig"; path = "Pods/Target Support Files/Pods-Simplicity/Pods-Simplicity.release.xcconfig"; sourceTree = "<group>"; };
+		2BDC34DC1FBA758D00C6AFA9 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		5A5AA80BD93280883C4A3B44 /* Pods_Simplicity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Simplicity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		92018BC11FA983D7006AF351 /* Simplicity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Simplicity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92018BC41FA983D7006AF351 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				92018BF81FA9922A006AF351 /* TabBarController.swift */,
+				2BDC34DC1FBA758D00C6AFA9 /* CameraViewController.swift */,
 				92018BFA1FA9924C006AF351 /* OverviewViewController.swift */,
 				92018BFC1FA99275006AF351 /* TransactionsViewController.swift */,
 				92018BFE1FA99824006AF351 /* AddViewController.swift */,
@@ -441,6 +444,7 @@
 				9217AB001FB692820093D6DB /* Receipt.swift in Sources */,
 				927316F91FABB794004E6DBC /* RequestManager.swift in Sources */,
 				92018BF91FA9922A006AF351 /* TabBarController.swift in Sources */,
+				2BDC34DD1FBA758D00C6AFA9 /* CameraViewController.swift in Sources */,
 				9217AB041FB697B20093D6DB /* DataManager.swift in Sources */,
 				92018BFB1FA9924C006AF351 /* OverviewViewController.swift in Sources */,
 				921DD9381FDA499F00EBF6FF /* ReceiptDetailViewController.swift in Sources */,
@@ -613,10 +617,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AXPQTEQ3M9;
 				INFOPLIST_FILE = "$(SRCROOT)/Simplicity/SupportFiles/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.LikeX4Y.Simplicity;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ItsLikeX4Y.Simplicity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -629,10 +634,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AXPQTEQ3M9;
 				INFOPLIST_FILE = "$(SRCROOT)/Simplicity/SupportFiles/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.LikeX4Y.Simplicity;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ItsLikeX4Y.Simplicity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
