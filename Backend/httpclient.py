@@ -1,7 +1,15 @@
 #!/usr/bin/env python
 
+from PIL import Image
+import base64
+import cStringIO
 import httplib
 import sys
+import json
+
+
+def decode_b64(b64string):
+    return Image.open(cStringIO.StringIO(base64.b64decode(b64string)))
 
 #get http server ip
 http_server = sys.argv[1]
@@ -26,6 +34,8 @@ while 1:
   data_received = rsp.read()
 
   print(data_received)
+
+  # decode_b64(json.loads(data_received)[0]['thumbnailImageData']).save("received.jpg", quality=95)
 
   # print(cmd[1].split("/"))
 
