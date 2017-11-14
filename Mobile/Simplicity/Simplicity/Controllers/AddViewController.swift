@@ -23,6 +23,18 @@ class AddViewController: UIViewController {
 //        fatalError("init(coder:) has not been implemented")
 //    }
     
+    @objc func transitionToCamera(sender: UIButton!) {
+        let secondViewController:CameraViewController = CameraViewController()
+        self.present(secondViewController, animated: true, completion: nil)
+
+    }
+    
+    @objc func transitionToUpload(sender: UIButton!) {
+        let secondViewController:CameraViewController = CameraViewController()
+        self.present(secondViewController, animated: true, completion: nil)
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -33,6 +45,22 @@ class AddViewController: UIViewController {
         let mainNavigationBar = MainNavigationBar(frame: view.frame, title: "Add")
         view.addSubview(mainNavigationBar)
         
+        let screenWidth = self.view.frame.size.width
+        let screenHeight = self.view.frame.size.height
+        
+        let takePhotoButton = UIButton(frame: CGRect(x : (screenWidth - 240) / 2, y : (screenHeight - 40) / 2, width : 240, height: 40))
+        takePhotoButton.backgroundColor = UIColor.lightGray
+        takePhotoButton.setTitle("Take Photo", for: .normal)
+        takePhotoButton.addTarget(self, action: #selector(transitionToCamera), for: .touchUpInside)
+        
+        self.view.addSubview(takePhotoButton)
+        
+        let uploadPhotoButton = UIButton(frame: CGRect(origin: CGPoint(x : self.view.frame.midX, y : self.view.frame.midY+80), size: CGSize(width : 240, height : 40)))
+        uploadPhotoButton.backgroundColor = UIColor.lightGray
+        uploadPhotoButton.setTitle("Upload Photo", for: .normal)
+        uploadPhotoButton.addTarget(self, action: #selector(transitionToUpload), for: .touchUpInside)
+        
+        self.view.addSubview(uploadPhotoButton)
         
         // for testing RequestManager
 //        let testButton = UIButton(type: .system)
