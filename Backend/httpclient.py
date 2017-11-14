@@ -22,18 +22,33 @@ while 1:
 
   if cmd[0] == 'exit': #tipe exit to end it
     break
-  
-  #request command to server
-  conn.request(cmd[0], cmd[1])
 
-  #get response from server
-  rsp = conn.getresponse()
-  
-  #print server response and data
-  print(rsp.status, rsp.reason)
-  data_received = rsp.read()
+  if cmd[0] == 'GET':
+    #request command to server
+    conn.request(cmd[0], cmd[1])
 
-  print(data_received)
+    #get response from server
+    rsp = conn.getresponse()
+    
+    #print server response and data
+    print(rsp.status, rsp.reason)
+    data_received = rsp.read()
+    print(data_received)
+
+  if cmd[0] == 'POST':
+    data = {'userId': 1, 'category': 'food', 'data': 'image data encoded as base64'}
+    headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+
+    #request command to server
+    conn.request(cmd[0], cmd[1], json.dumps(data), headers)
+
+    #get response from server
+    rsp = conn.getresponse()
+    
+    #print server response and data
+    print(rsp.status, rsp.reason)
+    data_received = rsp.read()
+    print(data_received)
 
   # decode_b64(json.loads(data_received)[0]['thumbnailImageData']).save("received.jpg", quality=95)
 

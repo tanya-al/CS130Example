@@ -1,10 +1,8 @@
+import endpoints as ep
+
 from flask import Flask, render_template, request, jsonify, g
 from werkzeug import secure_filename
-from PIL import Image, ImageOps
 import sqlite3
-import base64
-import cStringIO
-import json
 app = Flask(__name__)
 
 DATABASE = 'transactions.db'
@@ -15,47 +13,35 @@ def get_db():
         db = g._database = sqlite3.connect(DATABASE)
     return db
 
-def encode_b64(img):
-    jpeg_image_buffer = cStringIO.StringIO()
-    img.save(jpeg_image_buffer, format="JPEG")
-    return base64.b64encode(jpeg_image_buffer.getvalue())
-
-def decode_b64(b64string):
-    return Image.open(cStringIO.StringIO(base64.b64decode(b64string)))
-
-def get_thumbnail(b64string):
-    img = decode_b64(b64string)
-    size = (100, 100)
-    img = ImageOps.fit(img, size, Image.ANTIALIAS)
-    return encode_b64(img)
-
 @app.route('/')
 def index():
    return "Let's go CS130!"
 
 @app.route('/transactions',methods=["GET"])
 def transactions():
-    userId = request.args.get("userId",'')
-    max_val = request.args.get("max",'')
+    user_id = request.args.get("userId",'')
+    max_num = request.args.get("max",'')
     offset = request.args.get("offset",'')
 
-    if userId == '' or max_val == '' or offset == '':
-        return "wrong url"
-    else:
-        return jsonify(userId=userId,max=max_val,offset=offset)
+    if user_id == '':
+        return "Must specify user id"
+    if max_num == '':
+        max_num = 20
+    if offset == '':
+        offset = 0
+
+    return jsonify(ep.get_transactions(get_db(), user_id, max_num, offset))
 
 @app.route('/receipt_img',methods=["GET"])
-def get_receipt_img():
-    transactionId = request.args.get("transactionId",'')
-    if transactionId == '':
+def receipt_img():
+    transaction_id = request.args.get("transactionId",'')
+    if transaction_id == '':
         return "Must specify transaction id"
    
-    cur = get_db().cursor()
-    cur.execute('SELECT image FROM transactions WHERE transaction_id=?', (transactionId,))
-    return jsonify(img=cur.fetchone()[0])
+    return jsonify(ep.get_receipt_img(get_db(), transaction_id))
 
 @app.route('/receipts',methods=["GET"])
-def get_receipts():
+def receipts():
     user_id = request.args.get("userId",'')
     max_num = request.args.get("max",'')
     offset = request.args.get("offset",'')
@@ -67,42 +53,45 @@ def get_receipts():
     if offset == '':
         offset = 0
     
-    cur = get_db().cursor()
-    cur.execute('SELECT transaction_id, user_id, date, image FROM transactions WHERE user_id=? ORDER BY date DESC LIMIT ? OFFSET ?;', (user_id, max_num, offset))
-    dict_list = []
-    for row in cur.fetchall():
-        dict_list.append({
-                'transactionId': row[0],
-                'userId': row[1],
-                'date': row[2],
-                'thumbnailImageData': get_thumbnail(row[3])
-            })
-    print(dict_list)
-    return jsonify(dict_list)
+    return jsonify(ep.get_receipts(get_db(), user_id, max_num, offset))
 
 
 @app.route('/overview',methods=["GET"])
-def get_overview():
-    userId = request.args.get("userId",'')
-    week = request.args.get("weeks",'')
+def overview():
+    user_id = request.args.get("userId",'')
+    weeks = request.args.get("weeks",'')
 
-    if userId == '' or week == '':
-        return "wrong url"
-    else:
-        return jsonify(userId=userId,weeks=week)
+    if userId == '':
+        return "Must specify user id"
+    if week == '':
+        return "Must specify number of weeks"
+    
+    return jsonify(ep.get_overview(get_db(), user_id, weeks))
 
 @app.route('/breakdown',methods=["GET"])
-def get_breakdown():
-    userId = request.args.get("userId",'')
-    week = request.args.get("weeks",'')
+def breakdown():
+    user_id = request.args.get("userId",'')
+    weeks = request.args.get("weeks",'')
 
-    if userId == '' or week == '':
-        return "wrong url"
-    else:
-        return jsonify(userId=userId,weeks=week)
+    if user_id == '':
+        return "Must specify user id"
+    if week == '':
+        return "Must specify number of weeks"
+    
+    return jsonify(ep.get_breakdown(get_db(), user_id, weeks))
 
 @app.route('/receipt',methods=["POST"])
 def receive_image():
+    json_data = request.get_json()
+
+    if not 'userId' in json_data:
+        return "Must specify user id"
+    if not 'category' in json_data:
+        return "Must specify category"
+    if not 'data' in json_data:
+        return "Must include image data"
+
+    ep.post_receipt(get_db(), json_data['userId'], json_data['category'], json_data['data'])
     return "image_received"
 
 @app.teardown_appcontext
