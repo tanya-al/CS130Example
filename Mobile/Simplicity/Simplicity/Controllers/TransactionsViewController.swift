@@ -19,6 +19,9 @@ class TransactionsViewController: UIViewController {
         
         let mainNavigationBar = MainNavigationBar(frame: view.frame, title: "Transactions")
         view.addSubview(mainNavigationBar)
+        
+        
+        DataManager.sharedInstance.getTransactionsAsync(onSuccess: { _ in }, onFailure: { _ in })
     }
     
     override func didReceiveMemoryWarning() {

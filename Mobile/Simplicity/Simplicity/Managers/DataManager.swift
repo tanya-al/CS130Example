@@ -7,10 +7,14 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class DataManager: NSObject {
     
     static let sharedInstance = DataManager()
+    
+    static let DUMMY_USER_ID: Int = 1
+    //private var _userId: Int
     
     private var _transactions: [Transaction]?
     private var _overviews: [Overview]?
@@ -42,6 +46,27 @@ class DataManager: NSObject {
         }
         
         return _overviews!
+    }
+    
+    func getOverviewsAsync(onSuccess: @escaping([Overview]) -> Void, onFailure: @escaping(Error) -> Void) {
+        
+    }
+    
+    func getTransactionsAsync(onSuccess: @escaping([Overview]) -> Void, onFailure: @escaping(Error) -> Void) {
+        print("hello")
+        
+        
+        RequestManager.sharedInstance.getTransactionsWithUserId(userId: DataManager.DUMMY_USER_ID, onSuccess: { json in
+            print(json)
+            
+            // parse JSON
+            
+        }, onFailure: { error in
+            print("rip yo")
+            let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+            //self.show(alert, sender: nil)
+        })
     }
     
 }
