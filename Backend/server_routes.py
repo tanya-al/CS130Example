@@ -61,11 +61,10 @@ def overview():
     user_id = request.args.get("userId",'')
     weeks = request.args.get("weeks",'')
 
-    if userId == '':
+    if user_id == '':
         return "Must specify user id"
-    if week == '':
+    if weeks == '':
         return "Must specify number of weeks"
-    
     return jsonify(ep.get_overview(get_db(), user_id, weeks))
 
 @app.route('/breakdown',methods=["GET"])
@@ -75,7 +74,7 @@ def breakdown():
 
     if user_id == '':
         return "Must specify user id"
-    if week == '':
+    if weeks == '':
         return "Must specify number of weeks"
     
     return jsonify(ep.get_breakdown(get_db(), user_id, weeks))
