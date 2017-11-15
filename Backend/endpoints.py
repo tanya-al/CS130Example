@@ -1,5 +1,6 @@
 import utils
-from datetime import datetime
+from datetime import datetime, timedelta
+import math
 
 def get_transactions(db, user_id, limit, offset):
     cur = db.cursor()
@@ -40,12 +41,70 @@ def get_receipts(db, user_id, limit, offset):
     return dict_list
 
 def get_overview(db, user_id, weeks):
-    # TODO: implement
-    return {'userId': user_id, 'weeks': weeks}
+    days = int(weeks) * 7
+    target_date = (datetime.now() - timedelta(days=days)).strftime('%Y-%m-%d %H:%M:%S')
+    cur = db.cursor()
+    cur.execute('''SELECT category, amount FROM transactions
+                 WHERE user_id=? 
+                 AND CAST(strftime('%s', date) AS integer) 
+                     > CAST(strftime('%s', ?) AS integer);'''
+                 , (user_id, target_date))
+    dict_list = []
+    for row in cur.fetchall():
+        dict_list.append({
+                'category': row[0],
+                'amount': row[1],
+            })
+    
+    # calculate total
+    total = 0.0
+    for transaction in dict_list:
+        print(transaction)
+        total += transaction['amount']
+
+    # append percentage
+    for transaction in dict_list:
+        transaction['percentage'] = round(transaction['amount']/total * 100,2)
+
+    print(dict_list)
+    return dict_list
 
 def get_breakdown(db, user_id, weeks):
-    # TODO: implement
-    return {'userId': user_id, 'weeks': weeks}
+    weeklist = [7 * (i+1) for i in range(int(weeks))]
+    target_dates = [(datetime.now() - timedelta(days=d)).strftime('%Y-%m-%d %H:%M:%S') for d in weeklist]
+    dict_list = []
+    cur = db.cursor()
+    i = 1
+    for date in target_dates:
+        cur.execute('''SELECT category, amount FROM transactions
+                     WHERE user_id=? 
+                     AND CAST(strftime('%s', date) AS integer) 
+                         > CAST(strftime('%s', ?) AS integer);'''
+                     , (user_id, date))
+        breakdown = []
+        for row in cur.fetchall():
+            breakdown.append({
+                'category': row[0],
+                'amount': row[1],
+            })
+
+        # calculate total
+        total = 0.0
+        for transaction in breakdown:
+            print(transaction)
+            total += transaction['amount']
+
+        # append percentage
+        for transaction in breakdown:
+            transaction['percentage'] = round(transaction['amount']/total * 100,2)
+
+        dict_list.append({
+            'week': i,
+            'categories': breakdown})
+        i += 1
+
+    print(dict_list)
+    return dict_list
 
 def post_receipt(db, user_id, category, image_data):
     cur = db.cursor()
