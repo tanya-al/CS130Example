@@ -51,10 +51,17 @@ def get_overview(db, user_id, weeks):
                  , (user_id, target_date))
     dict_list = []
     for row in cur.fetchall():
-        dict_list.append({
-                'category': row[0],
-                'amount': row[1],
-            })
+        # check if this category already exists
+        existed = False
+        for d in dict_list:
+            if d["category"] == row[0]:
+                existed = True
+                d["amount"] = round(row[1] + d["amount"],2)
+        if not existed:
+            dict_list.append({
+                    'category': row[0],
+                    'amount': row[1],
+                })
     
     # calculate total
     total = 0.0
@@ -83,10 +90,17 @@ def get_breakdown(db, user_id, weeks):
                      , (user_id, date))
         breakdown = []
         for row in cur.fetchall():
-            breakdown.append({
-                'category': row[0],
-                'amount': row[1],
-            })
+            # check if this category already exists
+            existed = False
+            for d in breakdown:
+                if d["category"] == row[0]:
+                    existed = True
+                    d["amount"] = round(row[1] + d["amount"],2)
+            if not existed:
+                breakdown.append({
+                        'category': row[0],
+                        'amount': row[1],
+                    })
 
         # calculate total
         total = 0.0
