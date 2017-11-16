@@ -1,10 +1,11 @@
+.pyc
+
 #####
 # Mac
 #####
 .DS_Store
 .AppleDouble
 .LSOverride
-
 
 #####
 # iOS gitignore template from https://github.com/github/gitignore/blob/master/Swift.gitignore
