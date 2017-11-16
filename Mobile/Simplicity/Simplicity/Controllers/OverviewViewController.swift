@@ -86,7 +86,7 @@ class OverviewViewController: UIViewController {
                                         height: OVERVIEW_VIEW_CARD_HEIGHT + LINE_CHART_VIEW_CARD_HEIGHT + TEST_CHART_VIEW_CARD_HEIGHT + VIEW_CARD_MARGIN * 4)
         
         
-        DataManager.sharedInstance.getOverviewsAsync(onSuccess: { _ in }, onFailure: { _ in })
+        //DataManager.sharedInstance.getOverviewsAsync(onSuccess: { _ in }, onFailure: { _ in })
     }
     
     override func didReceiveMemoryWarning() {
@@ -123,7 +123,8 @@ class OverviewViewController: UIViewController {
         
         //let pieChartDataSet = PieChartDataSet(values: dataEntries, label: "")
         
-        let pieChartDataSet = PieChartDataSet()
+        var dataEntries: [PieChartDataEntry] = []
+        let pieChartDataSet = PieChartDataSet(values: dataEntries, label: "")
         //pieChartDataSet.values = dataEntries
         
         // add "%" to label
@@ -151,8 +152,10 @@ class OverviewViewController: UIViewController {
         pieChartView.drawCenterTextEnabled = false
         pieChartView.chartDescription?.text = ""
         
+        
+        
         DataManager.sharedInstance.getOverviewsAsync(onSuccess: {overviews in
-            var dataEntries: [PieChartDataEntry] = []
+//            var dataEntries: [PieChartDataEntry] = []
             
             for i in 0..<overviews.count {
                 let dataEntry = PieChartDataEntry(value: overviews[i].percentage, label: overviews[i].category)
@@ -165,12 +168,14 @@ class OverviewViewController: UIViewController {
                 pieChartView.data = PieChartData(dataSet: pieChartDataSet)
                 pieChartView.notifyDataSetChanged()
                 
-                pieChartView.noDataText = "No data available"
-                pieChartView.holeRadiusPercent = 0.4
-                pieChartView.transparentCircleRadiusPercent = 0.48
-                pieChartView.drawEntryLabelsEnabled = false
-                pieChartView.drawCenterTextEnabled = false
-                pieChartView.chartDescription?.text = ""
+//                pieChartView.noDataText = "No data available"
+//                pieChartView.holeRadiusPercent = 0.4
+//                pieChartView.transparentCircleRadiusPercent = 0.48
+//                pieChartView.drawEntryLabelsEnabled = false
+//                pieChartView.drawCenterTextEnabled = false
+//                pieChartView.chartDescription?.text = ""
+                
+                // customize legend
                 pieChartView.legend.orientation = Legend.Orientation.vertical
                 pieChartView.legend.xOffset = 350
                 pieChartView.legend.yOffset = 110
