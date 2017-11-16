@@ -62,6 +62,29 @@ if __name__ == '__main__':
 	b64 = encode_b64(Image.open("receipts/1003-2.jpg"))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 3, "transportation", 60.00, "2017-10-12 21:20:39", ?)''', (transaction_id, b64))
+	transaction_id += 1
+
+	#====================== overview dummy data ======================#
+	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
+					VALUES (?, 42069, "Restaurant", 60.00, "2017-11-14 19:29:00", "image_b64")''', (transaction_id,))
+	transaction_id += 1
+
+	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
+					VALUES (?, 42069, "Transportation", 40.00, "2017-11-14 19:30:00", "image_b64")''', (transaction_id,))
+	transaction_id += 1
+
+	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
+					VALUES (?, 42069, "Textbook", 30.00, "2017-11-14 19:31:00", "image_b64")''', (transaction_id,))
+	transaction_id += 1
+
+	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
+					VALUES (?, 42069, "Grocery", 40.00, "2017-11-14 19:32:00", "image_b64")''', (transaction_id,))
+	transaction_id += 1
+
+	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
+					VALUES (?, 42069, "Other", 30.00, "2017-11-14 19:33:00", "image_b64")''', (transaction_id,))
+	transaction_id += 1
+	#==================== end overview dummy data ====================#
 
 	conn.commit()
 
