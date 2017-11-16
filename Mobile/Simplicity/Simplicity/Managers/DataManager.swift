@@ -15,7 +15,6 @@ class DataManager: NSObject {
     
     static let DUMMY_USER_ID: Int = 42069
     static let DUMMY_NUMBER_OF_WEEKS: Int = 5
-    //private var _userId: Int
     
     let AMOUNT_JSON_KEY: String = "amount"
     let CATEGORY_JSON_KEY: String = "category"
