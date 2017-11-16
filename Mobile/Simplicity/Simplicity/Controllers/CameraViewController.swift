@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 import AVFoundation
 
-class CameraViewController: UIViewController {
+class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     var captureSession: AVCaptureSession?
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
-    @IBOutlet var previewView : UIButton?
+    var takePhoto = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +34,18 @@ class CameraViewController: UIViewController {
         self.view.layer.addSublayer(videoPreviewLayer!)
         videoPreviewLayer?.frame = self.view.layer.frame
         captureSession?.startRunning()
+        
+        let dataOutput = AVCaptureVideoDataOutput()
+        if captureSession!.canAddOutput(dataOutput) {
+            captureSession?.addOutput(dataOutput)
+        }
+        captureSession?.commitConfiguration()
+        
+        let queue = DispatchQueue(label: "com.Simplicity.ItsLikeXForY")
+        dataOutput.setSampleBufferDelegate(self, queue: queue)
     }
+    
+//    func takePhoto(
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
