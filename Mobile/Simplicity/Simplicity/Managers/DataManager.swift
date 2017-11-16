@@ -58,7 +58,7 @@ class DataManager: NSObject {
                                                                      numberOfWeeks: DataManager.DUMMY_NUMBER_OF_WEEKS,
                                                                          onSuccess:
         { json in
-            print(json)                                                     
+            print("[DataManager] getOverviewsAsync success! Parsing JSON...")
             self._overviews = []
                                                                     
             // parse JSON
@@ -71,33 +71,14 @@ class DataManager: NSObject {
 
             onSuccess(self._overviews!)
         }, onFailure: { error in
-            print("[Error] getOverviewsAsync")
+            print("[DataManager][Error] getOverviewsAsync")
             onFailure(error)
         })
     }
     
     func getTransactionsAsync(onSuccess: @escaping([Overview]) -> Void, onFailure: @escaping(Error) -> Void) {
-        print("hello")
-        
-        
-        RequestManager.sharedInstance.getTransactionsWithUserId(userId: DataManager.DUMMY_USER_ID, onSuccess: { json in
-            print(json)
-            
-            // parse JSON
-            for item in json.array! {
-                if let amount = item["amount"].double {
-                    print(amount)
-                } else {
-                    print("why")
-                }
-            }
-            
-        }, onFailure: { error in
-            print("rip yo")
-            let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-            
-        })
+        print("getTransactionsAsync not implemented yet!!")
+        abort()
     }
     
 }
