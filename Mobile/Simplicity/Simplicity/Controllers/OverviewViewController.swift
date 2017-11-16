@@ -85,6 +85,8 @@ class OverviewViewController: UIViewController {
         scrollView!.contentSize = CGSize(width: scrollView!.contentSize.width,
                                         height: OVERVIEW_VIEW_CARD_HEIGHT + LINE_CHART_VIEW_CARD_HEIGHT + TEST_CHART_VIEW_CARD_HEIGHT + VIEW_CARD_MARGIN * 4)
         
+        
+        DataManager.sharedInstance.getOverviewsAsync(onSuccess: { _ in }, onFailure: { _ in })
     }
     
     override func didReceiveMemoryWarning() {
@@ -111,15 +113,18 @@ class OverviewViewController: UIViewController {
         overviewViewCard!.addSubview(title)
         
         // pie chart
-        let overviews = DataManager.sharedInstance.getOverviews()
-        var dataEntries: [PieChartDataEntry] = []
+//        let overviews = DataManager.sharedInstance.getOverviews()
+//        var dataEntries: [PieChartDataEntry] = []
+//
+//        for i in 0..<overviews.count {
+//            let dataEntry = PieChartDataEntry(value: overviews[i].percentage, label: overviews[i].category)
+//            dataEntries.append(dataEntry)
+//        }
         
-        for i in 0..<overviews.count {
-            let dataEntry = PieChartDataEntry(value: overviews[i].percentage, label: overviews[i].category)
-            dataEntries.append(dataEntry)
-        }
+        //let pieChartDataSet = PieChartDataSet(values: dataEntries, label: "")
         
-        let pieChartDataSet = PieChartDataSet(values: dataEntries, label: "")
+        let pieChartDataSet = PieChartDataSet()
+        //pieChartDataSet.values = dataEntries
         
         // add "%" to label
         let formatter = NumberFormatter()
@@ -138,7 +143,7 @@ class OverviewViewController: UIViewController {
                                                   width: overviewViewCard!.frame.width + 110,
                                                  height: overviewViewCard!.frame.height - title.frame.height - VIEW_CARD_LABEL_MARGIN - PIE_CHART_MARGIN * 2))
         
-        pieChartView.data = PieChartData(dataSet: pieChartDataSet)
+        //pieChartView.data = PieChartData(dataSet: pieChartDataSet)
         pieChartView.noDataText = "No data available"
         pieChartView.holeRadiusPercent = 0.4
         pieChartView.transparentCircleRadiusPercent = 0.48
@@ -146,10 +151,38 @@ class OverviewViewController: UIViewController {
         pieChartView.drawCenterTextEnabled = false
         pieChartView.chartDescription?.text = ""
         
+        DataManager.sharedInstance.getOverviewsAsync(onSuccess: {overviews in
+            var dataEntries: [PieChartDataEntry] = []
+            
+            for i in 0..<overviews.count {
+                let dataEntry = PieChartDataEntry(value: overviews[i].percentage, label: overviews[i].category)
+                dataEntries.append(dataEntry)
+            }
+            
+            pieChartDataSet.values = dataEntries
+            
+            DispatchQueue.main.async {
+                pieChartView.data = PieChartData(dataSet: pieChartDataSet)
+                pieChartView.notifyDataSetChanged()
+                
+                pieChartView.noDataText = "No data available"
+                pieChartView.holeRadiusPercent = 0.4
+                pieChartView.transparentCircleRadiusPercent = 0.48
+                pieChartView.drawEntryLabelsEnabled = false
+                pieChartView.drawCenterTextEnabled = false
+                pieChartView.chartDescription?.text = ""
+                pieChartView.legend.orientation = Legend.Orientation.vertical
+                pieChartView.legend.xOffset = 350
+                pieChartView.legend.yOffset = 110
+            }
+        }, onFailure: {error in
+    
+        })
+        
         // customize legend
-        pieChartView.legend.orientation = Legend.Orientation.vertical
-        pieChartView.legend.xOffset = 350
-        pieChartView.legend.yOffset = 110
+//        pieChartView.legend.orientation = Legend.Orientation.vertical
+//        pieChartView.legend.xOffset = 350
+//        pieChartView.legend.yOffset = 110
 
         overviewViewCard!.addSubview(pieChartView)
     }

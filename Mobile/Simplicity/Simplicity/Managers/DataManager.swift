@@ -13,8 +13,13 @@ class DataManager: NSObject {
     
     static let sharedInstance = DataManager()
     
-    static let DUMMY_USER_ID: Int = 1
+    static let DUMMY_USER_ID: Int = 42069
+    static let DUMMY_NUMBER_OF_WEEKS: Int = 5
     //private var _userId: Int
+    
+    let AMOUNT_JSON_KEY: String = "amount"
+    let CATEGORY_JSON_KEY: String = "category"
+    let PERCENTAGE_JSON_KEY: String = "percentage"
     
     private var _transactions: [Transaction]?
     private var _overviews: [Overview]?
@@ -49,7 +54,26 @@ class DataManager: NSObject {
     }
     
     func getOverviewsAsync(onSuccess: @escaping([Overview]) -> Void, onFailure: @escaping(Error) -> Void) {
-        
+        RequestManager.sharedInstance.getOverviewWithUserIdAndNumberOfWeeks(userId: DataManager.DUMMY_USER_ID,
+                                                                     numberOfWeeks: DataManager.DUMMY_NUMBER_OF_WEEKS,
+                                                                         onSuccess:
+        { json in
+            print(json)                                                     
+            self._overviews = []
+                                                                    
+            // parse JSON
+            for item in json.array! {
+                let amount = item[self.AMOUNT_JSON_KEY].double
+                let category = item[self.CATEGORY_JSON_KEY].string
+                let percentage = item[self.PERCENTAGE_JSON_KEY].double
+                self._overviews?.append(Overview(category: category!, amount: amount!, percentage: percentage!)!)
+            }
+
+            onSuccess(self._overviews!)
+        }, onFailure: { error in
+            print("[Error] getOverviewsAsync")
+            onFailure(error)
+        })
     }
     
     func getTransactionsAsync(onSuccess: @escaping([Overview]) -> Void, onFailure: @escaping(Error) -> Void) {
@@ -60,12 +84,19 @@ class DataManager: NSObject {
             print(json)
             
             // parse JSON
+            for item in json.array! {
+                if let amount = item["amount"].double {
+                    print(amount)
+                } else {
+                    print("why")
+                }
+            }
             
         }, onFailure: { error in
             print("rip yo")
             let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-            //self.show(alert, sender: nil)
+            
         })
     }
     
