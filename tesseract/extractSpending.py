@@ -4,26 +4,44 @@ import sys,os
 import argparse
 import cv2
 
+# set $PATH to tesseract
 pya.pytesseract.tesseract_cmdtesseract_cmd = '/usr/local/Cellar/tesseract/3.05.01/bin/tesseract'
-# Include the above line, if you don't have tesseract executable in your PATH
-# Example tesseract_cmd: 'C:\\Program Files (x86)\\Tesseract-OCR\\tesseract'
 
 def read_image_text(image):
-	im = Image.open(image)
+	'''Reads the text on the image
+	@param image 	the whole path to the image, including the image name
+	@return     	a string that has all words on the image processed by tesseract
+	@throws			OSError if the file is not found or cannot be opened
+	'''
+	try:
+		im = Image.open(image)
+	except OSError:
+		print("Cannot open file {0}".format(image))
+
+	# call to tesseract
 	string = pya.image_to_string(im)
 	return string
 
 def is_number(s):
-    try:
-        float(s)
-        return True
-    except ValueError:
-        return False
+	'''Check if the whole string is a number
+	@param s 		the variable to be checked
+	@return 		True if the variable is a number, false otherwise
+	@throws			ValueError if the variable is not a number
+	'''
+	try:
+		float(s)
+		return True
+	except ValueError:
+		return False
 
 
 def is_digit(s, index):
+	'''Check if the char is valid to appear in amount
+	@param s 		the string containing the char that is checked
+	@param index 	the index of char that is checked
+	@return			True if the char is valid. i.e,: number, or '.', or ' ' right next to '.'
+	'''
 	if s[index].isdigit() or s[index] == ' ' or s[index] == '.':
-		# space must be next to .
 		if s[index] == ' ' and ((index < len(s)-1 and s[index+1] == '.') or (index > 0 and s[index-1] == '.')):
 			return True
 		elif s[index] != ' ':
@@ -34,6 +52,10 @@ def is_digit(s, index):
 
 
 def grab_amount(row):
+	'''Extract all valid amount of money(number of the form $xx.xx) in the given string
+	@param row		the string from which it extract money
+	@return 		a list containing all valid money
+	'''
 	size = len(row)
 	num_list = []
 	i = 0
@@ -50,10 +72,11 @@ def grab_amount(row):
 			i += 1
 
 		# if num is a valid number and has two decimal precision ($xx.xx)
-		if num != "":
-			print('--------')
-			print('num: {2}, len: {0},  decimal: {1}'.format(len(num), index_of_decimal, num))
-			print('--------')
+		# debugging info
+		# if num != "":
+		# 	print('--------')
+		# 	print('num: {2}, len: {0},  decimal: {1}'.format(len(num), index_of_decimal, num))
+		# 	print('--------')
 		if is_number(num) and len(num)-index_of_decimal == 2 and index_of_decimal != 0:
 			num_list.append(float(num))
 		i+=1
@@ -61,22 +84,29 @@ def grab_amount(row):
 	return num_list
 
 def process_text(string):
+	'''Extract the maximum amount of money in the given string
+	@param string 	the text to extract money from
+	@return			the maximum amount of money if there is any valid money, -1 if there is no valid amount
+	@throws			ValueError if there is no valid amount of money in the string
+	'''
 	num_list = []
 
 	# add all amounts into the valid spending list
 	num_list = grab_amount(string)
 
-	print(num_list)
+	# debugging info	
+	#print(num_list)
 
 	# find the maximum spending (total cost)
 	total = -1
 	try:
 		total = max(num_list)
-	except:
+	except ValueError:
 		print("No vaild spending recognized")
 
 	return total
 
+# functions below might be modified according to the input of the script
 def parse_arg():
 	ap = argparse.ArgumentParser()
 	ap.add_argument("-i", "--image", required=True,
@@ -87,8 +117,8 @@ def parse_arg():
 	return args
 
 def preprocess_img(args):
-	# load the example image and convert it to grayscale
-
+	
+	# load the example image
 	image = cv2.imread(args["image"])
 	 
 	# check to see if we should apply thresholding to preprocess the
@@ -125,6 +155,5 @@ if __name__ == "__main__":
 	img = preprocess_img(args)
 
 	string = read_image_text(img)
-	print(string)
 	total_spending = process_text(string)
 	print(total_spending)
