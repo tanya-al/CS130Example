@@ -1,6 +1,6 @@
-import endpoints as ep
+from endpoints import Endpoints
 
-from flask import Flask, render_template, request, jsonify, g
+from flask import Flask, render_template, request, jsonify, g, abort
 from werkzeug import secure_filename
 import sqlite3
 import os
@@ -12,9 +12,15 @@ DBPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transactions.
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
-        print(DBPATH)
+        # print(DBPATH)
         db = g._database = sqlite3.connect(DBPATH)
     return db
+
+def get_endpoints():
+    ep = getattr(g, 'endpoints', None)
+    if ep is None:
+        ep = g.endpoints = Endpoints()
+    return ep
 
 @app.route('/')
 def index():
@@ -27,21 +33,30 @@ def transactions():
     offset = request.args.get("offset",'')
 
     if user_id == '':
-        return "Must specify user id"
+        abort(400, "Must specify a user id")
+    elif not user_id.isdigit():
+        abort(400, "The parameter 'userId' must be an integer")
     if max_num == '':
         max_num = 20
+    elif not max_num.isdigit():
+        abort(400, "The parameter 'max' must be an integer")
     if offset == '':
         offset = 0
+    elif not offset.isdigit():
+        abort(400, "The parameter 'offset' must be an integer")
 
-    return jsonify(ep.get_transactions(get_db(), user_id, max_num, offset))
+    return jsonify(get_endpoints().get_transactions(get_db(), user_id, max_num, offset))
 
 @app.route('/receipt_img',methods=["GET"])
 def receipt_img():
     transaction_id = request.args.get("transactionId",'')
+
     if transaction_id == '':
-        return "Must specify transaction id"
+        abort(400, "Must specify a transaction id")
+    elif not transaction_id.isdigit():
+        abort(400, "The parameter 'transactionId' must be an integer")
    
-    return jsonify(ep.get_receipt_img(get_db(), transaction_id))
+    return jsonify(get_endpoints().get_receipt_img(get_db(), transaction_id))
 
 @app.route('/receipts',methods=["GET"])
 def receipts():
@@ -50,13 +65,19 @@ def receipts():
     offset = request.args.get("offset",'')
 
     if user_id == '':
-        return "Must specify user id"
+        abort(400, "Must specify a user id")
+    elif not user_id.isdigit():
+        abort(400, "The parameter 'userId' must be an integer")
     if max_num == '':
         max_num = 20
+    elif not max_num.isdigit():
+        abort(400, "The parameter 'max' must be an integer")
     if offset == '':
         offset = 0
+    elif not offset.isdigit():
+        abort(400, "The parameter 'offset' must be an integer")
     
-    return jsonify(ep.get_receipts(get_db(), user_id, max_num, offset))
+    return jsonify(get_endpoints().get_receipts(get_db(), user_id, max_num, offset))
 
 
 @app.route('/overview',methods=["GET"])
@@ -65,10 +86,15 @@ def overview():
     weeks = request.args.get("weeks",'')
 
     if user_id == '':
-        return "Must specify user id"
+        abort(400, "Must specify a user id")
+    elif not user_id.isdigit():
+        abort(400, "The parameter 'userId' must be an integer")
     if weeks == '':
-        return "Must specify number of weeks"
-    return jsonify(ep.get_overview(get_db(), user_id, weeks))
+        abort(400, "Must specify the number of weeks")
+    elif not weeks.isdigit():
+        abort(400, "The parameter 'weeks' must be an integer")
+
+    return jsonify(get_endpoints().get_overview(get_db(), user_id, weeks))
 
 @app.route('/breakdown',methods=["GET"])
 def breakdown():
@@ -76,24 +102,28 @@ def breakdown():
     weeks = request.args.get("weeks",'')
 
     if user_id == '':
-        return "Must specify user id"
+        abort(400, "Must specify a user id")
+    elif not user_id.isdigit():
+        abort(400, "The parameter 'userId' must be an integer")
     if weeks == '':
-        return "Must specify number of weeks"
+        abort(400, "Must specify the number of weeks")
+    elif not user_id.isdigit():
+        abort(400, "The parameter 'weeks' must be an integer")
     
-    return jsonify(ep.get_breakdown(get_db(), user_id, weeks))
+    return jsonify(get_endpoints().get_breakdown(get_db(), user_id, weeks))
 
 @app.route('/receipt',methods=["POST"])
 def receive_image():
     json_data = request.get_json()
 
     if not 'userId' in json_data:
-        return "Must specify user id"
+        abort(400, "Must specify user id")
     if not 'category' in json_data:
-        return "Must specify category"
+        abort(400, "Must specify category")
     if not 'data' in json_data:
-        return "Must include image data"
+        abort(400, "Must include image data")
 
-    ep.post_receipt(get_db(), json_data['userId'], json_data['category'], json_data['data'])
+    get_endpoints().post_receipt(get_db(), json_data['userId'], json_data['category'], json_data['data'])
     return "image_received"
 
 @app.teardown_appcontext
