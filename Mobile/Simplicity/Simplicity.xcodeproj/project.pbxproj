@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B8F05471FBE947A00EBEC1D /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8F05461FBE947A00EBEC1D /* PhotoViewController.swift */; };
 		2BDC34DD1FBA758D00C6AFA9 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC34DC1FBA758D00C6AFA9 /* CameraViewController.swift */; };
 		3D04B07E448C2BEB74905189 /* Pods_Simplicity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A5AA80BD93280883C4A3B44 /* Pods_Simplicity.framework */; };
 		92018BC51FA983D7006AF351 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92018BC41FA983D7006AF351 /* AppDelegate.swift */; };
@@ -52,6 +53,7 @@
 
 /* Begin PBXFileReference section */
 		25B4CFE9E2903DD3DCC277A2 /* Pods-Simplicity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simplicity.release.xcconfig"; path = "Pods/Target Support Files/Pods-Simplicity/Pods-Simplicity.release.xcconfig"; sourceTree = "<group>"; };
+		2B8F05461FBE947A00EBEC1D /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		2BDC34DC1FBA758D00C6AFA9 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		5A5AA80BD93280883C4A3B44 /* Pods_Simplicity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Simplicity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		92018BC11FA983D7006AF351 /* Simplicity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Simplicity.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -188,6 +190,7 @@
 				92018BFA1FA9924C006AF351 /* OverviewViewController.swift */,
 				92018BFC1FA99275006AF351 /* TransactionsViewController.swift */,
 				92018BFE1FA99824006AF351 /* AddViewController.swift */,
+				2B8F05461FBE947A00EBEC1D /* PhotoViewController.swift */,
 				92018C001FA99862006AF351 /* ReceiptsViewController.swift */,
 				921DD9371FDA499F00EBF6FF /* ReceiptDetailViewController.swift */,
 				92018C021FA998A4006AF351 /* SettingsViewController.swift */,
@@ -450,6 +453,7 @@
 				921DD9381FDA499F00EBF6FF /* ReceiptDetailViewController.swift in Sources */,
 				921DD93A1FDA4C6600EBF6FF /* LeftBackNavigationBar.swift in Sources */,
 				921DD9361FDA156200EBF6FF /* ReceiptCell.swift in Sources */,
+				2B8F05471FBE947A00EBEC1D /* PhotoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
