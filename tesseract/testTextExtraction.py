@@ -17,6 +17,10 @@ class TestTextExtraction(unittest.TestCase):
 		max_amount = extractSpending.process_text(s)
 		self.assertEqual(max_amount, 7.6)
 
+	def test_corrupted_image(self):
+		with self.assertRaises(OSError):
+			extractSpending.read_image_text("corrupted_image.jpeg")
+
 
 if __name__ == '__main__':
     unittest.main()

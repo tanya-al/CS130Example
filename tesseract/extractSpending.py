@@ -11,13 +11,13 @@ def read_image_text(image):
 	'''Reads the text on the image
 	@param image 	the whole path to the image, including the image name
 	@return     	a string that has all words on the image processed by tesseract
-	@throws			OSError if the file is not found or cannot be opened
+	@throws			OSError if the file is not found or cannot be opened, and return empty string
 	'''
 	try:
 		im = Image.open(image)
-	except OSError:
+	except cv2.error as e:
 		print("Cannot open file {0}".format(image))
-
+		return ""
 	# call to tesseract
 	string = pya.image_to_string(im)
 	return string
@@ -120,7 +120,7 @@ def preprocess_img(args):
 	
 	# load the example image
 	image = cv2.imread(args["image"])
-	 
+
 	# check to see if we should apply thresholding to preprocess the
 	# image
 	if args["preprocess"] == "thresh":
