@@ -25,6 +25,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.rootViewController = initialViewController
         self.window?.makeKeyAndVisible()
         
+        let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
+        if statusBar.responds(to:#selector(setter: UIView.backgroundColor)) {
+            statusBar.backgroundColor = UIColor.clear
+        }
+        UIApplication.shared.statusBarStyle = .lightContent
+        
         return true
     }
 

@@ -7,10 +7,18 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class DataManager: NSObject {
     
     static let sharedInstance = DataManager()
+    
+    static let DUMMY_USER_ID: Int = 42069
+    static let DUMMY_NUMBER_OF_WEEKS: Int = 5
+    
+    let AMOUNT_JSON_KEY: String = "amount"
+    let CATEGORY_JSON_KEY: String = "category"
+    let PERCENTAGE_JSON_KEY: String = "percentage"
     
     private var _transactions: [Transaction]?
     private var _overviews: [Overview]?
@@ -42,6 +50,34 @@ class DataManager: NSObject {
         }
         
         return _overviews!
+    }
+    
+    func getOverviewsAsync(onSuccess: @escaping([Overview]) -> Void, onFailure: @escaping(Error) -> Void) {
+        RequestManager.sharedInstance.getOverviewWithUserIdAndNumberOfWeeks(userId: DataManager.DUMMY_USER_ID,
+                                                                     numberOfWeeks: DataManager.DUMMY_NUMBER_OF_WEEKS,
+                                                                         onSuccess:
+        { json in
+            print("[DataManager] getOverviewsAsync success! Parsing JSON...")
+            self._overviews = []
+                                                                    
+            // parse JSON
+            for item in json.array! {
+                let amount = item[self.AMOUNT_JSON_KEY].double
+                let category = item[self.CATEGORY_JSON_KEY].string
+                let percentage = item[self.PERCENTAGE_JSON_KEY].double
+                self._overviews?.append(Overview(category: category!, amount: amount!, percentage: percentage!)!)
+            }
+
+            onSuccess(self._overviews!)
+        }, onFailure: { error in
+            print("[DataManager][Error] getOverviewsAsync")
+            onFailure(error)
+        })
+    }
+    
+    func getTransactionsAsync(onSuccess: @escaping([Overview]) -> Void, onFailure: @escaping(Error) -> Void) {
+        print("getTransactionsAsync not implemented yet!!")
+        abort()
     }
     
 }

@@ -84,7 +84,6 @@ class OverviewViewController: UIViewController {
         // update scrollView content height
         scrollView!.contentSize = CGSize(width: scrollView!.contentSize.width,
                                         height: OVERVIEW_VIEW_CARD_HEIGHT + LINE_CHART_VIEW_CARD_HEIGHT + TEST_CHART_VIEW_CARD_HEIGHT + VIEW_CARD_MARGIN * 4)
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -111,14 +110,8 @@ class OverviewViewController: UIViewController {
         overviewViewCard!.addSubview(title)
         
         // pie chart
-        let overviews = DataManager.sharedInstance.getOverviews()
+        // initialize with empty data
         var dataEntries: [PieChartDataEntry] = []
-        
-        for i in 0..<overviews.count {
-            let dataEntry = PieChartDataEntry(value: overviews[i].percentage, label: overviews[i].category)
-            dataEntries.append(dataEntry)
-        }
-        
         let pieChartDataSet = PieChartDataSet(values: dataEntries, label: "")
         
         // add "%" to label
@@ -138,7 +131,6 @@ class OverviewViewController: UIViewController {
                                                   width: overviewViewCard!.frame.width + 110,
                                                  height: overviewViewCard!.frame.height - title.frame.height - VIEW_CARD_LABEL_MARGIN - PIE_CHART_MARGIN * 2))
         
-        pieChartView.data = PieChartData(dataSet: pieChartDataSet)
         pieChartView.noDataText = "No data available"
         pieChartView.holeRadiusPercent = 0.4
         pieChartView.transparentCircleRadiusPercent = 0.48
@@ -146,10 +138,27 @@ class OverviewViewController: UIViewController {
         pieChartView.drawCenterTextEnabled = false
         pieChartView.chartDescription?.text = ""
         
-        // customize legend
-        pieChartView.legend.orientation = Legend.Orientation.vertical
-        pieChartView.legend.xOffset = 350
-        pieChartView.legend.yOffset = 110
+        // get actual data
+        DataManager.sharedInstance.getOverviewsAsync(onSuccess: {overviews in
+            for i in 0..<overviews.count {
+                let dataEntry = PieChartDataEntry(value: overviews[i].percentage, label: overviews[i].category)
+                dataEntries.append(dataEntry)
+            }
+            
+            pieChartDataSet.values = dataEntries
+            
+            DispatchQueue.main.async {
+                pieChartView.data = PieChartData(dataSet: pieChartDataSet)
+                pieChartView.notifyDataSetChanged()
+                
+                // customize legend
+                pieChartView.legend.orientation = Legend.Orientation.vertical
+                pieChartView.legend.xOffset = 350
+                pieChartView.legend.yOffset = 110
+            }
+        }, onFailure: {error in
+    
+        })
 
         overviewViewCard!.addSubview(pieChartView)
     }
