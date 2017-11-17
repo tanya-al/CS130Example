@@ -16,7 +16,7 @@
 
 3. ```test_transactions_invalid_parameters```: tests whether the transactions server endpoint returns error code 400 (Bad Request) when the client passes bad input parameters in the url, such as a letter for userId, which should be an integer
    - Success: the transactions endpoint returns error code 400 for each of the bad requests
-   - Failure: the transactions endpoint returns anything besides the 400 error code for any of the bad requests, such as a success
+   - Failure: the transactions endpoint returns anything besides the 400 error code for any of the bad requests, such as a 200 success code
 
 ##### receipt_img tests
 
@@ -30,7 +30,7 @@
 
 6. ```test_receipt_img_invalid_parameters```: tests whether the receipt_img server endpoint returns error code 400 (Bad Request) when the client passes bad input parameters in the url, such as a letter for transactionId, which should be an integer
    - Success: the receipt_img endpoint returns error code 400 for each of the bad requests
-   - Failure: the receipt_img endpoint returns anything besides the 400 error code for any of the bad requests, such as a success
+   - Failure: the receipt_img endpoint returns anything besides the 400 error code for any of the bad requests, such as a 200 success code
 
 ##### overview tests
 
@@ -48,7 +48,7 @@
 
 10. ```test_overview_invalid_parameters```: tests whether the overview server endpoint returns error code 400 (Bad Request) when the client passes bad input parameters in the url, such as a letter for userId or weeks, which should be an integer
     - Success: the overview endpoint returns error code 400 for each of the bad requests
-    - Failure: the overview endpoint returns anything besides the 400 error code for any of the bad requests, such as a success
+    - Failure: the overview endpoint returns anything besides the 400 error code for any of the bad requests, such as a 200 success code
 
 
 ### Text Extraction Tests
