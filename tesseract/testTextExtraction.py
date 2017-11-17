@@ -19,8 +19,8 @@ class TestTextExtraction(unittest.TestCase):
 
 	def test_corrupted_image(self):
 		with self.assertRaises(OSError):
-			extractSpending.read_image_text("corrupted_image.jpeg")
-
+			s = extractSpending.read_image_text("corrupted_image.jpeg")
+			self.assertEqual("", s)
 
 if __name__ == '__main__':
     unittest.main()
