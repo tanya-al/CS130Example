@@ -4,8 +4,7 @@
 
 #### **get_transactions**
 
-```dict get_transactions(Connection db, int user_id, int limit, int
-offset)```
+```dict get_transactions(Connection db, int user_id, int limit, int offset)```
 
 Given the inputs user_id (user we want to grab transactions for), limit
 and offset (filtering the query), we want to return a dict containing
@@ -125,8 +124,7 @@ List of {‘category’, ‘amount’, ‘percentage’} for each week.
 ---
 #### **post_receipt**
 
-```void post_receipt(Connection db, int user_id, string category, string
-image_data)```
+```void post_receipt(Connection db, int user_id, string category, string image_data)```
 
 Given the user_id, category, and the image, this function will use
 pytesseract to find the amount, and write into the database this
@@ -227,8 +225,7 @@ A list of double amount of money
 
 #### **getOverviewWithUserIdAndNumberOfWeeks**
 
-```void getOverviewWithUserIdAndNumberOfWeeks(int userId, int
-numberOfWeeks, onSuccess(JSON), onFailure(Error))```
+```void getOverviewWithUserIdAndNumberOfWeeks(int userId, int numberOfWeeks, onSuccess(JSON), onFailure(Error))```
 
 Given the userId and numberOfWeeks, make the request call to the
 backend, and call the onSuccess or onFailure completion block based on
