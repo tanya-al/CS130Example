@@ -1,4 +1,298 @@
-# CS130
+# CS130 - Simplicity
+
+## Backend API
+
+#### **get_transactions**
+
+```dict get_transactions(Connection db, int user_id, int limit, int
+offset)```
+
+Given the inputs user_id (user we want to grab transactions for), limit
+and offset (filtering the query), we want to return a dict containing
+the user’s {‘transactionId’, ‘userId’, ‘category’, ‘amount’, ‘date’}
+
+This function will use the parameters to make a sql query, and reformat
+the returned rows into the dict that the frontend expects.
+
+**Parameters:**
+
+```db``` - database connection
+
+```user_id``` - the id of the user we want to query fields for
+
+```limit``` - max number of rows we want to return
+
+```offset``` - offset of the rows we want to return
+
+**Returns:**
+
+List of {‘transactionId’, ‘userId’, ‘category’, ‘amount’, ‘date’}
+
+---
+#### **get_receipt_img**
+
+```dict get_receipt_img(Connection db, int transaction_id)```
+
+Given the transactionId, this function will return the receipt image
+associated with it.
+
+This function will use the parameters to make a sql query, and reformat
+the returned rows into the dict that the frontend expects.
+
+**Parameters:**
+
+```db``` - database connection
+
+```transaction_id``` - id of the transaction we want to retrieve the image of
+
+**Returns:**
+
+Base64 encoded image associated with the parameter’s transactionId
+
+---
+#### **get_receipts**
+
+```dict get_receipts(Connection db, int user_id, int limit, int offset)```
+
+Given the inputs user_id (user we want to grab transactions for), limit
+and offset (filtering the query), we want to return a dict containing
+the user’s {‘transactionId’, ‘userId’, date, ‘thumbnailImageData’}. The
+thumbnailImageData is a conversion of the original receipt image to
+thumbnail size.
+
+This function will use the parameters to make a sql query, and reformat
+the returned rows into the dict that the frontend expects.
+
+**Parameters:**
+
+```db``` - database connection
+
+```user_id``` - the id of the user we want to query fields for
+
+```limit``` - max number of rows we want to return
+
+```offset``` - offset of the rows we want to return
+
+**Returns:**
+
+List of {‘transactionId’, ‘userId’, date, ‘thumbnailImageData’}
+
+---
+#### **get_overview**
+
+```dict get_overview(Connection db, int user_id, int weeks)```
+
+Given the user_id and the amount of weeks ago we want to look, we want
+to return a dict containing each of the categories of spending the user
+has spent on, and the percentage of his/her expenditures on each
+category.
+
+This function will use the parameters to make a sql query, and reformat
+the returned rows into the dict that the frontend expects.
+
+**Parameters:**
+
+```db``` - database connection
+
+```user_id``` - the id of the user we want to query fields for
+
+```weeks``` - weeks ago we want to look back in the database
+
+**Returns:**
+
+List of {‘category’, ‘amount’, ‘percentage’}
+
+---
+#### **get_breakdown**
+
+```dict get_breakdown(Connection db, int user_id, int weeks)```
+
+See “get_overview”. This function will get the breakdown *per week* for
+the set amount of weeks
+
+**Parameters:**
+
+```db``` - database connection
+
+```user_id``` - the id of the user we want to query fields for
+
+```weeks``` - weeks ago we want to look back in the database
+
+**Returns:**
+
+List of {‘category’, ‘amount’, ‘percentage’} for each week.
+
+---
+#### **post_receipt**
+
+```void post_receipt(Connection db, int user_id, string category, string
+image_data)```
+
+Given the user_id, category, and the image, this function will use
+pytesseract to find the amount, and write into the database this
+transaction.
+
+This function will use the parameters to make a sql query, and store the
+necessary information into the database.
+
+**Parameters:**
+
+```db``` - database connection
+
+```user_id``` - the id of the user we want to query fields for
+
+```category``` - name of the category this transaction belongs in
+
+```image_data``` - base64 encoded string containing the image
+
+**Returns:**
+
+Returns nothing.
+
+---
+## Image Processing API
+
+#### **preprocess_img**
+
+```def preprocess_img(image)```
+
+Given the image, this function will add preprocessing to the old image
+and generate a new preprocessed one
+
+This function do thresh, blur, grayscale preprocessing and save the one
+with best result
+
+**Parameters:**
+
+```image``` - the image that require preprocessing
+
+**Returns:**
+
+Returns nothing.
+
+---
+#### **read_image_text**
+
+```def read_image_text(image)```
+
+Given the image, this function applies tesseract to the processed image
+and read the text on it
+
+**Parameters:**
+
+```image``` - the image to extract text from
+
+**Returns:**
+
+string of the words extracted from image
+
+---
+#### **process_text**
+
+```def process_text(string)```
+
+Given a string, this function calls grab_amount extract the maximum
+amount of money in the given string.
+
+**Parameters:**
+
+```image``` - the image to extract text from
+
+**Returns:**
+
+double of maximum amount of money in the string
+
+**See Also:**
+
+```grab_amount```
+
+---
+#### **grab_amount**
+
+```def grab_amount(row)```
+
+Given a row of string, this function calls extract all valid amount of
+money(number of the form $xx.xx) in the given string.
+
+**Parameters:**
+
+```row``` - the row of string to extract all amount of money from
+
+**Returns:**
+
+A list of double amount of money
+
+---
+## Frontend API
+
+#### **getOverviewWithUserIdAndNumberOfWeeks**
+
+```void getOverviewWithUserIdAndNumberOfWeeks(int userId, int
+numberOfWeeks, onSuccess(JSON), onFailure(Error))```
+
+Given the userId and numberOfWeeks, make the request call to the
+backend, and call the onSuccess or onFailure completion block based on
+whether the request succeed or not.
+
+**Parameters:**
+
+```userId``` - id of the user we want to make request on
+
+```numberOfWeeks``` - number of weeks we want to accumulate data on
+
+```onSuccess``` - completion block on success
+
+```onFailure``` - completion block on failure
+
+**Returns:**
+
+Void
+
+---
+#### **getTransactionsWithUserId**
+
+void getTransactionsWithUserId(int userId, onSuccess(JSON),
+onFailure(Error))
+
+Given the userId, make the request call to the backend to get a list of
+transactions uploaded by this user. Call the onSuccess or onFailure
+completion block based on whether the request succeed or not.
+
+**Parameters:**
+
+```userId``` - id of the user we want to make request on
+
+```onSuccess``` - completion block on success
+
+```onFailure``` - completion block on failure
+
+**Returns:**
+
+Void
+
+---
+#### **getOverviewAsync**
+
+```void getOverviewAsync(onSuccess([Overview]), onFailure(Error))```
+
+Get a list of Overview with the current application’s userId, and call
+the onSuccess or onFailure completion block based on whether the request
+succeed or not.
+
+**Parameters:**
+
+```onSuccess``` - completion block on success
+
+```onFailure``` - completion block on failure
+
+**Returns:**
+
+Void
+
+---
+---
+
+## Testing
 
 ### Server Routes Tests
 #### server_routes_test_case.py contains the following 10 tests for the transactions, receipt_img, and overview endpoints
