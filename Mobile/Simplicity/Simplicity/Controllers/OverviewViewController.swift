@@ -89,78 +89,6 @@ class OverviewViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func populateBreakdownViewCard() {
-        
-        // initialize breakdownViewCard
-        breakdownViewCard = UIView(frame: CGRect(x: VIEW_CARD_MARGIN,
-                                                 y: OVERVIEW_VIEW_CARD_HEIGHT + VIEW_CARD_MARGIN * 2,
-                                                 width: scrollView!.frame.width - VIEW_CARD_MARGIN * 2,
-                                                 height: BREAKDOWN_VIEW_CARD_HEIGHT))
-        breakdownViewCard!.backgroundColor = UIColor.white
-        scrollView?.addSubview(breakdownViewCard!)
-        
-        // title
-        let title = UILabel(frame: CGRect(x: VIEW_CARD_LABEL_MARGIN, y: VIEW_CARD_LABEL_MARGIN, width: 0, height: 0))
-        title.text = "Weekly Breakdown"
-        title.textColor = UIColor.black
-        title.font = UIFont(name: VIEW_CARD_TITLE_FONT, size: 24)
-        title.sizeToFit()
-        breakdownViewCard!.addSubview(title)
-        
-        // line chart
-        let lineChartView = LineChartView(frame: CGRect(x: LINE_CHART_MARGIN,
-                                                        y: title.frame.height + VIEW_CARD_LABEL_MARGIN,
-                                                        width: breakdownViewCard!.frame.width - LINE_CHART_MARGIN * 2,
-                                                        height: 200))
-        lineChartView.chartDescription?.text = ""
-        lineChartView.xAxis.labelPosition = .bottom
-        lineChartView.xAxis.drawAxisLineEnabled = false
-        lineChartView.xAxis.drawLimitLinesBehindDataEnabled = false //?
-        //lineChartView.xAxis.drawLabelsEnabled = false
-        
-//        lineChartView.legend.orientation = Legend.Orientation.vertical
-//        lineChartView.legend.horizontalAlignment = Legend.HorizontalAlignment.right
-//        lineChartView.legend.verticalAlignment = Legend.VerticalAlignment.center
-        
-        
-        lineChartView.leftAxis.removeAllLimitLines()
-        
-        let lineChartData = LineChartData()
-        let breakdowns = DataManager.sharedInstance.getTempBreakdowns()
-        
-        for i in 0..<breakdowns.count {
-            // iterate through each breakdown
-            var lineChartEntries = [ChartDataEntry]()
-            for j in 0..<breakdowns[i].amounts.count {
-                let dataEntry = ChartDataEntry(x: Double(j), y: breakdowns[i].amounts[j])
-                lineChartEntries.append(dataEntry)
-            }
-            
-            let line = LineChartDataSet(values: lineChartEntries, label: breakdowns[i].category)
-            line.drawCirclesEnabled = false
-            line.colors = [pieChartColors[i]]
-            
-            lineChartData.addDataSet(line)
-        }
-//        var lineChartEntries = [ChartDataEntry]()
-//        for i in 0..<breakdowns[0].amounts.count {
-//            let dataEntry = ChartDataEntry(x: Double(i), y: breakdowns[0].amounts[i])
-//            lineChartEntries.append(dataEntry)
-//        }
-//
-//        let line1 = LineChartDataSet(values: lineChartEntries, label: breakdowns[0].category)
-//        line1.colors = pieChartColors
-//
-//        let data = LineChartData()
-//        data.addDataSet(line1)
-        
-
-        lineChartView.data = lineChartData
-        breakdownViewCard!.addSubview(lineChartView)
-        
-        
-    }
-    
     func populateOverviewViewCard() {
         
         // initialize overviewViewCard
@@ -231,6 +159,74 @@ class OverviewViewController: UIViewController {
         })
 
         overviewViewCard!.addSubview(pieChartView)
+    }
+    
+    func populateBreakdownViewCard() {
+        
+        // initialize breakdownViewCard
+        breakdownViewCard = UIView(frame: CGRect(x: VIEW_CARD_MARGIN,
+                                                 y: OVERVIEW_VIEW_CARD_HEIGHT + VIEW_CARD_MARGIN * 2,
+                                                 width: scrollView!.frame.width - VIEW_CARD_MARGIN * 2,
+                                                 height: BREAKDOWN_VIEW_CARD_HEIGHT))
+        breakdownViewCard!.backgroundColor = UIColor.white
+        scrollView?.addSubview(breakdownViewCard!)
+        
+        // title
+        let title = UILabel(frame: CGRect(x: VIEW_CARD_LABEL_MARGIN, y: VIEW_CARD_LABEL_MARGIN, width: 0, height: 0))
+        title.text = "Weekly Breakdown"
+        title.textColor = UIColor.black
+        title.font = UIFont(name: VIEW_CARD_TITLE_FONT, size: 24)
+        title.sizeToFit()
+        breakdownViewCard!.addSubview(title)
+        
+        // line chart
+        let lineChartView = LineChartView(frame: CGRect(x: LINE_CHART_MARGIN,
+                                                        y: title.frame.height + VIEW_CARD_LABEL_MARGIN,
+                                                        width: breakdownViewCard!.frame.width - LINE_CHART_MARGIN * 2,
+                                                        height: 200))
+        lineChartView.chartDescription?.text = ""
+        lineChartView.xAxis.labelPosition = .bottom
+        lineChartView.xAxis.drawAxisLineEnabled = false
+        lineChartView.xAxis.drawLimitLinesBehindDataEnabled = false //?
+        lineChartView.xAxis.drawLabelsEnabled = false
+        lineChartView.xAxis.drawGridLinesEnabled = false
+        lineChartView.xAxis.axisMinimum = -0.5
+        lineChartView.xAxis.axisMaximum = 4.5 // TODO: count + 0.5
+        
+        lineChartView.rightAxis.removeAllLimitLines()
+        lineChartView.rightAxis.drawZeroLineEnabled = false
+        
+        lineChartView.rightAxis.drawTopYLabelEntryEnabled = false
+        lineChartView.rightAxis.drawAxisLineEnabled = false
+        lineChartView.rightAxis.drawGridLinesEnabled = false
+        lineChartView.rightAxis.drawLabelsEnabled = false
+        lineChartView.rightAxis.drawLimitLinesBehindDataEnabled = false
+        
+        lineChartView.leftAxis.removeAllLimitLines()
+        
+        let lineChartData = LineChartData()
+        let breakdowns = DataManager.sharedInstance.getTempBreakdowns()
+        
+        for i in 0..<breakdowns.count {
+            // iterate through each breakdown
+            var lineChartEntries = [ChartDataEntry]()
+            for j in 0..<breakdowns[i].amounts.count {
+                let dataEntry = ChartDataEntry(x: Double(j), y: breakdowns[i].amounts[j])
+                lineChartEntries.append(dataEntry)
+            }
+            
+            let line = LineChartDataSet(values: lineChartEntries, label: breakdowns[i].category)
+            line.drawCirclesEnabled = false
+            line.colors = [pieChartColors[i]]
+            line.lineWidth = 2.5
+            
+            lineChartData.addDataSet(line)
+        }
+        
+        lineChartData.setDrawValues(false)
+        
+        lineChartView.data = lineChartData
+        breakdownViewCard!.addSubview(lineChartView)
     }
     
 }
