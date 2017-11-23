@@ -22,6 +22,7 @@ class DataManager: NSObject {
     
     private var _transactions: [Transaction]?
     private var _overviews: [Overview]?
+    private var _breakdowns: [Breakdown]?
     
     private override init() {
         super.init()
@@ -50,6 +51,19 @@ class DataManager: NSObject {
         }
         
         return _overviews!
+    }
+    
+    func getTempBreakdowns() -> [Breakdown] {
+        if (_breakdowns == nil) {
+            _breakdowns = []
+            _breakdowns?.append(Breakdown(category: "Restaurant", amounts: [50, 20, 40, 60])!)
+            _breakdowns?.append(Breakdown(category: "Transportation", amounts: [15, 22, 19, 44])!)
+            _breakdowns?.append(Breakdown(category: "Textbook", amounts: [70, 20, 0, 0])!)
+            _breakdowns?.append(Breakdown(category: "Grocery", amounts: [42, 27, 55, 39])!)
+            _breakdowns?.append(Breakdown(category: "Other", amounts: [19, 23, 43, 26])!)
+        }
+        
+        return _breakdowns!
     }
     
     func getOverviewsAsync(onSuccess: @escaping([Overview]) -> Void, onFailure: @escaping(Error) -> Void) {

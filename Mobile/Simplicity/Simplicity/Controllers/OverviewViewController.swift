@@ -13,7 +13,7 @@ class OverviewViewController: UIViewController {
     
     let VIEW_CARD_MARGIN: CGFloat = 10
     let OVERVIEW_VIEW_CARD_HEIGHT: CGFloat = 250
-    let LINE_CHART_VIEW_CARD_HEIGHT: CGFloat = 250
+    let BREAKDOWN_VIEW_CARD_HEIGHT: CGFloat = 250
     let TEST_CHART_VIEW_CARD_HEIGHT: CGFloat = 250
     
     let VIEW_CARD_LABEL_MARGIN: CGFloat = 15
@@ -21,10 +21,12 @@ class OverviewViewController: UIViewController {
     let PIE_CHART_HEIGHT: CGFloat = 150
     let PIE_CHART_MARGIN: CGFloat = 5
     
+    let VIEW_CARD_TITLE_FONT: String = "Avenir"
+    
     // MARK: Properties
     var scrollView: UIScrollView?
     var overviewViewCard: UIView?
-    var lineChartViewCard: UIView?
+    var breakdownViewCard: UIView?
     var testViewCard: UIView?
     
     var pieChartColors: [UIColor]
@@ -65,16 +67,10 @@ class OverviewViewController: UIViewController {
         
         // add view cards
         populateOverviewViewCard()
-        
-        lineChartViewCard = UIView(frame: CGRect(x: VIEW_CARD_MARGIN,
-                                                 y: OVERVIEW_VIEW_CARD_HEIGHT + VIEW_CARD_MARGIN * 2,
-                                             width: scrollView!.frame.width - VIEW_CARD_MARGIN * 2,
-                                            height: LINE_CHART_VIEW_CARD_HEIGHT))
-        lineChartViewCard!.backgroundColor = UIColor.white
-        scrollView?.addSubview(lineChartViewCard!)
+        populateBreakdownViewCard()
         
         testViewCard = UIView(frame: CGRect(x: VIEW_CARD_MARGIN,
-                                            y: OVERVIEW_VIEW_CARD_HEIGHT + LINE_CHART_VIEW_CARD_HEIGHT +  VIEW_CARD_MARGIN * 3,
+                                            y: OVERVIEW_VIEW_CARD_HEIGHT + BREAKDOWN_VIEW_CARD_HEIGHT +  VIEW_CARD_MARGIN * 3,
                                         width: scrollView!.frame.width - VIEW_CARD_MARGIN * 2,
                                        height: TEST_CHART_VIEW_CARD_HEIGHT))
         testViewCard!.backgroundColor = UIColor.white
@@ -83,12 +79,31 @@ class OverviewViewController: UIViewController {
         
         // update scrollView content height
         scrollView!.contentSize = CGSize(width: scrollView!.contentSize.width,
-                                        height: OVERVIEW_VIEW_CARD_HEIGHT + LINE_CHART_VIEW_CARD_HEIGHT + TEST_CHART_VIEW_CARD_HEIGHT + VIEW_CARD_MARGIN * 4)
+                                        height: OVERVIEW_VIEW_CARD_HEIGHT + BREAKDOWN_VIEW_CARD_HEIGHT + TEST_CHART_VIEW_CARD_HEIGHT + VIEW_CARD_MARGIN * 4)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func populateBreakdownViewCard() {
+        
+        // initialize breakdownViewCard
+        breakdownViewCard = UIView(frame: CGRect(x: VIEW_CARD_MARGIN,
+                                                 y: OVERVIEW_VIEW_CARD_HEIGHT + VIEW_CARD_MARGIN * 2,
+                                                 width: scrollView!.frame.width - VIEW_CARD_MARGIN * 2,
+                                                 height: BREAKDOWN_VIEW_CARD_HEIGHT))
+        breakdownViewCard!.backgroundColor = UIColor.white
+        scrollView?.addSubview(breakdownViewCard!)
+        
+        // title
+        let title = UILabel(frame: CGRect(x: VIEW_CARD_LABEL_MARGIN, y: VIEW_CARD_LABEL_MARGIN, width: 0, height: 0))
+        title.text = "Breakdown"
+        title.textColor = UIColor.black
+        title.font = UIFont(name: VIEW_CARD_TITLE_FONT, size: 24)
+        title.sizeToFit()
+        breakdownViewCard!.addSubview(title)
     }
     
     func populateOverviewViewCard() {
@@ -105,7 +120,7 @@ class OverviewViewController: UIViewController {
         let title = UILabel(frame: CGRect(x: VIEW_CARD_LABEL_MARGIN, y: VIEW_CARD_LABEL_MARGIN, width: 0, height: 0))
         title.text = "Overview"
         title.textColor = UIColor.black
-        title.font = UIFont(name: "Avenir", size: 24)
+        title.font = UIFont(name: VIEW_CARD_TITLE_FONT, size: 24)
         title.sizeToFit()
         overviewViewCard!.addSubview(title)
         
