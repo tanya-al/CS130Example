@@ -15,10 +15,17 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     var captureSession: AVCaptureSession?
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     var takePhoto = false
+    var dataOutput : AVCaptureVideoDataOutput?
+    var queue = DispatchQueue(label: "com.ItsLikeX4Y.Simplicity")
+    
+    enum errors : Error {
+        case captureSessionMissing
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        displayButton()
         
         let captureDevice = AVCaptureDevice.default(for: AVMediaType.video)
         var input : AVCaptureInput?
@@ -30,43 +37,60 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         captureSession = AVCaptureSession()
         captureSession?.sessionPreset = AVCaptureSession.Preset.photo
         captureSession?.addInput(input!)
-        
+
         videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
         self.view.layer.addSublayer(videoPreviewLayer!)
         videoPreviewLayer?.frame = self.view.layer.frame
         captureSession?.startRunning()
         
-        let verticalBottom: CGFloat = UIScreen.main.bounds.minY
-        let horizontalCenter: CGFloat = UIScreen.main.bounds.midX
+        //capture image
+        dataOutput = AVCaptureVideoDataOutput()
+//        dataOutput?.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey : AVVideoCodecJPEG])], completionHandler: nil)
+        dataOutput?.videoSettings = [((kCVPixelBufferPixelFormatTypeKey as NSString) as String) : NSNumber(value: kCVPixelFormatType_420YpCbCr8BiPlanarFullRange as UInt32)]
+        dataOutput?.alwaysDiscardsLateVideoFrames = true
         
-        let captureButton = UIButton(type: .roundedRect)
-        captureButton.backgroundColor = .red
-        captureButton.sizeThatFits(CGSize(width: 40, height: 40))
-        captureButton.center = CGPoint(x: horizontalCenter, y: verticalBottom+80)
-        captureButton.addTarget(self, action: #selector(takePhoto(_:)), for: .touchUpInside)
-        self.view.insertSubview(captureButton, at: 0)
-        
-        let dataOutput = AVCaptureVideoDataOutput()
-        if captureSession!.canAddOutput(dataOutput) {
-            captureSession?.addOutput(dataOutput)
+        if captureSession!.canAddOutput(dataOutput!) {
+            captureSession?.addOutput(dataOutput!)
         }
         captureSession?.commitConfiguration()
-        
-        let queue = DispatchQueue(label: "com.ItsLikeX4Y.Simplicity")
-        dataOutput.setSampleBufferDelegate(self, queue: queue)
+
+        dataOutput?.setSampleBufferDelegate(self, queue: queue)
     }
     
-    func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+    @objc func displayPreview(on view: UIView) throws {
+       let photoVC = PhotoViewController(capturedImage: UIImageView(frame: (videoPreviewLayer?.frame)!))
+        DispatchQueue.main.async {
+            self.present(photoVC, animated: true, completion: nil)
+        }
+        
+//        view.layer.insertSublayer(self.videoPreviewLayer!, at: 0)
+//        self.videoPreviewLayer?.frame = view.frame
+    }
+    
+    func displayButton() {
+        view.backgroundColor = UIColor.white
+        let verticalBottom: CGFloat = UIScreen.main.bounds.maxY
+        let horizontalCenter: CGFloat = UIScreen.main.bounds.midX
+        
+        let captureButton = UIButton(type: .custom)
+        captureButton.frame = CGRect(x: self.view.frame.size.width - 20, y: 42, width: 40, height: 40)
+        captureButton.layer.cornerRadius = 0.5 * captureButton.bounds.size.width
+        captureButton.clipsToBounds = true
+        captureButton.backgroundColor = .red
+        captureButton.center = CGPoint(x: horizontalCenter, y: verticalBottom-40)
+        captureButton.addTarget(self, action: #selector(displayPreview(on:)), for: .touchUpInside)
+        self.view.insertSubview(captureButton, at: 0)
+    }
+    
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         if takePhoto {
             takePhoto = false
             //getImagefromsmaplebuffer
             if let image = self.getImageFromSampleBuffer(buffer: sampleBuffer) {
-                let photoVC = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() as! PhotoViewController
-                photoVC.takenPhoto = image
+                let photoVC = PhotoViewController(capturedImage: UIImageView(image: image))
                 
                 DispatchQueue.main.async {
                     self.present(photoVC, animated: true, completion: nil)
-                    
                 }
             }
         }
@@ -86,8 +110,9 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         return nil
     }
     
-    @objc func takePhoto(_ sender  : Any) {
+    @IBAction func takePhoto(_ sender  : Any) {
         takePhoto = true
+        captureOutput(dataOutput!, didOutput: dataOutput?.sampleBufferDelegate as! CMSampleBuffer, from: (videoPreviewLayer?.connection)!)
     }
     
     override func didReceiveMemoryWarning() {
