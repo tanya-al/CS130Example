@@ -44,7 +44,7 @@ class PhotoViewController: UIViewController {
     
 //        view.layer.insertSublayer(videoPreviewLayer!, at: 0)
 //        videoPreviewLayer?.frame = view.frame
-//        displayButton()
+        displayButton()
     }
     
     func displayButton() {
@@ -58,6 +58,7 @@ class PhotoViewController: UIViewController {
         captureButton.clipsToBounds = true
         captureButton.backgroundColor = .red
         captureButton.center = CGPoint(x: horizontalCenter, y: verticalBottom-40)
+        captureButton.setTitle("test", for: UIControlState.normal)
 //        captureButton.addTarget(self, action: #selector(displayCamera(on:)), for: .touchUpInside)
         self.view.insertSubview(captureButton, at: 0)
     }
