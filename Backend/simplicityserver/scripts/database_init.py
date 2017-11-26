@@ -93,6 +93,44 @@ if __name__ == '__main__':
 	transaction_id += 1
 	#==================== end overview dummy data ====================#
 
+	#===================== breakdown dummy data ======================#
+	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
+					VALUES (?, 99, "restaurant", 10.00, "2017-11-24 19:29:00", "image_b64")''', (transaction_id,))
+	transaction_id += 1
+
+	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
+					VALUES (?, 99, "restaurant", 15.00, "2017-11-23 19:29:00", "image_b64")''', (transaction_id,))
+	transaction_id += 1
+
+	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
+					VALUES (?, 99, "grocery", 5.00, "2017-11-23 19:29:00", "image_b64")''', (transaction_id,))
+	transaction_id += 1
+
+	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
+					VALUES (?, 99, "other", 5.00, "2017-11-23 19:29:00", "image_b64")''', (transaction_id,))
+	transaction_id += 1
+
+	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
+					VALUES (?, 99, "grocery", 30.00, "2017-11-15 19:30:00", "image_b64")''', (transaction_id,))
+	transaction_id += 1
+
+	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
+					VALUES (?, 99, "other", 20.00, "2017-11-16 19:31:00", "image_b64")''', (transaction_id,))
+	transaction_id += 1
+
+	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
+					VALUES (?, 99, "restaurant", 10.00, "2017-11-08 19:32:00", "image_b64")''', (transaction_id,))
+	transaction_id += 1
+
+	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
+					VALUES (?, 99, "other", 20.00, "2017-11-09 19:33:00", "image_b64")''', (transaction_id,))
+	transaction_id += 1
+
+	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
+					VALUES (?, 99, "other", 25.00, "2017-11-08 19:33:00", "image_b64")''', (transaction_id,))
+	transaction_id += 1
+	#=================== end breakdown dummy data ====================#
+
 	conn.commit()
 
 	cur.execute('SELECT transaction_id, user_id, date FROM transactions WHERE user_id=1001 ORDER BY date DESC LIMIT 3;')

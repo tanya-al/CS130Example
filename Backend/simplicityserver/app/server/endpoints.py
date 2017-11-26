@@ -84,46 +84,44 @@ class Endpoints():
     def get_breakdown(self, db, user_id, weeks):
         weeklist = [7 * (i+1) for i in range(int(weeks))]
         target_dates = [(datetime.now() - timedelta(days=d)).strftime('%Y-%m-%d %H:%M:%S') for d in weeklist]
-        dict_list = []
+        target_dates = [datetime.now().strftime('%Y-%m-%d %H:%M:%S')] + target_dates
         cur = db.cursor()
-        i = 1
-        for date in target_dates:
+        weekdicts = []
+        for i in range(1, len(target_dates)):
             cur.execute('''SELECT category, amount FROM transactions
                          WHERE user_id=? 
-                         AND CAST(strftime('%s', date) AS integer) 
-                             > CAST(strftime('%s', ?) AS integer);'''
-                         , (user_id, date))
-            breakdown = []
-            for row in cur.fetchall():
-                # check if this category already exists
-                existed = False
-                for d in breakdown:
-                    if d["category"] == row[0]:
-                        existed = True
-                        d["amount"] = round(row[1] + d["amount"],2)
-                if not existed:
-                    breakdown.append({
-                            'category': row[0],
-                            'amount': row[1],
-                        })
+                         AND date <= ?
+                         AND date > ?;'''
+                         , (user_id, target_dates[i-1], target_dates[i]))
+            transactions = cur.fetchall()
+            categories = {}
+            for t in transactions:
+                if t[0] in categories:
+                    categories[t[0]] += t[1]
+                else:
+                    categories[t[0]] = t[1]
+            weekdicts.append(categories)
 
-            # calculate total
-            total = 0.0
-            for transaction in breakdown:
-                # print(transaction)
-                total += transaction['amount']
+        breakdown = {}
+        for i in range(len(weekdicts)):
+            for category in weekdicts[i]:
+                if not category in breakdown:
+                    breakdown[category] = [0] * len(weekdicts)
+                breakdown[category][i] = weekdicts[i][category]
 
-            # append percentage
-            for transaction in breakdown:
-                transaction['percentage'] = round(transaction['amount']/total * 100,2)
+        breakdown_list = []
+        for category in breakdown:
+            d = {
+                "category": category,
+                "amounts": breakdown[category]
+            }
+            breakdown_list.append(d)
 
-            dict_list.append({
-                'week': i,
-                'categories': breakdown})
-            i += 1
-
-        # print(dict_list)
-        return dict_list
+        return {
+            "userId": user_id,
+            "weeks": weeks,
+            "breakdowns": breakdown_list
+        }
 
     def post_receipt(self, db, user_id, category, image_data):
         cur = db.cursor()
