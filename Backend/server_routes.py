@@ -90,8 +90,21 @@ def receive_image():
     if not 'data' in json_data:
         return "Must include image data"
 
-    ep.post_receipt(get_db(), json_data['userId'], json_data['category'], json_data['data'])
-    return "image_received"
+    ret = ep.post_receipt(get_db(), json_data['userId'], json_data['category'], json_data['data'])
+    return jsonify(ret)
+
+@app.route('/update_transaction',methods=["POST"])
+def update_transaction():
+    json_data = request.get_json()
+
+    print(json_data)
+    if 'transactionId' not in json_data:
+        return "Must specify transaction id"
+    if 'amount' not in json_data:
+        return "Must specify amount"
+
+    ep.update_transaction(get_db(), json_data['transactionId'], json_data['amount'])
+    return "updated transaction"
 
 @app.teardown_appcontext
 def close_connection(exception):

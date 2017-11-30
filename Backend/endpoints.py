@@ -1,3 +1,8 @@
+# TESTING:
+# Run server: python2 server_routes.py 
+# Start requests: python2 httpclient.py 127.0.0.1:5000
+# Make request: <GET/POST> <endpoint>?<param1>=<val1>&<param2>=<val2>...
+
 import utils
 from datetime import datetime, timedelta
 import math
@@ -131,3 +136,26 @@ def post_receipt(db, user_id, category, image_data):
     cur.execute(''' INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
                     VALUES (?, ?, ?, ?, ?, ?)''', (transaction_id, user_id, category, amount, date, image_data))
     db.commit()
+
+    return {'transactionId': transaction_id, 'amount': amount}
+
+def update_transaction(db, transaction_id, amount):
+    cur = db.cursor()
+    cur.execute(''' UPDATE transactions 
+                    SET amount=? 
+                    WHERE transaction_id=?; '''
+                    , (amount, transaction_id))
+    
+    db.commit()
+    return "done"
+
+
+
+
+
+
+
+
+
+
+
