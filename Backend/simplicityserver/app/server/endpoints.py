@@ -134,3 +134,15 @@ class Endpoints():
         cur.execute(''' INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
                         VALUES (?, ?, ?, ?, ?, ?)''', (transaction_id, user_id, category, amount, date, image_data))
         db.commit()
+
+        return {'transactionId': transaction_id, 'amount': amount}
+
+    def update_transaction(self, db, transaction_id, amount):
+        cur = db.cursor()
+        cur.execute(''' UPDATE transactions 
+                        SET amount=? 
+                        WHERE transaction_id=?; '''
+                        , (amount, transaction_id))
+        
+        db.commit()
+        return "done"

@@ -36,7 +36,11 @@ while 1:
     print(data_received)
 
   if cmd[0] == 'POST':
-    data = {'userId': 1, 'category': 'food', 'data': 'image data encoded as base64'}
+    # Data for 'receipt' POST request
+    #data = {'userId': 1, 'category': 'food', 'data': 'image data encoded as base64'}
+    
+    # Data for 'update_transaction'
+    data = {'transactionId': 16, 'amount': 1.0}
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
     #request command to server
