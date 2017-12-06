@@ -11,6 +11,11 @@ import json
 def decode_b64(b64string):
     return Image.open(cStringIO.StringIO(base64.b64decode(b64string)))
 
+def encode_b64(img):
+      jpeg_image_buffer = cStringIO.StringIO()
+      img.save(jpeg_image_buffer, format="JPEG")
+      return base64.b64encode(jpeg_image_buffer.getvalue())
+
 #get http server ip
 http_server = sys.argv[1]
 #create a connection
@@ -37,10 +42,11 @@ while 1:
 
   if cmd[0] == 'POST':
     # Data for 'receipt' POST request
-    #data = {'userId': 1, 'category': 'food', 'data': 'image data encoded as base64'}
+    data = {'userId': 1, 'category': 'food', 'data': encode_b64(Image.open("receipts/1002-3.jpg"))}
     
     # Data for 'update_transaction'
-    data = {'transactionId': 16, 'amount': 1.0}
+    # data = {'transactionId': 16, 'amount': 1.0}
+
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
     #request command to server

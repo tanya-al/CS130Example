@@ -1,3 +1,4 @@
+import simplicityserver.app.tesseract.extractSpending as extract_spending
 from utils import Utils
 from datetime import datetime, timedelta
 import math
@@ -124,17 +125,18 @@ class Endpoints():
         }
 
     def post_receipt(self, db, user_id, category, image_data):
+        print("here1")
         cur = db.cursor()
         cur.execute('SELECT MAX(transaction_id) FROM transactions')
         transaction_id = int(cur.fetchone()[0]) + 1
-        # replace with call to tesseract API
-        amount = 99.99  
+        print("here2")
+        amount = extract_spending.extract_receipt_total(Utils().decode_b64(image_data))
+        print("here3")
         date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
         cur.execute(''' INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
                         VALUES (?, ?, ?, ?, ?, ?)''', (transaction_id, user_id, category, amount, date, image_data))
         db.commit()
-
         return {'transactionId': transaction_id, 'amount': amount}
 
     def update_transaction(self, db, transaction_id, amount):
