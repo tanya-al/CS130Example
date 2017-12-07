@@ -15,6 +15,7 @@ class RequestManager: NSObject {
     
     static let getOverviewEndpoint = "overview"
     static let getTransactionsEndpoint = "transactions"
+    static let getBreakdownEndpoint = "breakdown"
     
     static let userIdParam = "userId"
     static let numberOfWeeksParam = "weeks"
@@ -32,6 +33,33 @@ class RequestManager: NSObject {
         
         // setup parameters
         let urlComp = NSURLComponents(string: baseURL + RequestManager.getOverviewEndpoint)!
+        urlComp.queryItems = queryItems
+        
+        // setup request
+        var request = URLRequest(url: urlComp.url!)
+        request.httpMethod = "GET"
+        
+        let session = URLSession.shared
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
+            if(error != nil){
+                onFailure(error!)
+            } else{
+                let result = JSON(data: data!)
+                onSuccess(result)
+            }
+        })
+        task.resume()
+    }
+    
+    func getBreakdownWithUserIdAndNumberOfWeeks(userId: Int, numberOfWeeks: Int, onSuccess: @escaping(JSON) -> Void, onFailure: @escaping(Error) -> Void) {
+        
+        // setup URL
+        var queryItems = [URLQueryItem]()
+        queryItems.append(URLQueryItem(name: RequestManager.userIdParam, value: String(userId)))
+        queryItems.append(URLQueryItem(name: RequestManager.numberOfWeeksParam, value: String(numberOfWeeks)))
+        
+        // setup parameters
+        let urlComp = NSURLComponents(string: baseURL + RequestManager.getBreakdownEndpoint)!
         urlComp.queryItems = queryItems
         
         // setup request

@@ -155,7 +155,7 @@ class OverviewViewController: UIViewController {
                 pieChartView.legend.yOffset = 110
             }
         }, onFailure: {error in
-    
+            print("[OverviewVC][OverviewCard][Error] Error in getting data")
         })
 
         overviewViewCard!.addSubview(pieChartView)
@@ -204,29 +204,37 @@ class OverviewViewController: UIViewController {
         
         lineChartView.leftAxis.removeAllLimitLines()
         
-        let lineChartData = LineChartData()
-        let breakdowns = DataManager.sharedInstance.getTempBreakdowns()
+        breakdownViewCard!.addSubview(lineChartView)
         
-        for i in 0..<breakdowns.count {
-            // iterate through each breakdown
-            var lineChartEntries = [ChartDataEntry]()
-            for j in 0..<breakdowns[i].amounts.count {
-                let dataEntry = ChartDataEntry(x: Double(j), y: breakdowns[i].amounts[j])
-                lineChartEntries.append(dataEntry)
+        let lineChartData = LineChartData()
+        
+        // get actual data
+        DataManager.sharedInstance.getBreakdownsAsync(onSuccess: {breakdowns in
+            for i in 0..<breakdowns.count {
+                // iterate through each breakdown
+                var lineChartEntries = [ChartDataEntry]()
+                for j in 0..<breakdowns[i].amounts.count {
+                    let dataEntry = ChartDataEntry(x: Double(j), y: breakdowns[i].amounts[j])
+                    lineChartEntries.append(dataEntry)
+                }
+                
+                let line = LineChartDataSet(values: lineChartEntries, label: breakdowns[i].category)
+                line.drawCirclesEnabled = false
+                line.colors = [self.pieChartColors[i]]
+                line.lineWidth = 2.5
+                
+                lineChartData.addDataSet(line)
+            }
+            lineChartData.setDrawValues(false)
+            
+            DispatchQueue.main.async {
+                lineChartView.data = lineChartData
             }
             
-            let line = LineChartDataSet(values: lineChartEntries, label: breakdowns[i].category)
-            line.drawCirclesEnabled = false
-            line.colors = [pieChartColors[i]]
-            line.lineWidth = 2.5
-            
-            lineChartData.addDataSet(line)
-        }
+        }, onFailure: {error in
+            print("[OverviewVC][BreakdownCard][Error] Error in getting data")
+        })
         
-        lineChartData.setDrawValues(false)
-        
-        lineChartView.data = lineChartData
-        breakdownViewCard!.addSubview(lineChartView)
     }
     
 }
