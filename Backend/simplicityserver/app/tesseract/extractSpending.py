@@ -3,18 +3,10 @@ import pytesseract as pya
 import sys,os
 import argparse
 import cv2
-import numpy
+import base64
 
 # set $PATH to tesseract
 pya.pytesseract.tesseract_cmdtesseract_cmd = '/usr/local/Cellar/tesseract/3.05.01/bin/tesseract'
-
-PREPROCESS_METHOD = "thresh"
-
-def extract_receipt_total(pil_image):
-	preprocessed_img = preprocess_img(pil_image.convert('RGB'), PREPROCESS_METHOD)
-	string = pya.image_to_string(preprocessed_img)
-	total_spending = process_text(string)
-	return total_spending
 
 def read_image_text(image):
 	'''Reads the text on the image
@@ -111,7 +103,7 @@ def process_text(string):
 	try:
 		total = max(num_list)
 	except ValueError:
-		print("No valid spending recognized")
+		print("No vaild spending recognized")
 
 	return total
 
@@ -125,40 +117,60 @@ def parse_arg():
 	args = vars(ap.parse_args())
 	return args
 
-def preprocess_img(pil_img, ppmethod):
-	# convert pil image to open cv image
-	image = cv2.cvtColor(numpy.array(pil_img), cv2.COLOR_RGB2BGR)
+def preprocess_img(args):
+	
+	# convert base64 encoding to actual image
+	image_64_decode = base64.decodestring(args[1]) 
+	image_decode = "{0}decode.jpeg".format(os.getpid())
+	image_result = open(image_decode, 'wb') # create a writable image and write the decoding result
+	image_result.write(image_64_decode)
+
+	# load the example image
+	image = cv2.imread(image_decode)
 
 	# check to see if we should apply thresholding to preprocess the
 	# image
-	if ppmethod == "thresh":
+	if args[0] == "thresh":
 		gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 		gray = cv2.threshold(gray, 0, 255,
 			cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
  
 	# make a check to see if median blurring should be done to remove
 	# noise
-	elif ppmethod == "blur":
+	elif args[0] == "blur":
 		gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 		gray = cv2.medianBlur(gray, 3)
 
-	elif ppmethod == "grayscale":
+	elif args[0] == "grayscale":
 		gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
 	else:
-		return pil_img
+		return args["image"]
  
- 	# convert back to pil format
-	return Image.fromarray(cv2.cvtColor(gray, cv2.COLOR_GRAY2RGB))
+	# write the grayscale image to disk as a temporary file so we can
+	# apply OCR to it
+	filename = "{0}{1}.png".format(os.getpid(), args[0])
+	cv2.imwrite(filename, gray)
+	return filename, image_decode
+
+def remove_temp_files(img, imgdecode):
+	os.remove(img)
+	os.remove(imgdecode)
+
+def apply_tesseract(encoding)
+	args = ["thresh", encoding]
+	img, imgdecode = preprocess_img(args)
+	string = read_image_text(img)
+	total_spending = process_text(string)
+	print(total_spending)
+	remove_temp_files(img, imgdecode)
+
 
 # if __name__ == "__main__":
-# 	if len(sys.argv) <= 2:
-# 		print("Usage: python3 extractSpending.py --image imagename --preprocess processmethod")
-# 		exit(1)
+	# args = ["thresh", encoding]
+	# img, imgdecode = preprocess_img(args)
+	# string = read_image_text(img)
+	# total_spending = process_text(string)
+	# print(total_spending)
+	# remove_temp_files(img, imgdecode)
 
-# 	args = parse_arg()
-# 	img = preprocess_img(args)
-
-# 	string = read_image_text(img)
-# 	total_spending = process_text(string)
-# 	print(total_spending)
