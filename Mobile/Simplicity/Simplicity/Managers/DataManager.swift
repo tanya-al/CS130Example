@@ -19,6 +19,7 @@ class DataManager: NSObject {
     let AMOUNT_JSON_KEY: String = "amount"
     let CATEGORY_JSON_KEY: String = "category"
     let PERCENTAGE_JSON_KEY: String = "percentage"
+    let BREAKDOWNS_JSON_KEY: String = "breakdowns"
     
     private var _transactions: [Transaction]?
     private var _overviews: [Overview]?
@@ -57,10 +58,10 @@ class DataManager: NSObject {
         if (_breakdowns == nil) {
             _breakdowns = []
             _breakdowns?.append(Breakdown(category: "Restaurant", amounts: [50, 20, 40, 60, 45])!)
-            _breakdowns?.append(Breakdown(category: "Transportation", amounts: [15, 22, 19, 44, 33])!)
-            _breakdowns?.append(Breakdown(category: "Textbook", amounts: [70, 20, 0, 0, 18])!)
-            _breakdowns?.append(Breakdown(category: "Grocery", amounts: [42, 27, 55, 39, 44])!)
-            _breakdowns?.append(Breakdown(category: "Other", amounts: [19, 23, 43, 26, 11])!)
+            _breakdowns?.append(Breakdown(category: "Transportation", amounts: [15, 52, 19, 44, 33])!)
+            _breakdowns?.append(Breakdown(category: "Textbook", amounts: [70, 30, 10, 10, 10])!)
+            _breakdowns?.append(Breakdown(category: "Grocery", amounts: [42, 37, 55, 39, 44])!)
+            _breakdowns?.append(Breakdown(category: "Other", amounts: [19, 23, 43, 26, 33])!)
         }
         
         return _breakdowns!
@@ -85,6 +86,33 @@ class DataManager: NSObject {
             onSuccess(self._overviews!)
         }, onFailure: { error in
             print("[DataManager][Error] getOverviewsAsync")
+            onFailure(error)
+        })
+    }
+    
+    func getBreakdownsAsync(onSuccess: @escaping([Breakdown]) -> Void, onFailure: @escaping(Error) -> Void) {
+        RequestManager.sharedInstance.getOverviewWithUserIdAndNumberOfWeeks(userId: DataManager.DUMMY_USER_ID,
+                                                                            numberOfWeeks: DataManager.DUMMY_NUMBER_OF_WEEKS,
+                                                                            onSuccess:
+            { json in
+                print("[DataManager] getBreakdownsAsync success! Parsing JSON...")
+                self._breakdowns = []
+                
+                // parse JSON
+                for item in json[self.BREAKDOWNS_JSON_KEY].array! {
+                    let amounts = item[self.AMOUNT_JSON_KEY].array
+                    var amountsDouble: [Double] = []
+                    for d in amounts! {
+                        amountsDouble.append(d.double!)
+                    }
+                    
+                    let category = item[self.CATEGORY_JSON_KEY].string
+                    self._breakdowns?.append(Breakdown(category: category!, amounts: amountsDouble)!)
+                }
+                
+                onSuccess(self._breakdowns!)
+        }, onFailure: { error in
+            print("[DataManager][Error] getBreakdownsAsync")
             onFailure(error)
         })
     }
