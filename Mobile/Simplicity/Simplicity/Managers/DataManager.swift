@@ -17,6 +17,7 @@ class DataManager: NSObject {
     static let DUMMY_NUMBER_OF_WEEKS: Int = 5
     
     let AMOUNT_JSON_KEY: String = "amount"
+    let AMOUNTS_JSON_KEY: String = "amounts"
     let CATEGORY_JSON_KEY: String = "category"
     let PERCENTAGE_JSON_KEY: String = "percentage"
     let BREAKDOWNS_JSON_KEY: String = "breakdowns"
@@ -91,17 +92,20 @@ class DataManager: NSObject {
     }
     
     func getBreakdownsAsync(onSuccess: @escaping([Breakdown]) -> Void, onFailure: @escaping(Error) -> Void) {
-        RequestManager.sharedInstance.getOverviewWithUserIdAndNumberOfWeeks(userId: DataManager.DUMMY_USER_ID,
+        RequestManager.sharedInstance.getBreakdownWithUserIdAndNumberOfWeeks(userId: DataManager.DUMMY_USER_ID,
                                                                             numberOfWeeks: DataManager.DUMMY_NUMBER_OF_WEEKS,
                                                                             onSuccess:
             { json in
                 print("[DataManager] getBreakdownsAsync success! Parsing JSON...")
                 self._breakdowns = []
                 
+                //print(json)
+                
                 // parse JSON
                 for item in json[self.BREAKDOWNS_JSON_KEY].array! {
-                    let amounts = item[self.AMOUNT_JSON_KEY].array
+                    let amounts = item[self.AMOUNTS_JSON_KEY].array
                     var amountsDouble: [Double] = []
+                    //print(amounts)
                     for d in amounts! {
                         amountsDouble.append(d.double!)
                     }
