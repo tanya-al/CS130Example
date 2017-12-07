@@ -26,6 +26,7 @@
 		9217AB021FB6957B0093D6DB /* Overview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9217AB011FB6957B0093D6DB /* Overview.swift */; };
 		9217AB041FB697B20093D6DB /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9217AB031FB697B20093D6DB /* DataManager.swift */; };
 		927316F91FABB794004E6DBC /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927316F81FABB794004E6DBC /* RequestManager.swift */; };
+		92A6E6971FC69D9500D2052C /* Breakdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A6E6961FC69D9500D2052C /* Breakdown.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		9217AB011FB6957B0093D6DB /* Overview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Overview.swift; sourceTree = "<group>"; };
 		9217AB031FB697B20093D6DB /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		927316F81FABB794004E6DBC /* RequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
+		92A6E6961FC69D9500D2052C /* Breakdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Breakdown.swift; sourceTree = "<group>"; };
 		AF3658F84728A7341FBF8EAA /* Pods-Simplicity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simplicity.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Simplicity/Pods-Simplicity.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -209,6 +211,7 @@
 				9217AAFD1FB68FF30093D6DB /* Transaction.swift */,
 				9217AAFF1FB692820093D6DB /* Receipt.swift */,
 				9217AB011FB6957B0093D6DB /* Overview.swift */,
+				92A6E6961FC69D9500D2052C /* Breakdown.swift */,
 			);
 			name = Models;
 			path = Simplicity/Models;
@@ -424,6 +427,7 @@
 				92018BFD1FA99275006AF351 /* TransactionsViewController.swift in Sources */,
 				9217AAFE1FB68FF30093D6DB /* Transaction.swift in Sources */,
 				92018C061FA99AF6006AF351 /* MainNavigationBar.swift in Sources */,
+				92A6E6971FC69D9500D2052C /* Breakdown.swift in Sources */,
 				92018BC51FA983D7006AF351 /* AppDelegate.swift in Sources */,
 				9217AB001FB692820093D6DB /* Receipt.swift in Sources */,
 				927316F91FABB794004E6DBC /* RequestManager.swift in Sources */,

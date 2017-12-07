@@ -13,7 +13,7 @@ class OverviewViewController: UIViewController {
     
     let VIEW_CARD_MARGIN: CGFloat = 10
     let OVERVIEW_VIEW_CARD_HEIGHT: CGFloat = 250
-    let LINE_CHART_VIEW_CARD_HEIGHT: CGFloat = 250
+    let BREAKDOWN_VIEW_CARD_HEIGHT: CGFloat = 250
     let TEST_CHART_VIEW_CARD_HEIGHT: CGFloat = 250
     
     let VIEW_CARD_LABEL_MARGIN: CGFloat = 15
@@ -21,10 +21,14 @@ class OverviewViewController: UIViewController {
     let PIE_CHART_HEIGHT: CGFloat = 150
     let PIE_CHART_MARGIN: CGFloat = 5
     
+    let LINE_CHART_MARGIN: CGFloat = 10
+    
+    let VIEW_CARD_TITLE_FONT: String = "Avenir"
+    
     // MARK: Properties
     var scrollView: UIScrollView?
     var overviewViewCard: UIView?
-    var lineChartViewCard: UIView?
+    var breakdownViewCard: UIView?
     var testViewCard: UIView?
     
     var pieChartColors: [UIColor]
@@ -65,16 +69,10 @@ class OverviewViewController: UIViewController {
         
         // add view cards
         populateOverviewViewCard()
-        
-        lineChartViewCard = UIView(frame: CGRect(x: VIEW_CARD_MARGIN,
-                                                 y: OVERVIEW_VIEW_CARD_HEIGHT + VIEW_CARD_MARGIN * 2,
-                                             width: scrollView!.frame.width - VIEW_CARD_MARGIN * 2,
-                                            height: LINE_CHART_VIEW_CARD_HEIGHT))
-        lineChartViewCard!.backgroundColor = UIColor.white
-        scrollView?.addSubview(lineChartViewCard!)
+        populateBreakdownViewCard()
         
         testViewCard = UIView(frame: CGRect(x: VIEW_CARD_MARGIN,
-                                            y: OVERVIEW_VIEW_CARD_HEIGHT + LINE_CHART_VIEW_CARD_HEIGHT +  VIEW_CARD_MARGIN * 3,
+                                            y: OVERVIEW_VIEW_CARD_HEIGHT + BREAKDOWN_VIEW_CARD_HEIGHT +  VIEW_CARD_MARGIN * 3,
                                         width: scrollView!.frame.width - VIEW_CARD_MARGIN * 2,
                                        height: TEST_CHART_VIEW_CARD_HEIGHT))
         testViewCard!.backgroundColor = UIColor.white
@@ -83,7 +81,7 @@ class OverviewViewController: UIViewController {
         
         // update scrollView content height
         scrollView!.contentSize = CGSize(width: scrollView!.contentSize.width,
-                                        height: OVERVIEW_VIEW_CARD_HEIGHT + LINE_CHART_VIEW_CARD_HEIGHT + TEST_CHART_VIEW_CARD_HEIGHT + VIEW_CARD_MARGIN * 4)
+                                        height: OVERVIEW_VIEW_CARD_HEIGHT + BREAKDOWN_VIEW_CARD_HEIGHT + TEST_CHART_VIEW_CARD_HEIGHT + VIEW_CARD_MARGIN * 4)
     }
     
     override func didReceiveMemoryWarning() {
@@ -105,7 +103,7 @@ class OverviewViewController: UIViewController {
         let title = UILabel(frame: CGRect(x: VIEW_CARD_LABEL_MARGIN, y: VIEW_CARD_LABEL_MARGIN, width: 0, height: 0))
         title.text = "Overview"
         title.textColor = UIColor.black
-        title.font = UIFont(name: "Avenir", size: 24)
+        title.font = UIFont(name: VIEW_CARD_TITLE_FONT, size: 24)
         title.sizeToFit()
         overviewViewCard!.addSubview(title)
         
@@ -161,6 +159,74 @@ class OverviewViewController: UIViewController {
         })
 
         overviewViewCard!.addSubview(pieChartView)
+    }
+    
+    func populateBreakdownViewCard() {
+        
+        // initialize breakdownViewCard
+        breakdownViewCard = UIView(frame: CGRect(x: VIEW_CARD_MARGIN,
+                                                 y: OVERVIEW_VIEW_CARD_HEIGHT + VIEW_CARD_MARGIN * 2,
+                                                 width: scrollView!.frame.width - VIEW_CARD_MARGIN * 2,
+                                                 height: BREAKDOWN_VIEW_CARD_HEIGHT))
+        breakdownViewCard!.backgroundColor = UIColor.white
+        scrollView?.addSubview(breakdownViewCard!)
+        
+        // title
+        let title = UILabel(frame: CGRect(x: VIEW_CARD_LABEL_MARGIN, y: VIEW_CARD_LABEL_MARGIN, width: 0, height: 0))
+        title.text = "Weekly Breakdown"
+        title.textColor = UIColor.black
+        title.font = UIFont(name: VIEW_CARD_TITLE_FONT, size: 24)
+        title.sizeToFit()
+        breakdownViewCard!.addSubview(title)
+        
+        // line chart
+        let lineChartView = LineChartView(frame: CGRect(x: LINE_CHART_MARGIN,
+                                                        y: title.frame.height + VIEW_CARD_LABEL_MARGIN,
+                                                        width: breakdownViewCard!.frame.width - LINE_CHART_MARGIN * 2,
+                                                        height: 200))
+        lineChartView.chartDescription?.text = ""
+        lineChartView.xAxis.labelPosition = .bottom
+        lineChartView.xAxis.drawAxisLineEnabled = false
+        lineChartView.xAxis.drawLimitLinesBehindDataEnabled = false //?
+        lineChartView.xAxis.drawLabelsEnabled = false
+        lineChartView.xAxis.drawGridLinesEnabled = false
+        lineChartView.xAxis.axisMinimum = -0.5
+        lineChartView.xAxis.axisMaximum = 4.5 // TODO: count + 0.5
+        
+        lineChartView.rightAxis.removeAllLimitLines()
+        lineChartView.rightAxis.drawZeroLineEnabled = false
+        
+        lineChartView.rightAxis.drawTopYLabelEntryEnabled = false
+        lineChartView.rightAxis.drawAxisLineEnabled = false
+        lineChartView.rightAxis.drawGridLinesEnabled = false
+        lineChartView.rightAxis.drawLabelsEnabled = false
+        lineChartView.rightAxis.drawLimitLinesBehindDataEnabled = false
+        
+        lineChartView.leftAxis.removeAllLimitLines()
+        
+        let lineChartData = LineChartData()
+        let breakdowns = DataManager.sharedInstance.getTempBreakdowns()
+        
+        for i in 0..<breakdowns.count {
+            // iterate through each breakdown
+            var lineChartEntries = [ChartDataEntry]()
+            for j in 0..<breakdowns[i].amounts.count {
+                let dataEntry = ChartDataEntry(x: Double(j), y: breakdowns[i].amounts[j])
+                lineChartEntries.append(dataEntry)
+            }
+            
+            let line = LineChartDataSet(values: lineChartEntries, label: breakdowns[i].category)
+            line.drawCirclesEnabled = false
+            line.colors = [pieChartColors[i]]
+            line.lineWidth = 2.5
+            
+            lineChartData.addDataSet(line)
+        }
+        
+        lineChartData.setDrawValues(false)
+        
+        lineChartView.data = lineChartData
+        breakdownViewCard!.addSubview(lineChartView)
     }
     
 }
