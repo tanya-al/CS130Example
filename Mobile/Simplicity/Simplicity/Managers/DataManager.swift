@@ -99,13 +99,11 @@ class DataManager: NSObject {
                 print("[DataManager] getBreakdownsAsync success! Parsing JSON...")
                 self._breakdowns = []
                 
-                //print(json)
-                
                 // parse JSON
                 for item in json[self.BREAKDOWNS_JSON_KEY].array! {
                     let amounts = item[self.AMOUNTS_JSON_KEY].array
                     var amountsDouble: [Double] = []
-                    //print(amounts)
+                    
                     for d in amounts! {
                         amountsDouble.append(d.double!)
                     }
