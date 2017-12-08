@@ -14,11 +14,12 @@ class Receipt {
     
     var trancationId: Int
     var userId: Int
+    var date: Date
     var thumbnailImage: UIImage
     var fullScreenImage: UIImage?
     
     // MARK: Initialization
-    init?(transactionId: Int, userId: Int, thumbnailImage: UIImage, fullScreenImage: UIImage?) {
+    init?(transactionId: Int, userId: Int, date: Date, thumbnailImage: UIImage, fullScreenImage: UIImage?) {
         
         if (transactionId < 1 || userId < 1) {
             return nil
@@ -26,8 +27,15 @@ class Receipt {
         
         self.trancationId = transactionId
         self.userId = userId
+        self.date = date
         self.thumbnailImage = thumbnailImage
         self.fullScreenImage = fullScreenImage
         
+    }
+    
+    convenience init?(transactionId: Int, userId: Int, date: Date, thumbnailImageBase64String: String) {
+        let data = NSData(base64Encoded: thumbnailImageBase64String, options: .ignoreUnknownCharacters)!
+        let image = UIImage(data: data as Data)!
+        self.init(transactionId: transactionId, userId: userId, date: date, thumbnailImage: image, fullScreenImage: nil)
     }
 }

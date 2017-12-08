@@ -21,10 +21,17 @@ class DataManager: NSObject {
     let CATEGORY_JSON_KEY: String = "category"
     let PERCENTAGE_JSON_KEY: String = "percentage"
     let BREAKDOWNS_JSON_KEY: String = "breakdowns"
+    let DATE_JSON_KEY: String = "date"
+    let THUMBNAIL_IMAGE_DATA_JSON_KEY: String = "thumbnailImageData"
+    let TRANSACTION_ID_JSON_KEY: String = "transactionId"
+    let USER_ID_JSON_KEY: String = "userId"
+    
+    let DATE_FORMATTER = "yyyy-MM-dd HH:mm:ss"
     
     private var _transactions: [Transaction]?
     private var _overviews: [Overview]?
     private var _breakdowns: [Breakdown]?
+    private var _receipts: [Receipt]?
     
     private override init() {
         super.init()
@@ -124,4 +131,56 @@ class DataManager: NSObject {
         abort()
     }
     
+    func getReceiptsAsync(onSuccess: @escaping([Breakdown]) -> Void, onFailure: @escaping(Error) -> Void) {
+        RequestManager.sharedInstance.getReceiptsWithUserId(userId: DataManager.DUMMY_USER_ID,
+                                                         maxNumber: nil,
+                                                            offset: nil,
+                                                            onSuccess:
+        { (json) in
+            print("[DataManager] getReceiptsAsync success! Parsing JSON...")
+            self._receipts = []
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = self.DATE_FORMATTER
+            
+            // parse JSON
+            for item in json.array! {
+                let date = dateFormatter.date(from: item[self.DATE_JSON_KEY].string!)
+                let userId = item[self.USER_ID_JSON_KEY].int
+                let transactionId = item[self.TRANSACTION_ID_JSON_KEY].int
+                let thumbnailData = item[self.THUMBNAIL_IMAGE_DATA_JSON_KEY].string
+                self._receipts?.append(Receipt(transactionId: transactionId!, userId: userId!, date: date!, thumbnailImageBase64String: thumbnailData!)!)
+            }
+            
+        }) { (error) in
+            print("[DataManager][Error] getReceiptsAsync")
+            onFailure(error)
+        }
+        
+        RequestManager.sharedInstance.getBreakdownWithUserIdAndNumberOfWeeks(userId: DataManager.DUMMY_USER_ID,
+                                                                             numberOfWeeks: DataManager.DUMMY_NUMBER_OF_WEEKS,
+                                                                             onSuccess:
+            { json in
+                print("[DataManager] getBreakdownsAsync success! Parsing JSON...")
+                self._breakdowns = []
+                
+                // parse JSON
+                for item in json[self.BREAKDOWNS_JSON_KEY].array! {
+                    let amounts = item[self.AMOUNTS_JSON_KEY].array
+                    var amountsDouble: [Double] = []
+                    
+                    for d in amounts! {
+                        amountsDouble.append(d.double!)
+                    }
+                    
+                    let category = item[self.CATEGORY_JSON_KEY].string
+                    self._breakdowns?.append(Breakdown(category: category!, amounts: amountsDouble)!)
+                }
+                
+                onSuccess(self._breakdowns!)
+        }, onFailure: { error in
+            print("[DataManager][Error] getBreakdownsAsync")
+            onFailure(error)
+        })
+    }
 }
