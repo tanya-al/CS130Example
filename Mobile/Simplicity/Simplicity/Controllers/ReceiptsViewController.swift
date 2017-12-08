@@ -16,6 +16,7 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
     let RECEIPT_PER_ROW = 4
     let EDGE_INSETS: CGFloat = 5
     let RECEIPT_THUMBNAIL_MARGIN: CGFloat = 5
+    let SEGUE_IDENTIFIER = "lovely_segue"
     
     // MARK: Properties
     var mainNavigationBar: MainNavigationBar?
@@ -101,6 +102,11 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
     // MARK: UICollectionViewDelegate
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("User tapped on item \(indexPath.row)")
+        print("[ReceiptsVC][didSelectItemAt] User tapped on item \(indexPath.row)")
+        if receipts != nil {
+            //self.performSegue(withIdentifier: SEGUE_IDENTIFIER, sender: receipts![indexPath.row])
+            let vc = ReceiptDetailViewController()
+            self.present(vc, animated: true, completion: nil)
+        }
     }
 }
