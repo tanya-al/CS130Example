@@ -73,145 +73,178 @@ if __name__ == '__main__':
 
 	#====================== overview dummy data ======================#
 		# week 0 #
-	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "1002-3.jpg")))
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "1001-1.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Restaurant", 50.00, "2017-12-05 19:29:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "1001-2.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Transportation", 15.00, "2017-12-05 19:30:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "1001-3.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Textbook", 70.00, "2017-12-05 19:31:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "1002-1.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Grocery", 42.00, "2017-12-05 19:32:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "1002-2.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Other", 19.00, "2017-12-05 19:33:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
 		# week 1 #
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "1002-3.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Restaurant", 20.00, "2017-11-28 19:29:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "1002-4.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Transportation", 52.00, "2017-11-28 19:30:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "1003-1.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Textbook", 30.00, "2017-11-28 19:31:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "1003-2.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Grocery", 37.00, "2017-11-28 19:32:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "test1.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Other", 23.00, "2017-11-28 19:33:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
 		# week 2 #
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "test2.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Restaurant", 40.00, "2017-11-21 19:29:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "test3.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Transportation", 19.00, "2017-11-21 19:30:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "test4.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Textbook", 10.00, "2017-11-21 19:31:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "test5.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Grocery", 55.00, "2017-11-21 19:32:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "test16.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Other", 43.00, "2017-11-21 19:33:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
 		# week 3 #
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "test7.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Restaurant", 60.00, "2017-11-14 19:29:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "test8.png")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Transportation", 44.00, "2017-11-14 19:30:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "test9.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Textbook", 10.00, "2017-11-14 19:31:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "test10.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Grocery", 39.00, "2017-11-14 19:32:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "test11.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Other", 26.00, "2017-11-14 19:33:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
 		# week 4 #
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "test12.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Restaurant", 45.00, "2017-11-07 19:29:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "test13.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Transportation", 33.00, "2017-11-07 19:30:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "test14.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Textbook", 10.00, "2017-11-07 19:31:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "test15.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Grocery", 44.00, "2017-11-07 19:32:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "test16.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 42069, "Other", 33.00, "2017-11-07 19:33:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 	#==================== end overview dummy data ====================#
 
 	#===================== breakdown dummy data ======================#
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "1001-1.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 99, "restaurant", 10.00, "2017-11-24 19:29:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "1001-2.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 99, "restaurant", 15.00, "2017-11-23 19:29:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "1001-3.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 99, "grocery", 5.00, "2017-11-23 19:29:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "1002-1.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 99, "other", 5.00, "2017-11-23 19:29:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "1002-2.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 99, "grocery", 30.00, "2017-11-15 19:30:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "1002-3.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 99, "other", 20.00, "2017-11-16 19:31:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "1002-4.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 99, "restaurant", 10.00, "2017-11-08 19:32:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "1003-1.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 99, "other", 20.00, "2017-11-09 19:33:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
 
+	b64 = encode_b64(Image.open(os.path.join(RECEIPTSPATH, "1003-2.jpg")))
 	cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, image)
 					VALUES (?, 99, "other", 25.00, "2017-11-08 19:33:00", ?)''', (transaction_id, b64))
 	transaction_id += 1
