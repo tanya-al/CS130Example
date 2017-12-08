@@ -27,15 +27,15 @@ class ReceiptDetailViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         view.backgroundColor = UIColor.white
-        self.title = "Receipt"
+        self.title = "Receipt Detail"
         
         let mainNavigationBar = LeftBackNavigationBar(frame: view.frame, title: "", parentVC: self)
         view.addSubview(mainNavigationBar)
         
         imageView = UIImageView(frame: CGRect(x: 0,
-                                                  y: mainNavigationBar.frame.height,
-                                              width: self.view.frame.width,
-                                             height: self.view.frame.height))
+                                              y: mainNavigationBar.frame.height,
+                                          width: self.view.frame.width,
+                                         height: self.view.frame.height))
         imageView!.image = UIImage.init(named: "default_receipt")
         imageView!.contentMode = .scaleAspectFit
         view.addSubview(imageView!)
