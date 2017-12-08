@@ -11,6 +11,16 @@ import UIKit
 class ReceiptDetailViewController: UIViewController {
 
     var receipt: Receipt?
+    var imageView: UIImageView?
+    
+    init(receipt: Receipt) {
+        super.init(nibName: nil, bundle: nil)
+        self.receipt = receipt
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,13 +32,38 @@ class ReceiptDetailViewController: UIViewController {
         let mainNavigationBar = LeftBackNavigationBar(frame: view.frame, title: "", parentVC: self)
         view.addSubview(mainNavigationBar)
         
-        let imageView = UIImageView(frame: CGRect(x: 0,
+        imageView = UIImageView(frame: CGRect(x: 0,
                                                   y: mainNavigationBar.frame.height,
                                               width: self.view.frame.width,
                                              height: self.view.frame.height))
-        imageView.image = UIImage.init(named: "default_receipt")
-        imageView.contentMode = .scaleAspectFit
-        view.addSubview(imageView)
+        imageView!.image = UIImage.init(named: "default_receipt")
+        imageView!.contentMode = .scaleAspectFit
+        view.addSubview(imageView!)
+        
+        setupReceiptImage()
+    }
+    
+    func setupReceiptImage() {
+        if receipt?.fullScreenImage != nil {
+            print("[ReceiptDetailVC][setupReceiptImage] Setting image")
+            DispatchQueue.main.async {
+                self.imageView!.image = self.receipt!.fullScreenImage
+            }
+        } else {
+            print("[ReceiptDetailVC][setupReceiptImage] Downloading image with transactionId = \(receipt?.trancationId ?? -1)")
+            getReceiptImageData()
+        }
+    }
+    
+    func getReceiptImageData() {
+        DataManager.sharedInstance.getReceiptImageAsync(transactionId: receipt!.trancationId,
+                                                        onSuccess:
+        { (image) in
+            self.receipt!.fullScreenImage = image
+            self.setupReceiptImage()
+        }, onFailure: { (error) in
+            print("[ReceiptDetailVC][getReceiptImageData] Error")
+        })
     }
     
     override func didReceiveMemoryWarning() {

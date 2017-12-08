@@ -17,8 +17,10 @@ class RequestManager: NSObject {
     static let getTransactionsEndpoint = "transactions"
     static let getBreakdownEndpoint = "breakdown"
     static let getReceiptsEndpoint = "receipts"
+    static let getReceiptImageEndpoint = "receipt_img"
     
     static let userIdParam = "userId"
+    static let transactionIdParam = "transactionId"
     static let numberOfWeeksParam = "weeks"
     static let maxNumberReceipts = "max"
     static let offsetNumberReceipts = "offset"
@@ -82,6 +84,19 @@ class RequestManager: NSObject {
         
         // setup parameters
         let urlComp = NSURLComponents(string: baseURL + RequestManager.getReceiptsEndpoint)!
+        urlComp.queryItems = queryItems
+        
+        getRequest(urlComp: urlComp, onSuccess: onSuccess, onFailure: onFailure)
+    }
+    
+    func getReceiptImageWithTransactionId(transactionId: Int, onSuccess: @escaping(JSON) -> Void, onFailure: @escaping(Error) -> Void) {
+        
+        // setup URL
+        var queryItems = [URLQueryItem]()
+        queryItems.append(URLQueryItem(name: RequestManager.transactionIdParam, value: String(transactionId)))
+        
+        // setup parameters
+        let urlComp = NSURLComponents(string: baseURL + RequestManager.getReceiptImageEndpoint)!
         urlComp.queryItems = queryItems
         
         getRequest(urlComp: urlComp, onSuccess: onSuccess, onFailure: onFailure)

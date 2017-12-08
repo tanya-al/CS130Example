@@ -105,7 +105,7 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
         print("[ReceiptsVC][didSelectItemAt] User tapped on item \(indexPath.row)")
         if receipts != nil {
             //self.performSegue(withIdentifier: SEGUE_IDENTIFIER, sender: receipts![indexPath.row])
-            let vc = ReceiptDetailViewController()
+            let vc = ReceiptDetailViewController(receipt: receipts![indexPath.row])
             self.present(vc, animated: true, completion: nil)
         }
     }

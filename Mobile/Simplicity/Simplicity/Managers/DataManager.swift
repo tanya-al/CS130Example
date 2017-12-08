@@ -25,6 +25,7 @@ class DataManager: NSObject {
     let THUMBNAIL_IMAGE_DATA_JSON_KEY: String = "thumbnailImageData"
     let TRANSACTION_ID_JSON_KEY: String = "transactionId"
     let USER_ID_JSON_KEY: String = "userId"
+    let IMAGE_JSON_KEY: String = "img"
     
     let DATE_FORMATTER = "yyyy-MM-dd HH:mm:ss"
     
@@ -156,6 +157,20 @@ class DataManager: NSObject {
             
         }) { (error) in
             print("[DataManager][Error] getReceiptsAsync")
+            onFailure(error)
+        }
+    }
+    
+    func getReceiptImageAsync(transactionId: Int, onSuccess: @escaping(UIImage) -> Void, onFailure: @escaping(Error) -> Void) {
+        RequestManager.sharedInstance.getReceiptImageWithTransactionId(transactionId: transactionId,
+                                                                           onSuccess:
+        { (json) in
+            let base64String = json[self.IMAGE_JSON_KEY].string!
+            let data = NSData(base64Encoded: base64String, options: .ignoreUnknownCharacters)!
+            let image = UIImage(data: data as Data)!
+            onSuccess(image)
+        }) { (error) in
+            print("[DataManager][Error] getReceiptImageAsync")
             onFailure(error)
         }
     }

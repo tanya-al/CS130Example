@@ -10,11 +10,6 @@ import UIKit
 
 class LeftBackNavigationBar: MainNavigationBar {
     
-    // MARK: Initialization
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//    }
-//
     // MARK: Properties
     weak var parentVC: UIViewController?
     
