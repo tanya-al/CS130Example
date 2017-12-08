@@ -19,7 +19,6 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
     
     // MARK: Properties
     var mainNavigationBar: MainNavigationBar?
-    //var collectionView: UICollectionView?
     var receipts: [Receipt]?
     
     override func viewDidLoad() {
@@ -32,23 +31,12 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
         mainNavigationBar = MainNavigationBar(frame: view.frame, title: "Receipts")
         view.addSubview(mainNavigationBar!)
         
-
         setupCollectionView()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(ReceiptsViewController.receiptDataReceived), name: Notification.Name(RECEIPT_DATA_NOTIFICATION) , object: nil)
+        NotificationCenter.default.addObserver(self,
+                                            selector: #selector(ReceiptsViewController.receiptDataReceived),
+                                                name: Notification.Name(RECEIPT_DATA_NOTIFICATION) ,
+                                              object: nil)
         getReceiptData()
-        //setupCollectionView()
-        
-//        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-//        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
-//        layout.itemSize = CGSize(width: 60, height: 60)
-        
-        //let myCollectionView:UICollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
-//        myCollectionView.dataSource = self
-//        myCollectionView.delegate = self
-        //myCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "MyCell")
-//        myCollectionView.backgroundColor = UIColor.blue
-//        self.view.addSubview(myCollectionView)
     }
     
     func setupCollectionView() {
@@ -58,40 +46,23 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
         layout.minimumInteritemSpacing = RECEIPT_THUMBNAIL_MARGIN
         
         let receiptThumbnailSize = (collectionView!.frame.width - RECEIPT_THUMBNAIL_MARGIN * CGFloat(RECEIPT_PER_ROW - 1) - EDGE_INSETS * 2) / CGFloat(RECEIPT_PER_ROW)
-        
         layout.itemSize = CGSize(width: receiptThumbnailSize, height: receiptThumbnailSize)
-        
         collectionView!.collectionViewLayout = layout
-        
-//        collectionView = UICollectionView(frame: CGRect(x: 0,
-//                                                        y: mainNavigationBar!.frame.height,
-//                                                        width: self.view.frame.width,
-//                                                        height: self.view.frame.height - mainNavigationBar!.frame.height),
-//                                          collectionViewLayout: layout)
+
         collectionView!.frame = CGRect(x: 0,
                                        y: mainNavigationBar!.frame.height,
                                    width: self.view.frame.width,
                                   height: self.view.frame.height - mainNavigationBar!.frame.height)
         
-        //let cell = UICollectionViewCell()
-        
         collectionView!.register(ReceiptCell.self, forCellWithReuseIdentifier: cellId)
         collectionView!.backgroundColor = UIColor.white
-        
-        //collectionView!.dataSource = self
-        //collectionView!.delegate = self
-        
-        //self.view.addSubview(collectionView!)
     }
     
     func getReceiptData() {
-        print("[ReceiptsVC][getReceiptData] Getting receipts data")
+        print("[ReceiptsVC][getReceiptData] Getting receipts data...")
         DataManager.sharedInstance.getReceiptsAsync(onSuccess: { (receipts) in
             self.receipts = receipts
             NotificationCenter.default.post(name: Notification.Name(self.RECEIPT_DATA_NOTIFICATION), object: nil)
-            //NotificationCenter.default.addObserver(observer: self, selector: #selector(ReceiptsViewController.receiptDataReceived(notification:)), name: nil, object: nil)
-            //(onMainThread: #selector(ReceiptsViewController.receiptDataReceived(notification:)), with: nil, waitUntilDone: false)
-            //NotificationCenter.default.postNotificationName(RECEIPT_DATA_NOTIFICATION, object: nil)
         }) { (error) in
             print("[ReceiptsVC][getReceiptData] Error")
         }
@@ -103,9 +74,6 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
             self.collectionView!.reloadData()
         }
     }
-//    @objc func receiptDataReceived(notification: NSNotification) {
-//        print("[ReceiptsVC][receiptDataReceived] Called")
-//    }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -119,8 +87,6 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
     // MARK: UICollectionViewDataSource
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //print("numbers?")
-        //return 100
         let count = receipts != nil ? receipts!.count : DEFAULT_RECEIPT_COUNT
         print("[ReceiptsVC][numberOfItemsInSection] Count = \(count)")
         return count
