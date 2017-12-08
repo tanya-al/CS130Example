@@ -131,7 +131,7 @@ class DataManager: NSObject {
         abort()
     }
     
-    func getReceiptsAsync(onSuccess: @escaping([Breakdown]) -> Void, onFailure: @escaping(Error) -> Void) {
+    func getReceiptsAsync(onSuccess: @escaping([Receipt]) -> Void, onFailure: @escaping(Error) -> Void) {
         RequestManager.sharedInstance.getReceiptsWithUserId(userId: DataManager.DUMMY_USER_ID,
                                                          maxNumber: nil,
                                                             offset: nil,
@@ -152,35 +152,11 @@ class DataManager: NSObject {
                 self._receipts?.append(Receipt(transactionId: transactionId!, userId: userId!, date: date!, thumbnailImageBase64String: thumbnailData!)!)
             }
             
+            onSuccess(self._receipts!)
+            
         }) { (error) in
             print("[DataManager][Error] getReceiptsAsync")
             onFailure(error)
         }
-        
-        RequestManager.sharedInstance.getBreakdownWithUserIdAndNumberOfWeeks(userId: DataManager.DUMMY_USER_ID,
-                                                                             numberOfWeeks: DataManager.DUMMY_NUMBER_OF_WEEKS,
-                                                                             onSuccess:
-            { json in
-                print("[DataManager] getBreakdownsAsync success! Parsing JSON...")
-                self._breakdowns = []
-                
-                // parse JSON
-                for item in json[self.BREAKDOWNS_JSON_KEY].array! {
-                    let amounts = item[self.AMOUNTS_JSON_KEY].array
-                    var amountsDouble: [Double] = []
-                    
-                    for d in amounts! {
-                        amountsDouble.append(d.double!)
-                    }
-                    
-                    let category = item[self.CATEGORY_JSON_KEY].string
-                    self._breakdowns?.append(Breakdown(category: category!, amounts: amountsDouble)!)
-                }
-                
-                onSuccess(self._breakdowns!)
-        }, onFailure: { error in
-            print("[DataManager][Error] getBreakdownsAsync")
-            onFailure(error)
-        })
     }
 }

@@ -11,10 +11,12 @@ import UIKit
 class ReceiptsViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     let cellId = "cellId"
+    let RECEIPT_DATA_NOTIFICATION = "receiptDataNotification"
     
     // MARK: Properties
     var mainNavigationBar: MainNavigationBar?
     //var collectionView: UICollectionView?
+    var receipts: [Receipt]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +31,8 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
 
         setupCollectionView()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(ReceiptsViewController.receiptDataReceived), name: Notification.Name(RECEIPT_DATA_NOTIFICATION) , object: nil)
+        getReceiptData()
         //setupCollectionView()
         
 //        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -71,6 +75,33 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
         //self.view.addSubview(collectionView!)
     }
     
+    func getReceiptData() {
+        print("[ReceiptsVC][getReceiptData] Getting receipts data")
+        DataManager.sharedInstance.getReceiptsAsync(onSuccess: { (receipts) in
+            self.receipts = receipts
+            NotificationCenter.default.post(name: Notification.Name(self.RECEIPT_DATA_NOTIFICATION), object: nil)
+            //NotificationCenter.default.addObserver(observer: self, selector: #selector(ReceiptsViewController.receiptDataReceived(notification:)), name: nil, object: nil)
+            //(onMainThread: #selector(ReceiptsViewController.receiptDataReceived(notification:)), with: nil, waitUntilDone: false)
+            //NotificationCenter.default.postNotificationName(RECEIPT_DATA_NOTIFICATION, object: nil)
+        }) { (error) in
+            print("[ReceiptsVC][getReceiptData] Error")
+        }
+    }
+
+    @objc func receiptDataReceived() {
+        print("[ReceiptsVC][receiptDataReceived] Called")
+        DispatchQueue.main.async {
+            self.collectionView!.reloadData()
+        }
+    }
+//    @objc func receiptDataReceived(notification: NSNotification) {
+//        print("[ReceiptsVC][receiptDataReceived] Called")
+//    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -79,8 +110,11 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
     // MARK: UICollectionViewDataSource
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("numbers?")
-        return 100
+        //print("numbers?")
+        //return 100
+        let count = receipts != nil ? receipts!.count : 0
+        print("[ReceiptsVC][numberOfItemsInSection] Count = \(count)")
+        return count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
