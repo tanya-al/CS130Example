@@ -12,6 +12,10 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
     
     let cellId = "cellId"
     let RECEIPT_DATA_NOTIFICATION = "receiptDataNotification"
+    let DEFAULT_RECEIPT_COUNT = 50
+    let RECEIPT_PER_ROW = 4
+    let EDGE_INSETS: CGFloat = 5
+    let RECEIPT_THUMBNAIL_MARGIN: CGFloat = 5
     
     // MARK: Properties
     var mainNavigationBar: MainNavigationBar?
@@ -49,8 +53,13 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
     
     func setupCollectionView() {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
-        layout.itemSize = CGSize(width: 60, height: 60)
+        layout.sectionInset = UIEdgeInsets(top: EDGE_INSETS, left: EDGE_INSETS, bottom: EDGE_INSETS, right: EDGE_INSETS)
+        layout.minimumLineSpacing = RECEIPT_THUMBNAIL_MARGIN
+        layout.minimumInteritemSpacing = RECEIPT_THUMBNAIL_MARGIN
+        
+        let receiptThumbnailSize = (collectionView!.frame.width - RECEIPT_THUMBNAIL_MARGIN * CGFloat(RECEIPT_PER_ROW - 1) - EDGE_INSETS * 2) / CGFloat(RECEIPT_PER_ROW)
+        
+        layout.itemSize = CGSize(width: receiptThumbnailSize, height: receiptThumbnailSize)
         
         collectionView!.collectionViewLayout = layout
         
@@ -67,7 +76,7 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
         //let cell = UICollectionViewCell()
         
         collectionView!.register(ReceiptCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView!.backgroundColor = UIColor.blue
+        collectionView!.backgroundColor = UIColor.white
         
         //collectionView!.dataSource = self
         //collectionView!.delegate = self
@@ -112,15 +121,14 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //print("numbers?")
         //return 100
-        let count = receipts != nil ? receipts!.count : 0
+        let count = receipts != nil ? receipts!.count : DEFAULT_RECEIPT_COUNT
         print("[ReceiptsVC][numberOfItemsInSection] Count = \(count)")
         return count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ReceiptCell
-        cell.backgroundColor = UIColor.green
-        cell.imageView.image = UIImage.init(named: "first")
+        cell.imageView.image = receipts != nil ? receipts![indexPath.row].thumbnailImage : UIImage.init(named: "default_receipt")
         return cell
     }
     
