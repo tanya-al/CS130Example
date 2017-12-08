@@ -60,7 +60,9 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
                                    width: self.view.frame.width,
                                   height: self.view.frame.height - mainNavigationBar!.frame.height)
         
-        collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        //let cell = UICollectionViewCell()
+        
+        collectionView!.register(ReceiptCell.self, forCellWithReuseIdentifier: cellId)
         collectionView!.backgroundColor = UIColor.blue
         
         //collectionView!.dataSource = self
@@ -69,11 +71,12 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
         //self.view.addSubview(collectionView!)
     }
     
-    // MARK: UICollectionViewDataSource
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
     
-//    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return 20
-//    }
+    // MARK: UICollectionViewDataSource
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print("numbers?")
@@ -81,20 +84,15 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ReceiptCell
         cell.backgroundColor = UIColor.green
+        cell.imageView.image = UIImage.init(named: "first")
         return cell
     }
-
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
-    {
+    
+    // MARK: UICollectionViewDelegate
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("User tapped on item \(indexPath.row)")
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
 }
