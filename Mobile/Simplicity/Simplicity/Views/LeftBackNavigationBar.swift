@@ -25,7 +25,14 @@ class LeftBackNavigationBar: MainNavigationBar {
         backButton.setTitle("Back", for: .normal)
         backButton.setTitleColor(UIColor.white, for: .normal)
         backButton.addTarget(self, action: #selector(LeftBackNavigationBar.backAction), for: .touchUpInside)
-        backButton.frame = CGRect(x: 20, y: self.center.y, width: 12, height: 20)
+        
+        let imageSize = CGSize(width: 12, height: 20)
+        backButton.frame = CGRect(x: 20, y: self.center.y, width: 60, height: 20)
+        backButton.imageEdgeInsets = UIEdgeInsetsMake(backButton.frame.size.height/2 - imageSize.height/2,  // top
+                                                      0,                                                    // left
+                                                      backButton.frame.size.height/2 - imageSize.height/2,  // bottom
+                                                      backButton.frame.size.width - imageSize.width)        // right
+        backButton.titleEdgeInsets = UIEdgeInsetsMake(0, -20, 0, 0)
         self.addSubview(backButton)
     }
     
