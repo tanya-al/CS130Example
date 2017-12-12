@@ -11,6 +11,7 @@ import UIKit
 class TransactionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let CELL_ID = "CELL_ID"
+    let CELL_HEIGHT: CGFloat = 82
     
     // MARK: Properties
     var tableView: UITableView!
@@ -28,12 +29,13 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
         tableView = UITableView(frame: CGRect(x: 0,
                                               y: mainNavigationBar.frame.height,
                                           width: view.frame.width,
-                                         height: view.frame.height))
+                                         height: view.frame.height - mainNavigationBar.frame.height))
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: CELL_ID)
+        tableView.register(TransactionTableViewCell.self, forCellReuseIdentifier: CELL_ID)
         view.addSubview(tableView)
-        
+//        tableView.rowHeight = UITableViewAutomaticDimension
+//        tableView.estimatedRowHeight = 300
         // TODO: height sizing issue for TableView
     }
     
@@ -47,9 +49,12 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: CELL_ID)
-        cell.backgroundColor = UIColor.blue
+        let cell = TransactionTableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: CELL_ID)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return CELL_HEIGHT
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
