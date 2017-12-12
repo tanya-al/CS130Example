@@ -107,7 +107,7 @@ def breakdown():
         abort(400, "The parameter 'userId' must be an integer")
     if weeks == '':
         abort(400, "Must specify the number of weeks")
-    elif not user_id.isdigit():
+    elif not weeks.isdigit():
         abort(400, "The parameter 'weeks' must be an integer")
     
     return jsonify(get_endpoints().get_breakdown(get_db(), user_id, weeks))
@@ -136,8 +136,7 @@ def update_transaction():
     if not 'amount' in json_data:
         abort(400, "Must specify amount")
 
-    get_endpoints().update_transaction(get_db(), json_data['transactionId'], json_data['amount'])
-    return "updated transaction"
+    return get_endpoints().update_transaction(get_db(), json_data['transactionId'], json_data['amount'])
 
 @app.teardown_appcontext
 def close_connection(exception):

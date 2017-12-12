@@ -120,15 +120,19 @@ class Endpoints():
             breakdown_list.append(d)
 
         return {
-            "userId": user_id,
-            "weeks": weeks,
+            "userId": int(user_id),
+            "weeks": int(weeks),
             "breakdowns": breakdown_list
         }
 
     def post_receipt(self, db, user_id, category, description, image_data):
         cur = db.cursor()
         cur.execute('SELECT MAX(transaction_id) FROM transactions')
-        transaction_id = int(cur.fetchone()[0]) + 1
+        maxtransaction = cur.fetchone()[0]
+        if(maxtransaction == None):
+            transaction_id = 1
+        else:
+            transaction_id = int(cur.fetchone()[0]) + 1
         amount = extract_spending.extract_receipt_total(Utils().decode_b64(image_data))
         date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
@@ -139,10 +143,15 @@ class Endpoints():
 
     def update_transaction(self, db, transaction_id, amount):
         cur = db.cursor()
+        cur.execute(''' SELECT transaction_id FROM transactions
+                        WHERE transaction_id=?;''', (transaction_id,))
+        if len(cur.fetchall()) < 1:
+            return 'transaction with id %d does not exist' % transaction_id
+
         cur.execute(''' UPDATE transactions 
                         SET amount=? 
                         WHERE transaction_id=?; '''
                         , (amount, transaction_id))
         
         db.commit()
-        return "done"
+        return 'updated transaction'

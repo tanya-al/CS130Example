@@ -11,9 +11,9 @@ import sys
 RECEIPTSPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "receipts")
 
 def encode_b64(img):
-	    jpeg_image_buffer = cStringIO.StringIO()
-	    img.save(jpeg_image_buffer, format="JPEG")
-	    return base64.b64encode(jpeg_image_buffer.getvalue())
+    jpeg_image_buffer = cStringIO.StringIO()
+    img.save(jpeg_image_buffer, format="JPEG")
+    return base64.b64encode(jpeg_image_buffer.getvalue())
 
 def decode_b64(b64string):
     return Image.open(cStringIO.StringIO(base64.b64decode(b64string)))
