@@ -29,22 +29,22 @@ class PhotoViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        displayAlert()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         let mainNavigationBar = MainNavigationBar(frame: view.frame, title: "Add")
         view.addSubview(mainNavigationBar)
         
-//        if let availableImage = takenPhoto {
-//            imageView.image = self.image
-//        }
-        imageView.frame = CGRect(x:0, y:64, width:UIScreen.main.bounds.size.width, height:UIScreen.main.bounds.size.height)
-        self.view.insertSubview(imageView, at: 0)
-//        view.backgroundColor = UIColor.white
-//        self.title = "Add"
+        imageView.frame = CGRect(x:0, y:64, width:UIScreen.main.bounds.size.width, height:UIScreen.main.bounds.size.height-64)
+        self.view.addSubview(imageView)
     
 //        view.layer.insertSublayer(videoPreviewLayer!, at: 0)
 //        videoPreviewLayer?.frame = view.frame
+
         displayButton()
     }
     
@@ -60,8 +60,13 @@ class PhotoViewController: UIViewController {
         captureButton.backgroundColor = .red
         captureButton.center = CGPoint(x: horizontalCenter, y: verticalBottom-40)
         captureButton.setTitle("test", for: UIControlState.normal)
-//        captureButton.addTarget(self, action: #selector(displayCamera(on:)), for: .touchUpInside)
-        self.view.insertSubview(captureButton, at: 0)
+        self.view.addSubview(captureButton)
+    }
+    
+    func displayAlert() {
+        let alert = UIAlertController(title: "Alert", message: "Message", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
