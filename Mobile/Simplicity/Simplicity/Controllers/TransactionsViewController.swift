@@ -13,6 +13,7 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
     let CELL_ID = "CELL_ID"
     let TRANSACTION_DATA_NOTIFICATION = "transactionDataNotification"
     let CELL_HEIGHT: CGFloat = 85
+    let NUMBER_OF_ROW_FIRST_SECTION = 3
     
     // MARK: Properties
     var tableView: UITableView!
@@ -65,7 +66,13 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
     // MARK: UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return transactions != nil ? transactions!.count : 0
+        if transactions == nil {
+            return 0
+        } else if section == 0 {
+            return min(NUMBER_OF_ROW_FIRST_SECTION, transactions!.count)
+        } else {
+            return max(transactions!.count - NUMBER_OF_ROW_FIRST_SECTION, 0)
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -75,6 +82,24 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
         }
         
         return TransactionTableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: CELL_ID)
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        if transactions == nil || transactions!.count <= NUMBER_OF_ROW_FIRST_SECTION {
+            return 1
+        } else {
+            return 2
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if transactions == nil {
+            return nil
+        } else if section == 0 {
+            return "Recent transactions"
+        } else {
+            return "All transactions"
+        }
     }
     
     // MARK: UITableViewDelegate
