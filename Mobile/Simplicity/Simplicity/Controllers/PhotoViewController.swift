@@ -38,6 +38,7 @@ class PhotoViewController: UIViewController {
 //        if let availableImage = takenPhoto {
 //            imageView.image = self.image
 //        }
+        imageView.frame = CGRect(x:0, y:64, width:UIScreen.main.bounds.size.width, height:UIScreen.main.bounds.size.height)
         self.view.insertSubview(imageView, at: 0)
 //        view.backgroundColor = UIColor.white
 //        self.title = "Add"
