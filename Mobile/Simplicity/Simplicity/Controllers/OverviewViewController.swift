@@ -31,6 +31,12 @@ class OverviewViewController: UIViewController {
     var breakdownViewCard: UIView?
     var testViewCard: UIView?
     
+    var pieChartView: PieChartView?
+    var dataEntries: [PieChartDataEntry]?
+    var pieChartDataSet: PieChartDataSet?
+    
+    var lineChartView: LineChartView?
+    
     var pieChartColors: [UIColor]
     
     // MARK: Initialization
@@ -82,6 +88,17 @@ class OverviewViewController: UIViewController {
         // update scrollView content height
         scrollView!.contentSize = CGSize(width: scrollView!.contentSize.width,
                                         height: OVERVIEW_VIEW_CARD_HEIGHT + BREAKDOWN_VIEW_CARD_HEIGHT + TEST_CHART_VIEW_CARD_HEIGHT + VIEW_CARD_MARGIN * 4)
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshOverviewData(_:)), for: .valueChanged)
+        scrollView!.refreshControl = refreshControl
+    }
+    
+    @objc private func refreshOverviewData(_ sender: Any) {
+        print("[OverviewVC][refreshOverviewData]")
+        
+        getOverviewData(isRefreshed: true)
+        getBreakdownData(isRefreshed: true)
     }
     
     override func didReceiveMemoryWarning() {
@@ -109,59 +126,79 @@ class OverviewViewController: UIViewController {
         
         // pie chart
         // initialize with empty data
-        var dataEntries: [PieChartDataEntry] = []
-        let pieChartDataSet = PieChartDataSet(values: dataEntries, label: "")
+        dataEntries = []
+        pieChartDataSet = PieChartDataSet(values: dataEntries, label: "")
         
         // add "%" to label
         let formatter = NumberFormatter()
         formatter.numberStyle = NumberFormatter.Style.percent
         formatter.maximumFractionDigits = 1
         formatter.multiplier = 1.0
-        pieChartDataSet.valueFormatter = DefaultValueFormatter(formatter:formatter)
+        pieChartDataSet?.valueFormatter = DefaultValueFormatter(formatter:formatter)
         
-        pieChartDataSet.colors = pieChartColors
-        pieChartDataSet.sliceSpace = 1
-        pieChartDataSet.selectionShift = 5
+        pieChartDataSet?.colors = pieChartColors
+        pieChartDataSet?.sliceSpace = 1
+        pieChartDataSet?.selectionShift = 5
         
         // initialize pieChartView, negative x position to move chart left
-        let pieChartView = PieChartView(frame: CGRect(x: -110,
+        pieChartView = PieChartView(frame: CGRect(x: -110,
                                                       y: title.frame.height + VIEW_CARD_LABEL_MARGIN + PIE_CHART_MARGIN,
                                                   width: overviewViewCard!.frame.width + 110,
                                                  height: overviewViewCard!.frame.height - title.frame.height - VIEW_CARD_LABEL_MARGIN - PIE_CHART_MARGIN * 2))
         
-        pieChartView.noDataText = "No data available"
-        pieChartView.holeRadiusPercent = 0.4
-        pieChartView.transparentCircleRadiusPercent = 0.48
-        pieChartView.drawEntryLabelsEnabled = false
-        pieChartView.drawCenterTextEnabled = false
-        pieChartView.chartDescription?.text = ""
+        pieChartView?.noDataText = "No data available"
+        pieChartView?.holeRadiusPercent = 0.4
+        pieChartView?.transparentCircleRadiusPercent = 0.48
+        pieChartView?.drawEntryLabelsEnabled = false
+        pieChartView?.drawCenterTextEnabled = false
+        pieChartView?.chartDescription?.text = ""
         
         // get actual data
-        DataManager.sharedInstance.getOverviewsAsync(onSuccess: {overviews in
-            for i in 0..<overviews.count {
-                let dataEntry = PieChartDataEntry(value: overviews[i].percentage, label: overviews[i].category)
-                dataEntries.append(dataEntry)
-            }
-            
-            pieChartDataSet.values = dataEntries
-            
-            DispatchQueue.main.async {
-                pieChartView.data = PieChartData(dataSet: pieChartDataSet)
-                pieChartView.notifyDataSetChanged()
-                
-                // customize legend
-                pieChartView.legend.orientation = Legend.Orientation.vertical
-                pieChartView.legend.xOffset = 350
-                pieChartView.legend.yOffset = 110
-            }
-        }, onFailure: {error in
-            print("[OverviewVC][OverviewCard][Error] Error in getting data")
-        })
+        getOverviewData()
 
-        overviewViewCard!.addSubview(pieChartView)
+        overviewViewCard!.addSubview(pieChartView!)
     }
     
-    func populateBreakdownViewCard() {
+    func getOverviewData(isRefreshed: Bool = false) {
+        DataManager.sharedInstance.getOverviewsAsync(onSuccess: {overviews in
+            print("[OverviewVC][getOverviewData] Success!")
+            
+            self.dataEntries?.removeAll()
+            
+            for i in 0..<overviews.count {
+                let dataEntry = PieChartDataEntry(value: overviews[i].percentage, label: overviews[i].category)
+                self.dataEntries?.append(dataEntry)
+            }
+            
+            self.pieChartDataSet?.values = self.dataEntries!
+            
+            DispatchQueue.main.async {
+                self.pieChartView?.data = PieChartData(dataSet: self.pieChartDataSet!)
+                self.pieChartView?.notifyDataSetChanged()
+                
+                // TODO: legend disappear after refresh
+                
+                // customize legend
+                self.pieChartView?.legend.orientation = Legend.Orientation.vertical
+                self.pieChartView?.legend.xOffset = 350
+                self.pieChartView?.legend.yOffset = 110
+                
+                if isRefreshed {
+                    self.scrollView?.refreshControl?.endRefreshing()
+                }
+            }
+        }, onFailure: {error in
+            print("[OverviewVC][getOverviewData][Error] Error in getting data")
+            
+            if isRefreshed {
+                DispatchQueue.main.async {
+                    self.scrollView?.refreshControl?.endRefreshing()
+                }
+            }
+        })
+    }
+    
+    private func populateBreakdownViewCard() {
         
         // initialize breakdownViewCard
         breakdownViewCard = UIView(frame: CGRect(x: VIEW_CARD_MARGIN,
@@ -180,36 +217,41 @@ class OverviewViewController: UIViewController {
         breakdownViewCard!.addSubview(title)
         
         // line chart
-        let lineChartView = LineChartView(frame: CGRect(x: LINE_CHART_MARGIN,
+        lineChartView = LineChartView(frame: CGRect(x: LINE_CHART_MARGIN,
                                                         y: title.frame.height + VIEW_CARD_LABEL_MARGIN,
                                                         width: breakdownViewCard!.frame.width - LINE_CHART_MARGIN * 2,
                                                         height: 200))
-        lineChartView.chartDescription?.text = ""
-        lineChartView.xAxis.labelPosition = .bottom
-        lineChartView.xAxis.drawAxisLineEnabled = false
-        lineChartView.xAxis.drawLimitLinesBehindDataEnabled = false //?
-        lineChartView.xAxis.drawLabelsEnabled = false
-        lineChartView.xAxis.drawGridLinesEnabled = false
-        lineChartView.xAxis.axisMinimum = -0.5
-        lineChartView.xAxis.axisMaximum = 4.5 // TODO: count + 0.5
+        lineChartView?.chartDescription?.text = ""
+        lineChartView?.xAxis.labelPosition = .bottom
+        lineChartView?.xAxis.drawAxisLineEnabled = false
+        lineChartView?.xAxis.drawLimitLinesBehindDataEnabled = false //?
+        lineChartView?.xAxis.drawLabelsEnabled = false
+        lineChartView?.xAxis.drawGridLinesEnabled = false
+        lineChartView?.xAxis.axisMinimum = -0.5
+        lineChartView?.xAxis.axisMaximum = 4.5 // TODO: count + 0.5
         
-        lineChartView.rightAxis.removeAllLimitLines()
-        lineChartView.rightAxis.drawZeroLineEnabled = false
+        lineChartView?.rightAxis.removeAllLimitLines()
+        lineChartView?.rightAxis.drawZeroLineEnabled = false
         
-        lineChartView.rightAxis.drawTopYLabelEntryEnabled = false
-        lineChartView.rightAxis.drawAxisLineEnabled = false
-        lineChartView.rightAxis.drawGridLinesEnabled = false
-        lineChartView.rightAxis.drawLabelsEnabled = false
-        lineChartView.rightAxis.drawLimitLinesBehindDataEnabled = false
+        lineChartView?.rightAxis.drawTopYLabelEntryEnabled = false
+        lineChartView?.rightAxis.drawAxisLineEnabled = false
+        lineChartView?.rightAxis.drawGridLinesEnabled = false
+        lineChartView?.rightAxis.drawLabelsEnabled = false
+        lineChartView?.rightAxis.drawLimitLinesBehindDataEnabled = false
         
-        lineChartView.leftAxis.removeAllLimitLines()
+        lineChartView?.leftAxis.removeAllLimitLines()
         
-        breakdownViewCard!.addSubview(lineChartView)
+        breakdownViewCard!.addSubview(lineChartView!)
+        
+        getBreakdownData()
+    }
+    
+    private func getBreakdownData(isRefreshed: Bool = false) {
         
         let lineChartData = LineChartData()
         
-        // get actual data
         DataManager.sharedInstance.getBreakdownsAsync(onSuccess: {breakdowns in
+            print("[OverviewVC][getBreakdownData] Success!")
             for i in 0..<breakdowns.count {
                 // iterate through each breakdown
                 var lineChartEntries = [ChartDataEntry]()
@@ -228,13 +270,22 @@ class OverviewViewController: UIViewController {
             lineChartData.setDrawValues(false)
             
             DispatchQueue.main.async {
-                lineChartView.data = lineChartData
+                self.lineChartView?.data = lineChartData
+                
+                if isRefreshed {
+                    self.scrollView?.refreshControl?.endRefreshing()
+                }
             }
             
         }, onFailure: {error in
-            print("[OverviewVC][BreakdownCard][Error] Error in getting data")
+            print("[OverviewVC][getBreakdownData][Error] Error in getting data")
+            
+            if isRefreshed {
+                DispatchQueue.main.async {
+                    self.scrollView?.refreshControl?.endRefreshing()
+                }
+            }
         })
-        
     }
     
 }
