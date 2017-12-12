@@ -132,7 +132,7 @@ class Endpoints():
         if(maxtransaction == None):
             transaction_id = 1
         else:
-            transaction_id = int(cur.fetchone()[0]) + 1
+            transaction_id = int(maxtransaction) + 1
         amount = extract_spending.extract_receipt_total(Utils().decode_b64(image_data))
         date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
