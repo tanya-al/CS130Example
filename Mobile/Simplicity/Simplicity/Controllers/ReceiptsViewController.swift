@@ -64,9 +64,9 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
         DataManager.sharedInstance.getReceiptsAsync(onSuccess: { (receipts) in
             self.receipts = receipts
             NotificationCenter.default.post(name: Notification.Name(self.RECEIPT_DATA_NOTIFICATION), object: nil)
-        }) { (error) in
+        }, onFailure: { (error) in
             print("[ReceiptsVC][getReceiptData] Error")
-        }
+        })
     }
 
     @objc func receiptDataReceived() {

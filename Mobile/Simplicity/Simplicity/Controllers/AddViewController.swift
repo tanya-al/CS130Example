@@ -23,16 +23,48 @@ class AddViewController: UIViewController {
 //        fatalError("init(coder:) has not been implemented")
 //    }
     
+    @objc func transitionToCamera(sender: UIButton!) {
+        let secondViewController:CameraViewController = CameraViewController()
+        self.present(secondViewController, animated: true, completion: nil)
+
+    }
+    
+    @objc func transitionToUpload(sender: UIButton!) {
+        let secondViewController:CameraViewController = CameraViewController()
+        self.present(secondViewController, animated: true, completion: nil)
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.lightGray
         self.title = "Add"
         
         let mainNavigationBar = MainNavigationBar(frame: view.frame, title: "Add")
         view.addSubview(mainNavigationBar)
         
+        let verticalCenter: CGFloat = UIScreen.main.bounds.midY
+        let horizontalCenter: CGFloat = UIScreen.main.bounds.midX
+        
+        let takePhotoButton = UIButton(frame: CGRect(origin: CGPoint(), size: CGSize(width : 240, height : 40)))
+        takePhotoButton.backgroundColor = UIColor.lightGray
+        takePhotoButton.setTitle("Take Photo", for: .normal)
+        takePhotoButton.titleLabel?.font = UIFont(name : "Times New Roman", size : 24)
+        takePhotoButton.addTarget(self, action: #selector(transitionToCamera), for: .touchUpInside)
+        takePhotoButton.center = CGPoint(x: horizontalCenter, y: verticalCenter-80)
+
+        self.view.addSubview(takePhotoButton)
+        
+        let uploadPhotoButton = UIButton(frame: CGRect(origin: CGPoint(), size: CGSize(width : 240, height : 40)))
+        uploadPhotoButton.backgroundColor = UIColor.lightGray
+        uploadPhotoButton.setTitle("Upload Photo", for: .normal)
+        uploadPhotoButton.titleLabel?.font = UIFont(name : "Times New Roman", size : 24)
+        uploadPhotoButton.addTarget(self, action: #selector(transitionToUpload), for: .touchUpInside)
+        uploadPhotoButton.center = CGPoint(x: horizontalCenter, y: verticalCenter+80)
+        
+        self.view.addSubview(uploadPhotoButton)
         
         // for testing RequestManager
 //        let testButton = UIButton(type: .system)
