@@ -11,10 +11,12 @@ import UIKit
 class TransactionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let CELL_ID = "CELL_ID"
-    let CELL_HEIGHT: CGFloat = 82
+    let TRANSACTION_DATA_NOTIFICATION = "transactionDataNotification"
+    let CELL_HEIGHT: CGFloat = 85
     
     // MARK: Properties
     var tableView: UITableView!
+    var transactions: [Transaction]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,31 +36,55 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
         tableView.dataSource = self
         tableView.register(TransactionTableViewCell.self, forCellReuseIdentifier: CELL_ID)
         view.addSubview(tableView)
-//        tableView.rowHeight = UITableViewAutomaticDimension
-//        tableView.estimatedRowHeight = 300
         // TODO: height sizing issue for TableView
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(TransactionsViewController.transactionDataReceived),
+                                               name: Notification.Name(TRANSACTION_DATA_NOTIFICATION) ,
+                                               object: nil)
+        getTransactionData()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func getTransactionData() {
+        print("[ReceiptsVC][getReceiptData] Getting transactions data...")
+        DataManager.sharedInstance.getTransactionsAsync(onSuccess: { (transactions) in
+            self.transactions = transactions
+            NotificationCenter.default.post(name: Notification.Name(self.TRANSACTION_DATA_NOTIFICATION), object: nil)
+        }, onFailure: { (error) in
+            print("[TransactionsVC][getTransactionData] Error")
+        })
     }
+    
+    @objc func transactionDataReceived() {
+        print("[ReceiptsVC][receiptDataReceived] Called")
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+    
+    // MARK: UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return transactions != nil ? transactions!.count : 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = TransactionTableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: CELL_ID)
-        return cell
+        if transactions != nil {
+            let cell = TransactionTableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: CELL_ID, transaction: transactions![indexPath.row])
+            return cell
+        }
+        
+        return TransactionTableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: CELL_ID)
     }
+    
+    // MARK: UITableViewDelegate
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CELL_HEIGHT
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+ 
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
-    
 }
