@@ -65,7 +65,16 @@ class PhotoViewController: UIViewController {
     
     func displayAlert() {
         let alert = UIAlertController(title: "Alert", message: "Message", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+        alert.addTextField(configurationHandler: {(_ textField: UITextField) -> Void in
+            textField.placeholder = "Receipt Title"
+            textField.isSecureTextEntry = true
+        })
+        let confirmAction = UIAlertAction(title: "Submit", style: .default, handler: {(_ action: UIAlertAction) -> Void in
+            print("Current password \(String(describing: alert.textFields?[0].text))")
+            //send to backend
+            
+        })
+        alert.addAction(confirmAction)
         self.present(alert, animated: true, completion: nil)
     }
     
