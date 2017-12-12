@@ -19,6 +19,7 @@ class DataManager: NSObject {
     let AMOUNT_JSON_KEY: String = "amount"
     let AMOUNTS_JSON_KEY: String = "amounts"
     let CATEGORY_JSON_KEY: String = "category"
+    let DESCRIPTION_JSON_KEY: String = "description"
     let PERCENTAGE_JSON_KEY: String = "percentage"
     let BREAKDOWNS_JSON_KEY: String = "breakdowns"
     let DATE_JSON_KEY: String = "date"
@@ -42,8 +43,8 @@ class DataManager: NSObject {
         if (_transactions == nil) {
             // TODO: get transactions from RequestManager
             _transactions = []
-            _transactions?.append(Transaction(transactionId: 1, userId: 1, category: "test", amount: 5.00, date: NSDate())!)
-            _transactions?.append(Transaction(transactionId: 2, userId: 1, category: "test", amount: 9.00, date: NSDate())!)
+            //_transactions?.append(Transaction(transactionId: 1, userId: 1, category: "test", amount: 5.00, date: NSDate())!)
+            //_transactions?.append(Transaction(transactionId: 2, userId: 1, category: "test", amount: 9.00, date: NSDate())!)
         }
         
         return _transactions!
@@ -127,9 +128,34 @@ class DataManager: NSObject {
         })
     }
     
-    func getTransactionsAsync(onSuccess: @escaping([Overview]) -> Void, onFailure: @escaping(Error) -> Void) {
-        print("getTransactionsAsync not implemented yet!!")
-        abort()
+    func getTransactionsAsync(onSuccess: @escaping([Transaction]) -> Void, onFailure: @escaping(Error) -> Void) {
+        RequestManager.sharedInstance.getTransactionsWithUserId(userId: DataManager.DUMMY_USER_ID,
+                                                             onSuccess:
+        {(json) in
+            print("[DataManager] getTransactionsAsync success! Parsing JSON...")
+            self._transactions = []
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = self.DATE_FORMATTER
+
+            // parse JSON
+            for item in json.array! {
+                let date = dateFormatter.date(from: item[self.DATE_JSON_KEY].string!)
+                let userId = item[self.USER_ID_JSON_KEY].int
+                let transactionId = item[self.TRANSACTION_ID_JSON_KEY].int
+                let amount = item[self.AMOUNT_JSON_KEY].double
+                let category = item[self.CATEGORY_JSON_KEY].string
+                let description = item[self.DESCRIPTION_JSON_KEY].string
+                self._transactions?.append(Transaction(transactionId: transactionId!, userId: userId!, category: category!, description: description!, amount: amount!, date: date!)!)
+            }
+
+            onSuccess(self._transactions!)
+            
+        }, onFailure: { (error) in
+            print("[DataManager][Error] getTransactionsAsync")
+            onFailure(error)
+        })
+
     }
     
     func getReceiptsAsync(onSuccess: @escaping([Receipt]) -> Void, onFailure: @escaping(Error) -> Void) {
@@ -155,10 +181,10 @@ class DataManager: NSObject {
             
             onSuccess(self._receipts!)
             
-        }) { (error) in
+        }, onFailure: { (error) in
             print("[DataManager][Error] getReceiptsAsync")
             onFailure(error)
-        }
+        })
     }
     
     func getReceiptImageAsync(transactionId: Int, onSuccess: @escaping(UIImage) -> Void, onFailure: @escaping(Error) -> Void) {
@@ -169,9 +195,9 @@ class DataManager: NSObject {
             let data = NSData(base64Encoded: base64String, options: .ignoreUnknownCharacters)!
             let image = UIImage(data: data as Data)!
             onSuccess(image)
-        }) { (error) in
+        }, onFailure: { (error) in
             print("[DataManager][Error] getReceiptImageAsync")
             onFailure(error)
-        }
+        })
     }
 }

@@ -15,12 +15,13 @@ class Transaction {
     var trancationId: Int
     var userId: Int
     var category: String
+    var description: String
     var amount: Double
-    var date: NSDate
+    var date: Date
     
     
     // MARK: Initialization
-    init?(transactionId: Int, userId: Int, category: String, amount: Double, date: NSDate) {
+    init?(transactionId: Int, userId: Int, category: String, description: String, amount: Double, date: Date) {
         
         if (transactionId < 1 || userId < 1 || amount < 0.0) {
             return nil
@@ -29,6 +30,7 @@ class Transaction {
         self.trancationId = transactionId
         self.userId = userId
         self.category = category
+        self.description = description
         self.amount = amount
         self.date = date
     }
