@@ -64,15 +64,40 @@ class PhotoViewController: UIViewController {
     }
     
     func displayAlert() {
-        let alert = UIAlertController(title: "Alert", message: "Message", preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Photo Taken", message: "Please enter a description and category for your expense.", preferredStyle: UIAlertControllerStyle.alert)
         alert.addTextField(configurationHandler: {(_ textField: UITextField) -> Void in
-            textField.placeholder = "Receipt Title"
-            textField.isSecureTextEntry = true
+            textField.placeholder = "Receipt Description"
+        })
+        alert.addTextField(configurationHandler: {(_ textField: UITextField) -> Void in
+            textField.placeholder = "Category of Expense"
         })
         let confirmAction = UIAlertAction(title: "Submit", style: .default, handler: {(_ action: UIAlertAction) -> Void in
-            print("Current password \(String(describing: alert.textFields?[0].text))")
+            print("Current description \(String(describing: alert.textFields?[0].text))")
+            let description = alert.textFields?[0].text
+            let category = alert.textFields?[1].text
             //send to backend
-            
+            let imageData: NSData = UIImageJPEGRepresentation(self.imageView.image!, 0.4)! as NSData
+            let strBase64 = imageData.base64EncodedString(options: .lineLength64Characters)
+            DataManager.sharedInstance.postReceiptImgAsync(categoryField: category!, descriptionField: description!, imageData: strBase64, onSuccess: {suggestedTransaction in
+                let amount = suggestedTransaction[0].amount
+                let transactionId = suggestedTransaction[0].transactionId
+                let newAlert = UIAlertController(title: "Confirm Transaction", message: String("Total expense is $"+String(amount)+". Is this correct?"), preferredStyle: UIAlertControllerStyle.alert)
+                let confirmAmount = UIAlertAction(title: "Yes", style: .default, handler: {(_ action: UIAlertAction) -> Void in
+                    let cameraVC = CameraViewController()
+                    
+                    DispatchQueue.main.async {
+                        self.present(cameraVC, animated: true, completion: nil)
+                    }
+                })
+                newAlert.addAction(confirmAmount)
+                let denyAmount = UIAlertAction(title: "No", style: .default, handler: {(_ action: UIAlertAction) -> Void in
+                    
+                })
+                newAlert.addAction(denyAmount)
+                self.present(newAlert, animated: true, completion: nil)
+            }, onFailure: {error in
+                print("[PhotoVC][Error] Error in getting data")
+            })
         })
         alert.addAction(confirmAction)
         self.present(alert, animated: true, completion: nil)
