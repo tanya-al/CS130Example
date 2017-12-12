@@ -266,7 +266,7 @@ class ServerRoutesTestCase(unittest.TestCase):
 		self.assertEqual(rv._status_code, 400)
 
 	#======================== receipt tests ========================#
-	def test_receipt_post(self):
+	def test_receipt_post_non_existing_user(self):
 		imgData = encode_b64(Image.open(TESTIMGPATH))
 		thumbData = encode_b64(Image.open(TESTTHUMBPATH))
 		data = {
@@ -294,6 +294,46 @@ class ServerRoutesTestCase(unittest.TestCase):
 		self.assertEqual(row[2], 'cat1')
 		self.assertEqual(row[3], 54.50)
 		self.assertEqual(row[4], 'desc1')
+		self.assertEqual(row[5], imgData)
+
+		# save and load thumbnail to turn it into exactly same format as test thumbnail
+		decode_b64(row[6]).save(TEMPTHUMBPATH, format="JPEG")
+		returned_thumb = encode_b64(Image.open(TEMPTHUMBPATH))
+		self.assertEqual(returned_thumb, thumbData)
+
+	def test_receipt_post_existing_user(self):
+		cur = self._conn.cursor()
+		cur.execute('''	INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)
+						VALUES 	(1, 1, "cat1", 10.01, "2000-01-01 00:00:00", "desc1", "img1", "thumb1")''')
+		self._conn.commit()
+
+		imgData = encode_b64(Image.open(TESTIMGPATH))
+		thumbData = encode_b64(Image.open(TESTTHUMBPATH))
+		data = {
+			'userId': 1,
+			'category': 'cat2',
+			'description': 'desc2',
+			'data': imgData
+		}
+
+		rv = self._app.post('/receipt', data=json.dumps(data), content_type='application/json')
+		rvdata = json.loads(rv.data)
+
+		self.assertEqual(rvdata['transactionId'], 2)
+		self.assertEqual(rvdata['amount'], 54.50)
+
+		cur = self._conn.cursor()
+		cur.execute(''' SELECT transaction_id, user_id, category, amount, description, image, thumbnail FROM transactions 
+                        WHERE transaction_id=2''')
+		rows = cur.fetchall()
+		self.assertEqual(len(rows), 1)
+		row = rows[0]
+
+		self.assertEqual(row[0], 2)
+		self.assertEqual(row[1], 1)
+		self.assertEqual(row[2], 'cat2')
+		self.assertEqual(row[3], 54.50)
+		self.assertEqual(row[4], 'desc2')
 		self.assertEqual(row[5], imgData)
 
 		# save and load thumbnail to turn it into exactly same format as test thumbnail
