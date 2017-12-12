@@ -24,7 +24,8 @@ class TabBarController: UITabBarController {
         let addViewController = AddViewController()
         addViewController.tabBarItem = UITabBarItem(title: "Add", image: UIImage(named: "add"), tag: 3)
         
-        let receiptsViewController = ReceiptsViewController()
+        let layout = UICollectionViewFlowLayout()
+        let receiptsViewController = ReceiptsViewController(collectionViewLayout: layout)
         receiptsViewController.tabBarItem = UITabBarItem(title: "Receipts", image: UIImage(named: "receipts"), tag: 4)
         
         let settingsViewController = SettingsViewController()

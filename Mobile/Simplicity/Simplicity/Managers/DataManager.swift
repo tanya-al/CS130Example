@@ -21,10 +21,18 @@ class DataManager: NSObject {
     let CATEGORY_JSON_KEY: String = "category"
     let PERCENTAGE_JSON_KEY: String = "percentage"
     let BREAKDOWNS_JSON_KEY: String = "breakdowns"
+    let DATE_JSON_KEY: String = "date"
+    let THUMBNAIL_IMAGE_DATA_JSON_KEY: String = "thumbnailImageData"
+    let TRANSACTION_ID_JSON_KEY: String = "transactionId"
+    let USER_ID_JSON_KEY: String = "userId"
+    let IMAGE_JSON_KEY: String = "img"
+    
+    let DATE_FORMATTER = "yyyy-MM-dd HH:mm:ss"
     
     private var _transactions: [Transaction]?
     private var _overviews: [Overview]?
     private var _breakdowns: [Breakdown]?
+    private var _receipts: [Receipt]?
     
     private override init() {
         super.init()
@@ -124,4 +132,46 @@ class DataManager: NSObject {
         abort()
     }
     
+    func getReceiptsAsync(onSuccess: @escaping([Receipt]) -> Void, onFailure: @escaping(Error) -> Void) {
+        RequestManager.sharedInstance.getReceiptsWithUserId(userId: DataManager.DUMMY_USER_ID,
+                                                         maxNumber: nil,
+                                                            offset: nil,
+                                                            onSuccess:
+        { (json) in
+            print("[DataManager] getReceiptsAsync success! Parsing JSON...")
+            self._receipts = []
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = self.DATE_FORMATTER
+            
+            // parse JSON
+            for item in json.array! {
+                let date = dateFormatter.date(from: item[self.DATE_JSON_KEY].string!)
+                let userId = item[self.USER_ID_JSON_KEY].int
+                let transactionId = item[self.TRANSACTION_ID_JSON_KEY].int
+                let thumbnailData = item[self.THUMBNAIL_IMAGE_DATA_JSON_KEY].string
+                self._receipts?.append(Receipt(transactionId: transactionId!, userId: userId!, date: date!, thumbnailImageBase64String: thumbnailData!)!)
+            }
+            
+            onSuccess(self._receipts!)
+            
+        }) { (error) in
+            print("[DataManager][Error] getReceiptsAsync")
+            onFailure(error)
+        }
+    }
+    
+    func getReceiptImageAsync(transactionId: Int, onSuccess: @escaping(UIImage) -> Void, onFailure: @escaping(Error) -> Void) {
+        RequestManager.sharedInstance.getReceiptImageWithTransactionId(transactionId: transactionId,
+                                                                           onSuccess:
+        { (json) in
+            let base64String = json[self.IMAGE_JSON_KEY].string!
+            let data = NSData(base64Encoded: base64String, options: .ignoreUnknownCharacters)!
+            let image = UIImage(data: data as Data)!
+            onSuccess(image)
+        }) { (error) in
+            print("[DataManager][Error] getReceiptImageAsync")
+            onFailure(error)
+        }
+    }
 }
