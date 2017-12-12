@@ -42,7 +42,7 @@ while 1:
 
   if cmd[0] == 'POST':
     # Data for 'receipt' POST request
-    data = {'userId': 1, 'category': 'food', 'data': encode_b64(Image.open("receipts/1002-3.jpg"))}
+    data = {'userId': 1, 'category': 'food', 'description': 'Fat Sals', 'data': encode_b64(Image.open("receipts/1002-3.jpg"))}
     
     # Data for 'update_transaction'
     # data = {'transactionId': 16, 'amount': 1.0}
