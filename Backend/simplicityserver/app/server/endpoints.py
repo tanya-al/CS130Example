@@ -6,7 +6,7 @@ import math
 class Endpoints():
     def get_transactions(self, db, user_id, limit, offset):
         cur = db.cursor()
-        cur.execute(''' SELECT transaction_id, user_id, category, amount, date FROM transactions 
+        cur.execute(''' SELECT transaction_id, user_id, category, amount, date, description FROM transactions 
                         WHERE user_id=? 
                         ORDER BY date DESC 
                         LIMIT ? OFFSET ?;''', (user_id, limit, offset))
@@ -17,7 +17,8 @@ class Endpoints():
                     'userId': row[1],
                     'category': row[2],
                     'amount': row[3],
-                    'date': row[4]
+                    'date': row[4],
+                    'description': row[5],
                 })
         return dict_list
 
@@ -124,15 +125,15 @@ class Endpoints():
             "breakdowns": breakdown_list
         }
 
-    def post_receipt(self, db, user_id, category, image_data):
+    def post_receipt(self, db, user_id, category, description, image_data):
         cur = db.cursor()
         cur.execute('SELECT MAX(transaction_id) FROM transactions')
         transaction_id = int(cur.fetchone()[0]) + 1
         amount = extract_spending.extract_receipt_total(Utils().decode_b64(image_data))
         date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
-        cur.execute(''' INSERT INTO transactions (transaction_id, user_id, category, amount, date, image, thumbnail)
-                        VALUES (?, ?, ?, ?, ?, ?, ?)''', (transaction_id, user_id, category, amount, date, image_data, Utils().get_thumbnail(image_data)))
+        cur.execute(''' INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)''', (transaction_id, user_id, category, amount, date, description, image_data, Utils().get_thumbnail(image_data)))
         db.commit()
         return {'transactionId': transaction_id, 'amount': amount}
 

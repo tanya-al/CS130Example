@@ -123,7 +123,7 @@ def receive_image():
     if not 'data' in json_data:
         abort(400, "Must include image data")
 
-    return jsonify(get_endpoints().post_receipt(get_db(), json_data['userId'], json_data['category'], json_data['data']))
+    return jsonify(get_endpoints().post_receipt(get_db(), json_data['userId'], json_data['category'], json_data['description'], json_data['data']))
 
 @app.route('/update_transaction',methods=["POST"])
 def update_transaction():
