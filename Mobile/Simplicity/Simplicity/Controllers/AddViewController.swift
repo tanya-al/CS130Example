@@ -8,7 +8,8 @@
 
 import UIKit
 
-class AddViewController: UIViewController {
+class AddViewController: UIViewController, UIImagePickerControllerDelegate,
+UINavigationControllerDelegate {
     
     // for testing RequestManager
 //    var testDataView: UITextView
@@ -30,9 +31,15 @@ class AddViewController: UIViewController {
     }
     
     @objc func transitionToUpload(sender: UIButton!) {
-        let secondViewController:CameraViewController = CameraViewController()
-        self.present(secondViewController, animated: true, completion: nil)
-        
+//        let secondViewController:CameraViewController = CameraViewController()
+//        self.present(secondViewController, animated: true, completion: nil)
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary;
+            imagePicker.allowsEditing = true
+            self.present(imagePicker, animated: true, completion: nil)
+        }
     }
     
     override func viewDidLoad() {

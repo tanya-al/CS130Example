@@ -143,7 +143,7 @@ class RequestManager: NSObject {
         var request = URLRequest(url: urlComp.url!)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("text/plain", forHTTPHeaderField: "Accept")
         
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: jsonObj, options: .prettyPrinted) // pass dictionary to nsdata object and set it as request body
