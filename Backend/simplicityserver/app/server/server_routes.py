@@ -37,7 +37,7 @@ def transactions():
     elif not user_id.isdigit():
         abort(400, "The parameter 'userId' must be an integer")
     if max_num == '':
-        max_num = 20
+        max_num = -1
     elif not max_num.isdigit():
         abort(400, "The parameter 'max' must be an integer")
     if offset == '':
@@ -69,7 +69,7 @@ def receipts():
     elif not user_id.isdigit():
         abort(400, "The parameter 'userId' must be an integer")
     if max_num == '':
-        max_num = 20
+        max_num = -1
     elif not max_num.isdigit():
         abort(400, "The parameter 'max' must be an integer")
     if offset == '':
