@@ -14,6 +14,7 @@ class DataManager: NSObject {
     static let sharedInstance = DataManager()
     
     static let DUMMY_USER_ID: Int = 42069
+    static let DUMMY_USER_ID2: Int = 5318008
     static let DUMMY_NUMBER_OF_WEEKS: Int = 5
     
     let AMOUNT_JSON_KEY: String = "amount"
@@ -27,6 +28,7 @@ class DataManager: NSObject {
     let TRANSACTION_ID_JSON_KEY: String = "transactionId"
     let USER_ID_JSON_KEY: String = "userId"
     let IMAGE_JSON_KEY: String = "img"
+    let IMAGE_DATA_JSON_KEY: String = "data"
     
     let DATE_FORMATTER = "yyyy-MM-dd HH:mm:ss"
     
@@ -34,6 +36,7 @@ class DataManager: NSObject {
     private var _overviews: [Overview]?
     private var _breakdowns: [Breakdown]?
     private var _receipts: [Receipt]?
+    private var _receiptTransactions: [ReceiptTransactionAmount]?
     
     private override init() {
         super.init()
@@ -199,5 +202,27 @@ class DataManager: NSObject {
             print("[DataManager][Error] getReceiptImageAsync")
             onFailure(error)
         })
+    }
+    
+    func postReceiptImgAsync(categoryField: Swift.String, descriptionField: Swift.String, imageData: Swift.String, onSuccess: @escaping([ReceiptTransactionAmount]) -> Void, onFailure: @escaping(Error) -> Void) {
+        RequestManager.sharedInstance.postReceiptImgWithUserIdCategoryDescriptionData(userId: DataManager.DUMMY_USER_ID2, category: categoryField, description: descriptionField, imgData: imageData, onSuccess:
+            {(json) in
+                print("[DataManager] postReceiptImgAsync success! Parsing JSON...")
+                self._receiptTransactions = []
+                print(json)
+                // parse JSON
+                for item in json.array! {
+                    let transactionId = item[self.TRANSACTION_ID_JSON_KEY].int
+                    let amount = item[self.AMOUNT_JSON_KEY].double
+                    self._receiptTransactions?.append(ReceiptTransactionAmount(transactionId: transactionId!, amount: amount!)!)
+                }
+                
+                onSuccess(self._receiptTransactions!)
+                
+        }, onFailure: { (error) in
+            print("[DataManager][Error] postReceiptImgAsync")
+            onFailure(error)
+        })
+        
     }
 }
