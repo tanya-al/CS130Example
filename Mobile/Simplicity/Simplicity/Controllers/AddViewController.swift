@@ -42,6 +42,14 @@ UINavigationControllerDelegate {
         }
     }
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        let imageView = UIImageView(image: image)
+        dismiss(animated:true, completion: nil)
+        let photoVC = PhotoViewController(capturedImage: imageView)
+        self.present(photoVC, animated: true, completion: nil)
+    }
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
