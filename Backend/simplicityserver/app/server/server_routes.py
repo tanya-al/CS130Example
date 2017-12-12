@@ -120,8 +120,10 @@ def receive_image():
         abort(400, "Must specify user id")
     if not 'category' in json_data:
         abort(400, "Must specify category")
+    if not 'description' in json_data:
+        abort(400, "Must include description")
     if not 'data' in json_data:
-        abort(400, "Must include image data")
+        abort(400, "Must include image data") 
 
     return jsonify(get_endpoints().post_receipt(get_db(), json_data['userId'], json_data['category'], json_data['description'], json_data['data']))
 
