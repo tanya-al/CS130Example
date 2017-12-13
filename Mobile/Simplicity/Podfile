@@ -4,13 +4,8 @@ use_frameworks!
 target 'Simplicity' do
 	pod 'SwiftyJSON'
 	pod 'Charts'
-end
-
-workspace 'Simplicity'
-
-
-target 'FacebookLoginExample' do
-    use_frameworks!
     pod 'FacebookCore'
     pod 'FacebookLogin'
 end
+
+workspace 'Simplicity'

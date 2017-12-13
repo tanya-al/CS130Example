@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FBSDKLoginKit
 //import FirstViewController
 
 @UIApplicationMain
@@ -31,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         UIApplication.shared.statusBarStyle = .lightContent
         
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         return true
     }
 
