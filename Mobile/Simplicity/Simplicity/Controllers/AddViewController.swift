@@ -31,8 +31,6 @@ UINavigationControllerDelegate {
     }
     
     @objc func transitionToUpload(sender: UIButton!) {
-//        let secondViewController:CameraViewController = CameraViewController()
-//        self.present(secondViewController, animated: true, completion: nil)
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self

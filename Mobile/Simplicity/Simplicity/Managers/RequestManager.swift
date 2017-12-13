@@ -10,7 +10,7 @@ import SwiftyJSON
 
 class RequestManager: NSObject {
     
-    let baseURL = "http://107.170.227.29:5000/"
+    let baseURL = "http://165.227.217.185:5000/"
     static let sharedInstance = RequestManager()    // singleton
     
     static let getOverviewEndpoint = "overview"
