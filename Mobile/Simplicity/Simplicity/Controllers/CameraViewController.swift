@@ -27,7 +27,9 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        displayButton()
+        displayCaptureButton()
+        let leftBackNavigationBar = LeftBackNavigationBar(frame: view.frame, title: "Take Photo", parentVC: self)
+        view.addSubview(leftBackNavigationBar)
         
         let captureDevice = AVCaptureDevice.default(for: AVMediaType.video)
         var input : AVCaptureInput?
@@ -56,13 +58,13 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
 
     }
     
-    func displayButton() {
+    func displayCaptureButton() {
         view.backgroundColor = UIColor.white
         let verticalBottom: CGFloat = UIScreen.main.bounds.maxY
         let horizontalCenter: CGFloat = UIScreen.main.bounds.midX
         
         let captureButton = UIButton(type: .custom)
-        captureButton.frame = CGRect(x: self.view.frame.size.width - 20, y: 42, width: 40, height: 40)
+        captureButton.frame = CGRect(x: self.view.frame.size.width - 20, y: 42, width: 50, height: 50)
         captureButton.layer.cornerRadius = 0.5 * captureButton.bounds.size.width
         captureButton.clipsToBounds = true
         captureButton.backgroundColor = .red

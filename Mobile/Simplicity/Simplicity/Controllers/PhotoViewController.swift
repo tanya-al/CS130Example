@@ -39,8 +39,9 @@ class PhotoViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        let mainNavigationBar = MainNavigationBar(frame: view.frame, title: "Add")
-        view.addSubview(mainNavigationBar)
+       
+        let leftBackNavigationBar = LeftBackNavigationBar(frame: view.frame, title: "Add", parentVC: self)
+        view.addSubview(leftBackNavigationBar)
         
         imageView.frame = CGRect(x:0, y:144, width:UIScreen.main.bounds.size.width, height:UIScreen.main.bounds.size.height-144)
         self.view.addSubview(imageView)
