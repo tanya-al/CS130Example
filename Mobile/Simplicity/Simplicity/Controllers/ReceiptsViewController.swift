@@ -38,6 +38,10 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
                                                 name: Notification.Name(RECEIPT_DATA_NOTIFICATION) ,
                                               object: nil)
         getReceiptData()
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshReceiptsData(_:)), for: .valueChanged)
+        collectionView?.refreshControl = refreshControl
     }
     
     func setupCollectionView() {
@@ -74,6 +78,25 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
         DispatchQueue.main.async {
             self.collectionView!.reloadData()
         }
+    }
+    
+    @objc private func refreshReceiptsData(_ sender: Any) {
+        print("[ReceiptsVC][refreshReceiptsData]")
+        DataManager.sharedInstance.getReceiptsAsync(onSuccess: { (receipts) in
+            print("[ReceiptsVC][refreshReceiptsData] Success!")
+            self.receipts = receipts
+            
+            DispatchQueue.main.async {
+                self.collectionView!.reloadData()
+                self.collectionView!.refreshControl?.endRefreshing()
+            }
+            
+        }, onFailure: { (error) in
+            print("[ReceiptsVC][refreshReceiptsData] Error")
+            DispatchQueue.main.async {
+                self.collectionView!.refreshControl?.endRefreshing()
+            }
+        })
     }
     
     deinit {
