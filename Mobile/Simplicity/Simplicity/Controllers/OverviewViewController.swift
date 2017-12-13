@@ -39,6 +39,8 @@ class OverviewViewController: UIViewController {
     
     var pieChartColors: [UIColor]
     
+    var overviewTitleHeight: CGFloat?
+    
     // MARK: Initialization
     override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         pieChartColors = []
@@ -97,7 +99,8 @@ class OverviewViewController: UIViewController {
     @objc private func refreshOverviewData(_ sender: Any) {
         print("[OverviewVC][refreshOverviewData]")
         
-        getOverviewData(isRefreshed: true)
+        // TODO: this is very hacky but for the purpose of class project + demo let's do this for now
+        repopulateOverviewCard()
         getBreakdownData(isRefreshed: true)
     }
     
@@ -106,7 +109,7 @@ class OverviewViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func populateOverviewViewCard() {
+    private func populateOverviewViewCard() {
         
         // initialize overviewViewCard
         overviewViewCard = UIView(frame: CGRect(x: VIEW_CARD_MARGIN,
@@ -124,6 +127,11 @@ class OverviewViewController: UIViewController {
         title.sizeToFit()
         overviewViewCard!.addSubview(title)
         
+        overviewTitleHeight = title.frame.height
+        populatePieChart()
+    }
+    
+    private func populatePieChart() {
         // pie chart
         // initialize with empty data
         dataEntries = []
@@ -142,9 +150,9 @@ class OverviewViewController: UIViewController {
         
         // initialize pieChartView, negative x position to move chart left
         pieChartView = PieChartView(frame: CGRect(x: -110,
-                                                      y: title.frame.height + VIEW_CARD_LABEL_MARGIN + PIE_CHART_MARGIN,
+                                                  y: overviewTitleHeight! + VIEW_CARD_LABEL_MARGIN + PIE_CHART_MARGIN,
                                                   width: overviewViewCard!.frame.width + 110,
-                                                 height: overviewViewCard!.frame.height - title.frame.height - VIEW_CARD_LABEL_MARGIN - PIE_CHART_MARGIN * 2))
+                                                  height: overviewViewCard!.frame.height - overviewTitleHeight! - VIEW_CARD_LABEL_MARGIN - PIE_CHART_MARGIN * 2))
         
         pieChartView?.noDataText = "No data available"
         pieChartView?.holeRadiusPercent = 0.4
@@ -155,11 +163,17 @@ class OverviewViewController: UIViewController {
         
         // get actual data
         getOverviewData()
-
+        
         overviewViewCard!.addSubview(pieChartView!)
     }
     
-    func getOverviewData(isRefreshed: Bool = false) {
+    private func repopulateOverviewCard() {
+        let oldPieChartView = self.pieChartView!
+        populatePieChart()
+        oldPieChartView.removeFromSuperview()
+    }
+    
+    private func getOverviewData(isRefreshed: Bool = false) {
         DataManager.sharedInstance.getOverviewsAsync(onSuccess: {overviews in
             print("[OverviewVC][getOverviewData] Success!")
             
