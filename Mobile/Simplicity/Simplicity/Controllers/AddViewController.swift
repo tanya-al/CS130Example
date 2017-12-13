@@ -64,7 +64,7 @@ UINavigationControllerDelegate {
         let takePhotoButton = UIButton(frame: CGRect(origin: CGPoint(), size: CGSize(width : 240, height : 40)))
         takePhotoButton.backgroundColor = UIColor.lightGray
         takePhotoButton.setTitle("Take Photo", for: .normal)
-        takePhotoButton.titleLabel?.font = UIFont(name : "Times New Roman", size : 24)
+        takePhotoButton.titleLabel?.font = UIFont(name : (takePhotoButton.titleLabel?.font.familyName)!, size : 24)
         takePhotoButton.addTarget(self, action: #selector(transitionToCamera), for: .touchUpInside)
         takePhotoButton.center = CGPoint(x: horizontalCenter, y: verticalCenter-80)
 
@@ -73,7 +73,7 @@ UINavigationControllerDelegate {
         let uploadPhotoButton = UIButton(frame: CGRect(origin: CGPoint(), size: CGSize(width : 240, height : 40)))
         uploadPhotoButton.backgroundColor = UIColor.lightGray
         uploadPhotoButton.setTitle("Upload Photo", for: .normal)
-        uploadPhotoButton.titleLabel?.font = UIFont(name : "Times New Roman", size : 24)
+        uploadPhotoButton.titleLabel?.font = UIFont(name : (takePhotoButton.titleLabel?.font.familyName)!, size : 24)
         uploadPhotoButton.addTarget(self, action: #selector(transitionToUpload), for: .touchUpInside)
         uploadPhotoButton.center = CGPoint(x: horizontalCenter, y: verticalCenter+80)
         
