@@ -86,6 +86,10 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
         })
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     // MARK: UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
