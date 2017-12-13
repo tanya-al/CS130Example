@@ -10,7 +10,7 @@ import SwiftyJSON
 
 class RequestManager: NSObject {
     
-    let baseURL = "http://107.170.227.29:5000/"
+    let baseURL = "http://165.227.217.185:5000/"
     static let sharedInstance = RequestManager()    // singleton
     
     static let getOverviewEndpoint = "overview"
@@ -18,12 +18,16 @@ class RequestManager: NSObject {
     static let getBreakdownEndpoint = "breakdown"
     static let getReceiptsEndpoint = "receipts"
     static let getReceiptImageEndpoint = "receipt_img"
+    static let postReceiptsEndpoint = "receipt"
     
     static let userIdParam = "userId"
     static let transactionIdParam = "transactionId"
     static let numberOfWeeksParam = "weeks"
     static let maxNumberReceipts = "max"
     static let offsetNumberReceipts = "offset"
+    static let categoryParam = "category"
+    static let descriptionParam = "description"
+    static let imgDataParam = "data"
     
     private override init() {
         super.init()
@@ -113,6 +117,59 @@ class RequestManager: NSObject {
                 onFailure(error!)
             } else{
                 let result = JSON(data: data!)
+                onSuccess(result)
+            }
+        })
+        task.resume()
+    }
+    
+    func postReceiptImgWithUserIdCategoryDescriptionData(userId: Int, category: String, description: String, imgData: String, onSuccess: @escaping(JSON) -> Void, onFailure: @escaping(Error) -> Void) {
+        
+        // setup URL
+        var params: [String: Any] = [:]
+        params[RequestManager.userIdParam] = String(userId)
+        params[RequestManager.categoryParam] = String(category)
+        params[RequestManager.descriptionParam] = String(description)
+        params[RequestManager.imgDataParam] = String(imgData)
+        
+        // setup parameters
+        let urlComp = NSURLComponents(string: baseURL + RequestManager.postReceiptsEndpoint)!
+        
+        postRequest(urlComp: urlComp, jsonObj: params, onSuccess: onSuccess, onFailure: onFailure)
+    }
+    
+    private func postRequest(urlComp: NSURLComponents, jsonObj: [String: Any], onSuccess: @escaping(JSON) -> Void, onFailure: @escaping(Error) -> Void) {
+        // setup request
+        var request = URLRequest(url: urlComp.url!)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("text/plain", forHTTPHeaderField: "Accept")
+        
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: jsonObj, options: .prettyPrinted) // pass dictionary to nsdata object and set it as request body
+        } catch let error {
+            print(error.localizedDescription)
+        }
+
+        print("Request")
+//        print(request)
+        print("httpBody")
+        print(request.httpBody!)
+        print("JSON")
+        print(JSON(request.httpBody!))
+        let session = URLSession.shared
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
+            if(error != nil){
+                print("error")
+                onFailure(error!)
+            } else{
+                print("Data")
+//                print(data!)
+                print("response")
+                print(response!)
+                let result = JSON(data: data!)
+                print("result")
+                print(result)
                 onSuccess(result)
             }
         })

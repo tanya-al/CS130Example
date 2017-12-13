@@ -8,7 +8,8 @@
 
 import UIKit
 
-class AddViewController: UIViewController {
+class AddViewController: UIViewController, UIImagePickerControllerDelegate,
+UINavigationControllerDelegate {
     
     // for testing RequestManager
 //    var testDataView: UITextView
@@ -30,11 +31,23 @@ class AddViewController: UIViewController {
     }
     
     @objc func transitionToUpload(sender: UIButton!) {
-        let secondViewController:CameraViewController = CameraViewController()
-        self.present(secondViewController, animated: true, completion: nil)
-        
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary;
+            imagePicker.allowsEditing = true
+            self.present(imagePicker, animated: true, completion: nil)
+        }
     }
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        let imageView = UIImageView(image: image)
+        dismiss(animated:true, completion: nil)
+        let photoVC = PhotoViewController(capturedImage: imageView)
+        self.present(photoVC, animated: true, completion: nil)
+    }
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -51,7 +64,7 @@ class AddViewController: UIViewController {
         let takePhotoButton = UIButton(frame: CGRect(origin: CGPoint(), size: CGSize(width : 240, height : 40)))
         takePhotoButton.backgroundColor = UIColor.lightGray
         takePhotoButton.setTitle("Take Photo", for: .normal)
-        takePhotoButton.titleLabel?.font = UIFont(name : "Times New Roman", size : 24)
+        takePhotoButton.titleLabel?.font = UIFont(name : (takePhotoButton.titleLabel?.font.familyName)!, size : 24)
         takePhotoButton.addTarget(self, action: #selector(transitionToCamera), for: .touchUpInside)
         takePhotoButton.center = CGPoint(x: horizontalCenter, y: verticalCenter-80)
 
@@ -60,7 +73,7 @@ class AddViewController: UIViewController {
         let uploadPhotoButton = UIButton(frame: CGRect(origin: CGPoint(), size: CGSize(width : 240, height : 40)))
         uploadPhotoButton.backgroundColor = UIColor.lightGray
         uploadPhotoButton.setTitle("Upload Photo", for: .normal)
-        uploadPhotoButton.titleLabel?.font = UIFont(name : "Times New Roman", size : 24)
+        uploadPhotoButton.titleLabel?.font = UIFont(name : (takePhotoButton.titleLabel?.font.familyName)!, size : 24)
         uploadPhotoButton.addTarget(self, action: #selector(transitionToUpload), for: .touchUpInside)
         uploadPhotoButton.center = CGPoint(x: horizontalCenter, y: verticalCenter+80)
         
