@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2B6F88161FE06E13007438F4 /* ReceiptTransactionAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6F88151FE06E13007438F4 /* ReceiptTransactionAmount.swift */; };
 		2B6F88181FE09E47007438F4 /* PhotoLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6F88171FE09E47007438F4 /* PhotoLibraryViewController.swift */; };
+		2B6F881A1FE1E183007438F4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6F88191FE1E183007438F4 /* LoginViewController.swift */; };
 		2B8F05471FBE947A00EBEC1D /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8F05461FBE947A00EBEC1D /* PhotoViewController.swift */; };
 		2BDC34DD1FBA758D00C6AFA9 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC34DC1FBA758D00C6AFA9 /* CameraViewController.swift */; };
 		3D04B07E448C2BEB74905189 /* Pods_Simplicity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A5AA80BD93280883C4A3B44 /* Pods_Simplicity.framework */; };
@@ -58,6 +59,7 @@
 		25B4CFE9E2903DD3DCC277A2 /* Pods-Simplicity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simplicity.release.xcconfig"; path = "Pods/Target Support Files/Pods-Simplicity/Pods-Simplicity.release.xcconfig"; sourceTree = "<group>"; };
 		2B6F88151FE06E13007438F4 /* ReceiptTransactionAmount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptTransactionAmount.swift; sourceTree = "<group>"; };
 		2B6F88171FE09E47007438F4 /* PhotoLibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryViewController.swift; sourceTree = "<group>"; };
+		2B6F88191FE1E183007438F4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		2B8F05461FBE947A00EBEC1D /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		2BDC34DC1FBA758D00C6AFA9 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		5A5AA80BD93280883C4A3B44 /* Pods_Simplicity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Simplicity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -201,6 +203,7 @@
 				921DD9371FDA499F00EBF6FF /* ReceiptDetailViewController.swift */,
 				92018C021FA998A4006AF351 /* SettingsViewController.swift */,
 				2B6F88171FE09E47007438F4 /* PhotoLibraryViewController.swift */,
+				2B6F88191FE1E183007438F4 /* LoginViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -447,6 +450,7 @@
 				9217AB021FB6957B0093D6DB /* Overview.swift in Sources */,
 				92018BFF1FA99824006AF351 /* AddViewController.swift in Sources */,
 				92018C011FA99862006AF351 /* ReceiptsViewController.swift in Sources */,
+				2B6F881A1FE1E183007438F4 /* LoginViewController.swift in Sources */,
 				92018C031FA998A4006AF351 /* SettingsViewController.swift in Sources */,
 				92018BFD1FA99275006AF351 /* TransactionsViewController.swift in Sources */,
 				9217AAFE1FB68FF30093D6DB /* Transaction.swift in Sources */,

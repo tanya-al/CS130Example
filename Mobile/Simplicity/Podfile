@@ -7,3 +7,10 @@ target 'Simplicity' do
 end
 
 workspace 'Simplicity'
+
+
+target 'FacebookLoginExample' do
+    use_frameworks!
+    pod 'FacebookCore'
+    pod 'FacebookLogin'
+end
