@@ -8,6 +8,7 @@
 
 import Foundation
 import FacebookLogin
+<<<<<<< HEAD
 import FBSDKLoginKit
 
 class LoginViewController : UIViewController {
@@ -97,4 +98,9 @@ class LoginViewController : UIViewController {
         }
 //        return userData
     }
+=======
+
+class LoginViewController : UIViewController {
+    
+>>>>>>> started fb login setup
 }
