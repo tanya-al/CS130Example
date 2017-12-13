@@ -8,7 +8,6 @@
 
 import Foundation
 import FacebookLogin
-<<<<<<< HEAD
 import FBSDKLoginKit
 
 class LoginViewController : UIViewController {
@@ -45,8 +44,7 @@ class LoginViewController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        
+    
         //creating button
         let loginButton = LoginButton(readPermissions: [ .publicProfile ])
         loginButton.center = view.center
@@ -75,7 +73,7 @@ class LoginViewController : UIViewController {
             case .cancelled:
                 print("User cancelled login.")
             case .success(let grantedPermissions, let declinedPermissions, let accessToken):
-                print("logged in")
+
                 self.getFBUserData()
             }
         }
@@ -98,9 +96,4 @@ class LoginViewController : UIViewController {
         }
 //        return userData
     }
-=======
-
-class LoginViewController : UIViewController {
-    
->>>>>>> started fb login setup
 }
