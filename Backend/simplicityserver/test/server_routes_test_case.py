@@ -49,8 +49,10 @@ class ServerRoutesTestCase(unittest.TestCase):
 	@classmethod
 	def tearDownClass(cls):
 		cls._conn.close()
-		os.remove(TESTDBPATH)
-		os.remove(TEMPTHUMBPATH)
+		if os.path.exists(TESTDBPATH):
+			os.remove(TESTDBPATH)
+		if os.path.exists(TEMPTHUMBPATH):
+			os.remove(TEMPTHUMBPATH)
 
 	def tearDown(self):
 		cur = self._conn.cursor()
