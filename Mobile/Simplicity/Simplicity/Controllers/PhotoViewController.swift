@@ -139,10 +139,10 @@ class PhotoViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
             let transactionId = suggestedTransaction[0].transactionId
             let newAlert = UIAlertController(title: "Confirm Transaction", message: String("Total expense is $"+String(amount)+". Is this correct?"), preferredStyle: UIAlertControllerStyle.alert)
             let confirmAmount = UIAlertAction(title: "Yes", style: .default, handler: {(_ action: UIAlertAction) -> Void in
-                let cameraVC = CameraViewController()
+                let addVC = TabBarController()
                 
                 DispatchQueue.main.async {
-                    self.present(cameraVC, animated: true, completion: nil)
+                    self.present(addVC, animated: true, completion: nil)
                 }
             })
             newAlert.addAction(confirmAmount)
