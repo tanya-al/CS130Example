@@ -13,13 +13,14 @@ import FBSDKLoginKit
 class LoginViewController : UIViewController {
     var dict : [String : AnyObject]!
     
-    override func viewDidAppear(_ animated: Bool) {
+    func enterApp(userData : [String:Any]) {
         if let accessToken = FBSDKAccessToken.current(){
             print(accessToken)
-            var userData = getFBUserData()
-            
+            print(userData["id"]!)
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let initialViewController = storyboard.instantiateViewController(withIdentifier: "TabBarController")
+            let initialViewController : TabBarController = storyboard.instantiateViewController(withIdentifier: "TabBarController") as! TabBarController
+            initialViewController.userData = userData
+//            print(userData["id"]!)
             UIApplication.shared.keyWindow?.rootViewController = initialViewController
             UIApplication.shared.keyWindow?.makeKeyAndVisible()
             
@@ -29,6 +30,15 @@ class LoginViewController : UIViewController {
             }
             UIApplication.shared.statusBarStyle = .lightContent
             print("did the thing")
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //if the user is already logged in
+        if let accessToken = FBSDKAccessToken.current(){
+            print("getting fb user data")
+            getFBUserData()
         }
     }
     
@@ -71,18 +81,20 @@ class LoginViewController : UIViewController {
     }
 
     //function is fetching the user data
-    func getFBUserData() -> [String: Any] {
-        var userData : [String: Any] = [:]
+    func getFBUserData() {//} -> [String: Any] {
+//        var userData : [String: Any] = [:]
         if((FBSDKAccessToken.current()) != nil){
+            print("user is logged in")
             FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, picture.type(large), email"]).start(completionHandler: { (connection, result, error) -> Void in
                 if (error == nil){
                     self.dict = result as! [String : AnyObject]
                     print(result!)
                     print(self.dict)
-                    userData = self.dict
+                    self.enterApp(userData: self.dict)
+//                    userData = self.dict
                 }
             })
         }
-        return userData
+//        return userData
     }
 }

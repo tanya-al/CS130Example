@@ -80,8 +80,9 @@ class DataManager: NSObject {
         return _breakdowns!
     }
     
-    func getOverviewsAsync(onSuccess: @escaping([Overview]) -> Void, onFailure: @escaping(Error) -> Void) {
-        RequestManager.sharedInstance.getOverviewWithUserIdAndNumberOfWeeks(userId: DataManager.DUMMY_USER_ID,
+    func getOverviewsAsync(userId: String, onSuccess: @escaping([Overview]) -> Void, onFailure: @escaping(Error) -> Void) {
+        let id = (userId as NSString).integerValue
+        RequestManager.sharedInstance.getOverviewWithUserIdAndNumberOfWeeks(userId: id,
                                                                      numberOfWeeks: DataManager.DUMMY_NUMBER_OF_WEEKS,
                                                                          onSuccess:
         { json in
@@ -103,8 +104,9 @@ class DataManager: NSObject {
         })
     }
     
-    func getBreakdownsAsync(onSuccess: @escaping([Breakdown]) -> Void, onFailure: @escaping(Error) -> Void) {
-        RequestManager.sharedInstance.getBreakdownWithUserIdAndNumberOfWeeks(userId: DataManager.DUMMY_USER_ID,
+    func getBreakdownsAsync(userId: String, onSuccess: @escaping([Breakdown]) -> Void, onFailure: @escaping(Error) -> Void) {
+        let id = (userId as NSString).integerValue
+        RequestManager.sharedInstance.getBreakdownWithUserIdAndNumberOfWeeks(userId: id,
                                                                             numberOfWeeks: DataManager.DUMMY_NUMBER_OF_WEEKS,
                                                                             onSuccess:
             { json in
