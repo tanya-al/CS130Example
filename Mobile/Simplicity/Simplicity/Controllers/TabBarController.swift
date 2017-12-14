@@ -10,12 +10,16 @@ import UIKit
 
 class TabBarController: UITabBarController {
     
+    var userData : [String : Any] = [:]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        print(userData["id"]!)
         // Add View Controllers to Tab Bar
         let overviewViewController = OverviewViewController()
+        overviewViewController.userData = userData
         overviewViewController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(named: "home"), tag: 1)
         
         let transactionsViewController = TransactionsViewController()

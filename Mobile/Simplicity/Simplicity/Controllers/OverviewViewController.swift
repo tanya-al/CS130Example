@@ -26,6 +26,7 @@ class OverviewViewController: UIViewController {
     let VIEW_CARD_TITLE_FONT: String = "Avenir"
     
     // MARK: Properties
+    var userData : [String : Any] = [:]
     var scrollView: UIScrollView?
     var overviewViewCard: UIView?
     var breakdownViewCard: UIView?
@@ -61,6 +62,7 @@ class OverviewViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        print(userData["id"]!)
         view.backgroundColor = UIColor.white
         self.title = "Home"
         
@@ -174,7 +176,7 @@ class OverviewViewController: UIViewController {
     }
     
     private func getOverviewData(isRefreshed: Bool = false) {
-        DataManager.sharedInstance.getOverviewsAsync(onSuccess: {overviews in
+        DataManager.sharedInstance.getOverviewsAsync(userId: String(describing: userData["id"]!), onSuccess: {overviews in
             print("[OverviewVC][getOverviewData] Success!")
             
             self.dataEntries?.removeAll()
@@ -264,7 +266,7 @@ class OverviewViewController: UIViewController {
         
         let lineChartData = LineChartData()
         
-        DataManager.sharedInstance.getBreakdownsAsync(onSuccess: {breakdowns in
+        DataManager.sharedInstance.getBreakdownsAsync(userId: String(describing: userData["id"]!), onSuccess: {breakdowns in
             print("[OverviewVC][getBreakdownData] Success!")
             for i in 0..<breakdowns.count {
                 // iterate through each breakdown
