@@ -15,6 +15,7 @@ class LoginViewController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         
         //creating button
         let loginButton = LoginButton(readPermissions: [ .publicProfile ])
@@ -30,10 +31,15 @@ class LoginViewController : UIViewController {
         
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
     //when login button clicked
     @objc func loginButtonClicked() {
         let loginManager = LoginManager()
-        loginManager.logIn([ .publicProfile ], viewController: self) { loginResult in
+        loginManager.logIn(readPermissions: [ .publicProfile ], viewController: self) { loginResult in
             switch loginResult {
             case .failed(let error):
                 print(error)
@@ -44,7 +50,7 @@ class LoginViewController : UIViewController {
             }
         }
     }
-    
+
     //function is fetching the user data
     func getFBUserData(){
         if((FBSDKAccessToken.current()) != nil){
