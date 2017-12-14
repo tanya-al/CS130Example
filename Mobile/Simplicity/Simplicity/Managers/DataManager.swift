@@ -210,13 +210,12 @@ class DataManager: NSObject {
                 print("[DataManager] postReceiptImgAsync success! Parsing JSON...")
                 self._receiptTransactions = []
                 print(json)
+                print(json.dictionaryObject!)
                 // parse JSON
-                for item in json.array! {
-                    let transactionId = item[self.TRANSACTION_ID_JSON_KEY].int
-                    let amount = item[self.AMOUNT_JSON_KEY].double
-                    self._receiptTransactions?.append(ReceiptTransactionAmount(transactionId: transactionId!, amount: amount!)!)
-                }
-                
+                let transactionId : String = json["transactionId"].description
+                let amount : Double = json["amount"].doubleValue
+                self._receiptTransactions?.append(ReceiptTransactionAmount(transactionId: Int(transactionId)!, amount: amount)!)
+               
                 onSuccess(self._receiptTransactions!)
                 
         }, onFailure: { (error) in
