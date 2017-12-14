@@ -87,7 +87,8 @@ class DataManager: NSObject {
         { json in
             print("[DataManager] getOverviewsAsync success! Parsing JSON...")
             self._overviews = []
-                                                                    
+            print(json)
+            print(json.array)
             // parse JSON
             for item in json.array! {
                 let amount = item[self.AMOUNT_JSON_KEY].double
@@ -110,7 +111,8 @@ class DataManager: NSObject {
             { json in
                 print("[DataManager] getBreakdownsAsync success! Parsing JSON...")
                 self._breakdowns = []
-                
+                print(json)
+                print(json.array)
                 // parse JSON
                 for item in json[self.BREAKDOWNS_JSON_KEY].array! {
                     let amounts = item[self.AMOUNTS_JSON_KEY].array
@@ -121,6 +123,8 @@ class DataManager: NSObject {
                     }
                     
                     let category = item[self.CATEGORY_JSON_KEY].string
+                    print(category)
+                    print(amountsDouble)
                     self._breakdowns?.append(Breakdown(category: category!, amounts: amountsDouble)!)
                 }
                 
@@ -205,7 +209,7 @@ class DataManager: NSObject {
     }
     
     func postReceiptImgAsync(categoryField: Swift.String, descriptionField: Swift.String, imageData: Swift.String, onSuccess: @escaping([ReceiptTransactionAmount]) -> Void, onFailure: @escaping(Error) -> Void) {
-        RequestManager.sharedInstance.postReceiptImgWithUserIdCategoryDescriptionData(userId: DataManager.DUMMY_USER_ID2, category: categoryField, description: descriptionField, imgData: imageData, onSuccess:
+        RequestManager.sharedInstance.postReceiptImgWithUserIdCategoryDescriptionData(userId: DataManager.DUMMY_USER_ID, category: categoryField, description: descriptionField, imgData: imageData, onSuccess:
             {(json) in
                 print("[DataManager] postReceiptImgAsync success! Parsing JSON...")
                 self._receiptTransactions = []
@@ -220,6 +224,27 @@ class DataManager: NSObject {
                 
         }, onFailure: { (error) in
             print("[DataManager][Error] postReceiptImgAsync")
+            onFailure(error)
+        })
+        
+    }
+    
+    func postUpdateTransactionAsync(transactionId: Int, amount: Double, onSuccess: @escaping([ReceiptTransactionAmount]) -> Void, onFailure: @escaping(Error) -> Void) {
+        RequestManager.sharedInstance.postUpdateTransaction(transactionId: transactionId, amount: amount, onSuccess:
+            {(json) in
+                print("[DataManager] postUpdateTransactionAsync success! Parsing JSON...")
+                self._receiptTransactions = []
+                print(json)
+//                print(json.dictionaryObject!)
+                // parse JSON
+//                let transactionId : String = json["transactionId"].description
+//                let amount : Double = json["amount"].doubleValue
+//                self._receiptTransactions?.append(ReceiptTransactionAmount(transactionId: transactionId, amount: amount)!)
+                
+                onSuccess(self._receiptTransactions!)
+                
+        }, onFailure: { (error) in
+            print("[DataManager][Error] postUpdateTransactionAsync")
             onFailure(error)
         })
         
