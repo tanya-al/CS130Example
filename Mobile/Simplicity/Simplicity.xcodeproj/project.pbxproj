@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B6F88161FE06E13007438F4 /* ReceiptTransactionAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6F88151FE06E13007438F4 /* ReceiptTransactionAmount.swift */; };
+		2B6F88181FE09E47007438F4 /* PhotoLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6F88171FE09E47007438F4 /* PhotoLibraryViewController.swift */; };
 		2B8F05471FBE947A00EBEC1D /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8F05461FBE947A00EBEC1D /* PhotoViewController.swift */; };
 		2BDC34DD1FBA758D00C6AFA9 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC34DC1FBA758D00C6AFA9 /* CameraViewController.swift */; };
 		3D04B07E448C2BEB74905189 /* Pods_Simplicity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A5AA80BD93280883C4A3B44 /* Pods_Simplicity.framework */; };
@@ -54,6 +56,8 @@
 
 /* Begin PBXFileReference section */
 		25B4CFE9E2903DD3DCC277A2 /* Pods-Simplicity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simplicity.release.xcconfig"; path = "Pods/Target Support Files/Pods-Simplicity/Pods-Simplicity.release.xcconfig"; sourceTree = "<group>"; };
+		2B6F88151FE06E13007438F4 /* ReceiptTransactionAmount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptTransactionAmount.swift; sourceTree = "<group>"; };
+		2B6F88171FE09E47007438F4 /* PhotoLibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryViewController.swift; sourceTree = "<group>"; };
 		2B8F05461FBE947A00EBEC1D /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		2BDC34DC1FBA758D00C6AFA9 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		5A5AA80BD93280883C4A3B44 /* Pods_Simplicity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Simplicity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -196,6 +200,7 @@
 				92018C001FA99862006AF351 /* ReceiptsViewController.swift */,
 				921DD9371FDA499F00EBF6FF /* ReceiptDetailViewController.swift */,
 				92018C021FA998A4006AF351 /* SettingsViewController.swift */,
+				2B6F88171FE09E47007438F4 /* PhotoLibraryViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -228,6 +233,7 @@
 			children = (
 				9217AAFD1FB68FF30093D6DB /* Transaction.swift */,
 				9217AAFF1FB692820093D6DB /* Receipt.swift */,
+				2B6F88151FE06E13007438F4 /* ReceiptTransactionAmount.swift */,
 				9217AB011FB6957B0093D6DB /* Overview.swift */,
 				92A6E6961FC69D9500D2052C /* Breakdown.swift */,
 			);
@@ -450,11 +456,13 @@
 				9217AB001FB692820093D6DB /* Receipt.swift in Sources */,
 				927316F91FABB794004E6DBC /* RequestManager.swift in Sources */,
 				92018BF91FA9922A006AF351 /* TabBarController.swift in Sources */,
+				2B6F88161FE06E13007438F4 /* ReceiptTransactionAmount.swift in Sources */,
 				2BDC34DD1FBA758D00C6AFA9 /* CameraViewController.swift in Sources */,
 				9217AB041FB697B20093D6DB /* DataManager.swift in Sources */,
 				92018BFB1FA9924C006AF351 /* OverviewViewController.swift in Sources */,
 				921DD9381FDA499F00EBF6FF /* ReceiptDetailViewController.swift in Sources */,
 				921DD93A1FDA4C6600EBF6FF /* LeftBackNavigationBar.swift in Sources */,
+				2B6F88181FE09E47007438F4 /* PhotoLibraryViewController.swift in Sources */,
 				924ECA051FDF8D4D00CC9790 /* TransactionTableViewCell.swift in Sources */,
 				921DD9361FDA156200EBF6FF /* ReceiptCell.swift in Sources */,
 				2B8F05471FBE947A00EBEC1D /* PhotoViewController.swift in Sources */,
@@ -627,7 +635,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Simplicity/SupportFiles/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.LikeX4Y.Simplicity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -644,7 +652,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Simplicity/SupportFiles/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.LikeX4Y.Simplicity;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -44,10 +44,14 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
                                                name: Notification.Name(TRANSACTION_DATA_NOTIFICATION) ,
                                                object: nil)
         getTransactionData()
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshTransactionData(_:)), for: .valueChanged)
+        tableView.refreshControl = refreshControl
     }
     
     func getTransactionData() {
-        print("[ReceiptsVC][getReceiptData] Getting transactions data...")
+        print("[TransactionsVC][getTransactionData] Getting transactions data...")
         DataManager.sharedInstance.getTransactionsAsync(onSuccess: { (transactions) in
             self.transactions = transactions
             NotificationCenter.default.post(name: Notification.Name(self.TRANSACTION_DATA_NOTIFICATION), object: nil)
@@ -57,10 +61,33 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     @objc func transactionDataReceived() {
-        print("[ReceiptsVC][receiptDataReceived] Called")
+        print("[TransactionsVC][getTransactionData] Called")
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
+    }
+    
+    @objc private func refreshTransactionData(_ sender: Any) {
+        print("[TransactionsVC][refreshTransactionData]")
+        DataManager.sharedInstance.getTransactionsAsync(onSuccess: { (transactions) in
+            print("[TransactionsVC][refreshTransactionData] Success!")
+            self.transactions = transactions
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                self.tableView.refreshControl?.endRefreshing()
+            }
+            
+        }, onFailure: { (error) in
+            print("[TransactionsVC][refreshTransactionData] Error")
+            DispatchQueue.main.async {
+                self.tableView.refreshControl?.endRefreshing()
+            }
+        })
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: UITableViewDataSource

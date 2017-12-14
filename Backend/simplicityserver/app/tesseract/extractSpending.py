@@ -106,12 +106,12 @@ def process_text(string):
 	# debugging info	
 	#print(num_list)
 
-	# find the maximum spending (total cost)
+	# find the maximum spending (total cost, when there is no valid spending, return -1
 	total = -1
-	try:
+	if len(num_list) == 0:
+		total = -1
+	else:
 		total = max(num_list)
-	except ValueError:
-		print("No valid spending recognized")
 
 	return total
 
