@@ -31,6 +31,52 @@ class SimplicityUITests: XCTestCase {
     func testExample() {
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+        let app = XCUIApplication()
+        let tabBarsQuery = app.tabBars
+        
+        sleep(1)
+        
+        //hit the home button
+        tabBarsQuery.buttons["Home"].tap()
+        
+        sleep(1)
+        
+        //hit transaction button
+        tabBarsQuery.buttons["Transactions"].tap()
+        
+        sleep(1)
+        
+        //hit receipts button
+        tabBarsQuery.buttons["Receipts"].tap()
+        
+        sleep(1)
+        
+        let collectionViewsQuery = app.collectionViews
+        
+        //click one receipt image
+        collectionViewsQuery.children(matching: .cell).element(boundBy: 8).children(matching: .other).element.tap()
+        app.children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.tap()
+        
+        sleep(1)
+        
+        let backButton = app.buttons["Back"]
+        //go back to receipts tab
+        backButton.tap()
+        
+        sleep(1)
+        
+        //hit another image
+        collectionViewsQuery.children(matching: .cell).element(boundBy: 19).children(matching: .other).element.tap()
+        
+        sleep(1)
+        
+        //go back to receipts tab
+        backButton.tap()
+        
+        sleep(1)
+        
+        //hit setting button
+        tabBarsQuery.buttons["Settings"].tap()
     }
     
 }
