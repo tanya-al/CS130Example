@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import AVFoundation
 
+/// CameraViewController: runs an AVCapture session to take pictures from
 class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     
     var captureSession: AVCaptureSession?
@@ -24,6 +25,8 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         case captureSessionMissing
     }
 
+    /// viewDidLoad
+    /// - Description: sets up and starts running a camera session so the user can take a photo
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -58,6 +61,8 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
 
     }
     
+    /// displayCaptureButton()
+    /// - Description: adds the UIButton for the user to take a photo
     func displayCaptureButton() {
         view.backgroundColor = UIColor.white
         let verticalBottom: CGFloat = UIScreen.main.bounds.maxY
@@ -77,6 +82,9 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         capturePhoto()
     }
     
+    /// capturePhoto()
+    /// - Description: captures still camera output from the screen and triggers the photoOutput delegate
+    /// - See: `photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photoSampleBuffer: CMSampleBuffer?, previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?)`
     func capturePhoto() {
         
         let settings = AVCapturePhotoSettings()
@@ -89,6 +97,17 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         
     }
     
+    /// photoOutput
+    ///
+    /// - Description: gets the camera image, converts it to a JPEG, then a UIImage and instantiates PhotoViewController with that image
+    ///
+    /// - Parameters:
+    ///   - output: output given by the camera
+    ///   - photoSampleBuffer: photo is stored in a sample buffer
+    ///   - previewPhotoSampleBuffer: preview buffer
+    ///   - resolvedSettings: photo settings
+    ///   - bracketSettings: still image settings
+    ///   - error: any errors that occurred while taking the photo
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photoSampleBuffer: CMSampleBuffer?, previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
 
         if let error = error {

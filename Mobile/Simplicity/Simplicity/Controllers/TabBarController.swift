@@ -8,8 +8,11 @@
 
 import UIKit
 
+/// TabBarController: instantiates the tabs of the app
 class TabBarController: UITabBarController {
     
+    /// viewDidLoad
+    /// - Description: initializes the various tabs for the user
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.

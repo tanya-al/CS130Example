@@ -53,6 +53,9 @@ class DataManager: NSObject {
         return _transactions!
     }
     
+    /// @brief: getOverviews: returns overview info for the user
+    ///
+    /// @return: [Overview]
     func getOverviews() -> [Overview] {
         if (_overviews == nil) {
             // TODO: get overviews from RequestManager
@@ -80,6 +83,11 @@ class DataManager: NSObject {
         return _breakdowns!
     }
     
+    /// getOverviewsAsync: asynchronously queries the backend for the user's overview data and parses the result
+    ///
+    /// - Parameters:
+    ///   - onSuccess: returns list of Overview data [Overview]
+    ///   - onFailure: returns Error
     func getOverviewsAsync(onSuccess: @escaping([Overview]) -> Void, onFailure: @escaping(Error) -> Void) {
         RequestManager.sharedInstance.getOverviewWithUserIdAndNumberOfWeeks(userId: DataManager.DUMMY_USER_ID,
                                                                      numberOfWeeks: DataManager.DUMMY_NUMBER_OF_WEEKS,
@@ -104,6 +112,11 @@ class DataManager: NSObject {
         })
     }
     
+    /// getBreakdownsAsync: asynchronously queries the backend for the user's breakdown data  and parses the result
+    ///
+    /// - Parameters:
+    ///   - onSuccess: returns array of Breakdowns [Breakdown]
+    ///   - onFailure: returns Error
     func getBreakdownsAsync(onSuccess: @escaping([Breakdown]) -> Void, onFailure: @escaping(Error) -> Void) {
         RequestManager.sharedInstance.getBreakdownWithUserIdAndNumberOfWeeks(userId: DataManager.DUMMY_USER_ID,
                                                                             numberOfWeeks: DataManager.DUMMY_NUMBER_OF_WEEKS,
@@ -135,6 +148,11 @@ class DataManager: NSObject {
         })
     }
     
+    /// getTransactionsAsyc: asynchronously queries the backend for the user's transaction data  and parses the result
+    ///
+    /// - Parameters:
+    ///   - onSuccess: returns array of Transactions [Transaction]
+    ///   - onFailure: returns Error
     func getTransactionsAsync(onSuccess: @escaping([Transaction]) -> Void, onFailure: @escaping(Error) -> Void) {
         RequestManager.sharedInstance.getTransactionsWithUserId(userId: DataManager.DUMMY_USER_ID,
                                                              onSuccess:
@@ -165,6 +183,11 @@ class DataManager: NSObject {
 
     }
     
+    /// getReceiptsAsync: asynchronously queries the backend for the user's Receipt data and parses the result
+    ///
+    /// - Parameters:
+    ///   - onSuccess: return array of Receipts [Receipt]
+    ///   - onFailure: returns Error
     func getReceiptsAsync(onSuccess: @escaping([Receipt]) -> Void, onFailure: @escaping(Error) -> Void) {
         RequestManager.sharedInstance.getReceiptsWithUserId(userId: DataManager.DUMMY_USER_ID,
                                                          maxNumber: nil,
@@ -194,6 +217,12 @@ class DataManager: NSObject {
         })
     }
     
+    /// getReceiptImageAsync: asynchronously queries the backend for the user's receipt image data and parses the result
+    ///
+    /// - Parameters:
+    ///   - transactionId: id of the transaction to request receipt image for
+    ///   - onSuccess: returns UIImage containing receipt image
+    ///   - onFailure: returns Error
     func getReceiptImageAsync(transactionId: Int, onSuccess: @escaping(UIImage) -> Void, onFailure: @escaping(Error) -> Void) {
         RequestManager.sharedInstance.getReceiptImageWithTransactionId(transactionId: transactionId,
                                                                            onSuccess:
@@ -208,6 +237,14 @@ class DataManager: NSObject {
         })
     }
     
+    /// postReceiptImgAsync: asynchronously queries the backend to add a new transaction for the user and parses the result
+    ///
+    /// - Parameters:
+    ///   - categoryField: category of the expense
+    ///   - descriptionField: description of the expense
+    ///   - imageData: base64 encoded image string of the expense
+    ///   - onSuccess: returns [ReceiptTransactionAmount] containing transactionId and amount
+    ///   - onFailure: returns Error
     func postReceiptImgAsync(categoryField: Swift.String, descriptionField: Swift.String, imageData: Swift.String, onSuccess: @escaping([ReceiptTransactionAmount]) -> Void, onFailure: @escaping(Error) -> Void) {
         RequestManager.sharedInstance.postReceiptImgWithUserIdCategoryDescriptionData(userId: DataManager.DUMMY_USER_ID, category: categoryField, description: descriptionField, imgData: imageData, onSuccess:
             {(json) in
@@ -229,6 +266,13 @@ class DataManager: NSObject {
         
     }
     
+    /// postUpdateTransactionAsync: asynchronously queries the backend to update the amount of a transaction and parses the result
+    ///
+    /// - Parameters:
+    ///   - transactionId: transaction to update
+    ///   - amount: new amount to write into transaction info
+    ///   - onSuccess: returns [ReceiptTransactionAmount] confirming data
+    ///   - onFailure: returns Error
     func postUpdateTransactionAsync(transactionId: Int, amount: Double, onSuccess: @escaping([ReceiptTransactionAmount]) -> Void, onFailure: @escaping(Error) -> Void) {
         RequestManager.sharedInstance.postUpdateTransaction(transactionId: transactionId, amount: amount, onSuccess:
             {(json) in
