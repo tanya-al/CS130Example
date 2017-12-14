@@ -14,7 +14,7 @@ class PhotoViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
 {
     
     var imageView : UIImageView!
-    let categories = ["Food","Housing","Entertainment"]
+    let categories = ["Restaurant","Transportation","Textbook","Grocery","Other"]
     var categoryTextField : UITextField!
     var descriptionTextField : UITextField!
     
@@ -140,14 +140,37 @@ class PhotoViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
             let newAlert = UIAlertController(title: "Confirm Transaction", message: String("Total expense is $"+String(amount)+". Is this correct?"), preferredStyle: UIAlertControllerStyle.alert)
             let confirmAmount = UIAlertAction(title: "Yes", style: .default, handler: {(_ action: UIAlertAction) -> Void in
                 let addVC = TabBarController()
-                
                 DispatchQueue.main.async {
                     self.present(addVC, animated: true, completion: nil)
                 }
             })
             newAlert.addAction(confirmAmount)
             let denyAmount = UIAlertAction(title: "No", style: .default, handler: {(_ action: UIAlertAction) -> Void in
-                
+                let newAmountAlert = UIAlertController(title: "Update Transaction", message: "", preferredStyle: UIAlertControllerStyle.alert)
+                let submitNewAmount = UIAlertAction(title: "Submit", style: .default) { (_) in
+                    let newAmt = newAmountAlert.textFields?[0].text
+                    print("should call data manager for update transaction")
+                    DataManager.sharedInstance.postUpdateTransactionAsync(transactionId: transactionId, amount: (NumberFormatter().number(from: newAmt!)?.doubleValue)!, onSuccess: {_ in 
+                        let addVC = TabBarController()
+                        DispatchQueue.main.async {
+                            self.present(addVC, animated: true, completion: nil)
+                        }
+                    }, onFailure: {error in
+                        print("[PhotoVC][Error] Error in updating transaction data")
+                    })
+                }
+                newAmountAlert.addAction(submitNewAmount)
+                newAmountAlert.addTextField(configurationHandler: {(_ textField: UITextField) -> Void in
+                    textField.placeholder = "Enter amount"
+                })
+                let cancelNewAmount = UIAlertAction(title: "Cancel", style: .default) { (_) in
+                    let addVC = TabBarController()
+                    DispatchQueue.main.async {
+                        self.present(addVC, animated: true, completion: nil)
+                    }
+                }
+                newAmountAlert.addAction(cancelNewAmount)
+                self.present(newAmountAlert, animated: true, completion: nil)
             })
             newAlert.addAction(denyAmount)
             self.present(newAlert, animated: true, completion: nil)

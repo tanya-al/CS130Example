@@ -19,6 +19,7 @@ class RequestManager: NSObject {
     static let getReceiptsEndpoint = "receipts"
     static let getReceiptImageEndpoint = "receipt_img"
     static let postReceiptsEndpoint = "receipt"
+    static let postUpdateTransactionEndpoint = "update_transaction"
     
     static let userIdParam = "userId"
     static let transactionIdParam = "transactionId"
@@ -28,6 +29,7 @@ class RequestManager: NSObject {
     static let categoryParam = "category"
     static let descriptionParam = "description"
     static let imgDataParam = "data"
+    static let amountParam = "amount"
     
     private override init() {
         super.init()
@@ -134,6 +136,19 @@ class RequestManager: NSObject {
         
         // setup parameters
         let urlComp = NSURLComponents(string: baseURL + RequestManager.postReceiptsEndpoint)!
+        
+        postRequest(urlComp: urlComp, jsonObj: params, onSuccess: onSuccess, onFailure: onFailure)
+    }
+    
+    func postUpdateTransaction(transactionId: Int, amount: Double, onSuccess: @escaping(JSON) -> Void, onFailure: @escaping(Error) -> Void) {
+        
+        // setup URL
+        var params: [String: Any] = [:]
+        params[RequestManager.transactionIdParam] = String(transactionId)
+        params[RequestManager.amountParam] = String(amount)
+        
+        // setup parameters
+        let urlComp = NSURLComponents(string: baseURL + RequestManager.postUpdateTransactionEndpoint)!
         
         postRequest(urlComp: urlComp, jsonObj: params, onSuccess: onSuccess, onFailure: onFailure)
     }
