@@ -246,6 +246,29 @@ whether the request succeed or not.
 Void
 
 ---
+#### **getOverviewWithUserIdAndNumberOfWeeks**
+
+```void getBreakdownWithUserIdAndNumberOfWeeks(int userId, int numberOfWeeks, onSuccess(JSON), onFailure(Error))```
+
+Given the userId and numberOfWeeks, make the request call to the
+backend, and call the onSuccess or onFailure completion block based on
+whether the request succeed or not.
+
+**Parameters:**
+
+```userId``` - id of the user we want to make request on
+
+```numberOfWeeks``` - number of weeks we want to accumulate data on
+
+```onSuccess``` - completion block on success
+
+```onFailure``` - completion block on failure
+
+**Returns:**
+
+Void
+
+---
 #### **getTransactionsWithUserId**
 
 void getTransactionsWithUserId(int userId, onSuccess(JSON),
@@ -268,15 +291,224 @@ completion block based on whether the request succeed or not.
 Void
 
 ---
+#### **getReceiptsWithUserId**
+
+void getTransactionsWithUserId(int userId, int maxNumber, int offset, onSuccess(JSON),
+onFailure(Error))
+
+Given the userId, maxNumber, and offset make the request call to the backend to get a list of receipts uploaded by this user. Call the onSuccess or onFailure completion block based on whether the request succeed or not.
+
+**Parameters:**
+
+```userId``` - id of the user we want to make request on
+
+```maxNumber``` - max number of receipt images to return
+
+```offset``` - the offset of the number of receipts
+
+```onSuccess``` - completion block on success
+
+```onFailure``` - completion block on failure
+
+**Returns:**
+
+Void
+
+---
+void getReceiptImageWithTransactionId(int transactionId, onSuccess(JSON),
+onFailure(Error))
+
+Given the transactionId, make the request call to the backend to get the receipt image uploaded by this user. Call the onSuccess or onFailure
+completion block based on whether the request succeed or not.
+
+**Parameters:**
+
+```transactionId``` - id of the user we want to make request on
+
+```onSuccess``` - completion block on success
+
+```onFailure``` - completion block on failure
+
+**Returns:**
+
+Void
+
+---
+void postReceiptImgWithUserIdCategoryDescriptionData(int userId, String category, String description, String imgData, onSuccess(JSON),
+onFailure(Error))
+
+Given the userId and other info, make the request call to the backend to post 
+the transaction uploaded by this user. Call the onSuccess or onFailure
+completion block based on whether the request succeed or not.
+
+**Parameters:**
+
+```userId``` - id of the user we want to make request on
+
+```category``` - the category of the expense
+
+```description``` - description of the expense
+
+```imgData``` - the base64 encoded string of receipt image data
+
+```onSuccess``` - completion block on success
+
+```onFailure``` - completion block on failure
+
+**Returns:**
+
+Void
+
+---
+void postUpdateTransaction(int transactionId, Double amount, onSuccess(JSON),
+onFailure(Error))
+
+Given the transactionId and amount, make the request call to the backend to post the updated transaction amount set by this user. Call the onSuccess or onFailure completion block based on whether the request succeed or not.
+
+**Parameters:**
+
+```transactionId``` - id of the transaction we want to make request on
+
+```amount``` - cost of the expense that we want to set
+
+```onSuccess``` - completion block on success
+
+```onFailure``` - completion block on failure
+
+**Returns:**
+
+Void
+
+---
 #### **getOverviewAsync**
 
-```void getOverviewAsync(onSuccess([Overview]), onFailure(Error))```
+```void getOverviewsAsync(onSuccess([Overview]), onFailure(Error))```
 
 Get a list of Overview with the current application’s userId, and call
 the onSuccess or onFailure completion block based on whether the request
 succeed or not.
 
 **Parameters:**
+
+```onSuccess``` - completion block on success
+
+```onFailure``` - completion block on failure
+
+**Returns:**
+
+Void
+
+---
+#### **getBreakdownsAsync**
+
+```void getBreakdownsAsync(onSuccess([Breakdown]), onFailure(Error))```
+
+Get a list of Breakdown with the current application’s userId, and call
+the onSuccess or onFailure completion block based on whether the request
+succeed or not.
+
+**Parameters:**
+
+```onSuccess``` - completion block on success
+
+```onFailure``` - completion block on failure
+
+**Returns:**
+
+Void
+
+---
+#### **getTransactionsAsync**
+
+```void getTransactionsAsync(onSuccess([Transaction]), onFailure(Error))```
+
+Get a list of Transaction with the current application’s userId, and call
+the onSuccess or onFailure completion block based on whether the request
+succeed or not.
+
+**Parameters:**
+
+```onSuccess``` - completion block on success
+
+```onFailure``` - completion block on failure
+
+**Returns:**
+
+Void
+
+---
+#### **getReceiptsAsync**
+
+```void getReceiptsAsync(onSuccess([Receipt]), onFailure(Error))```
+
+Get a list of Receipt with the current application’s userId, and call
+the onSuccess or onFailure completion block based on whether the request
+succeed or not.
+
+**Parameters:**
+
+```onSuccess``` - completion block on success
+
+```onFailure``` - completion block on failure
+
+**Returns:**
+
+Void
+
+---
+#### **getReceiptImgAsync**
+
+```void getReceiptImgAsync(onSuccess([ReceiptImg]), onFailure(Error))```
+
+Get a ReceiptImg with the current application’s userId, and call
+the onSuccess or onFailure completion block based on whether the request
+succeed or not.
+
+**Parameters:**
+
+```onSuccess``` - completion block on success
+
+```onFailure``` - completion block on failure
+
+**Returns:**
+
+Void
+
+---
+#### **postReceiptImgAsync**
+
+```void postReceiptImgAsync(Swift.String categoryField, Swift.String descriptionField, Swift.String imageData, onSuccess([ReceiptTransactionAmount]), onFailure(Error))```
+
+Post a transaction with the current application’s userId and transaction data, and call the onSuccess or onFailure completion block based on whether the request succeed or not.
+
+**Parameters:**
+
+```categoryField``` - category of expense
+
+```descriptionField``` - description of expense
+
+```imageData``` - base64 encoded image data of expense
+
+```onSuccess``` - completion block on success
+
+```onFailure``` - completion block on failure
+
+**Returns:**
+
+Void
+
+---
+#### **postUpdateTransactionAsync**
+
+```void postUpdateTransactionAsync(int transactionId, double amount, onSuccess([ReceiptTransactionAmount]), onFailure(Error))```
+
+Post a transaction amount update with the current application’s userId and transactionId and updated amount, and call the onSuccess or onFailure completion block based on whether the request succeed or not.
+
+**Parameters:**
+
+```transactionId``` - id of the user's transaction
+
+```amount``` - updated cost of expense
 
 ```onSuccess``` - completion block on success
 
