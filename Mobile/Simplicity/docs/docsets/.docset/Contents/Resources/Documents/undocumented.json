@@ -2,147 +2,84 @@
   "warnings": [
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/AddViewController.swift",
-      "line": 11,
-      "symbol": "AddViewController",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/AddViewController.swift",
-      "line": 27,
-      "symbol": "AddViewController.transitionToCamera(sender:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/AddViewController.swift",
-      "line": 33,
-      "symbol": "AddViewController.transitionToUpload(sender:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/AddViewController.swift",
-      "line": 43,
-      "symbol": "AddViewController.imagePickerController(_:didFinishPickingMediaWithInfo:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/AddViewController.swift",
-      "line": 51,
-      "symbol": "AddViewController.viewDidLoad()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/AddViewController.swift",
-      "line": 106,
+      "line": 122,
       "symbol": "AddViewController.didReceiveMemoryWarning()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
-      "line": 13,
-      "symbol": "CameraViewController",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
-      "line": 15,
+      "line": 16,
       "symbol": "CameraViewController.captureSession",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
-      "line": 16,
+      "line": 17,
       "symbol": "CameraViewController.videoPreviewLayer",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
-      "line": 17,
+      "line": 18,
       "symbol": "CameraViewController.takePhotoVar",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
-      "line": 18,
+      "line": 19,
       "symbol": "CameraViewController.dataOutput",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
-      "line": 19,
+      "line": 20,
       "symbol": "CameraViewController.stillCameraOutput",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
-      "line": 20,
+      "line": 21,
       "symbol": "CameraViewController.queue",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
-      "line": 21,
+      "line": 22,
       "symbol": "CameraViewController.imageView",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
-      "line": 23,
+      "line": 24,
       "symbol": "CameraViewController.errors",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
-      "line": 24,
+      "line": 25,
       "symbol": "CameraViewController.errors.captureSessionMissing",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
-      "line": 63,
-      "symbol": "CameraViewController.displayCaptureButton()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
-      "line": 78,
+      "line": 81,
       "symbol": "CameraViewController.takePhoto(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
-      "line": 82,
-      "symbol": "CameraViewController.capturePhoto()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
-      "line": 94,
-      "symbol": "CameraViewController.photoOutput(_:didFinishProcessingPhoto:previewPhoto:resolvedSettings:bracketSettings:error:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
-      "line": 115,
+      "line": 132,
       "symbol": "CameraViewController.didReceiveMemoryWarning()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -674,133 +611,63 @@
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TabBarController.swift",
-      "line": 11,
-      "symbol": "TabBarController",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TabBarController.swift",
-      "line": 46,
+      "line": 47,
       "symbol": "TabBarController.didReceiveMemoryWarning()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
-      "line": 11,
-      "symbol": "TransactionsViewController",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
-      "line": 13,
+      "line": 14,
       "symbol": "TransactionsViewController.CELL_ID",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
-      "line": 14,
+      "line": 15,
       "symbol": "TransactionsViewController.TRANSACTION_DATA_NOTIFICATION",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
-      "line": 15,
+      "line": 16,
       "symbol": "TransactionsViewController.CELL_HEIGHT",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
-      "line": 16,
+      "line": 17,
       "symbol": "TransactionsViewController.NUMBER_OF_ROW_FIRST_SECTION",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
-      "line": 19,
+      "line": 20,
       "symbol": "TransactionsViewController.tableView",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
-      "line": 20,
+      "line": 21,
       "symbol": "TransactionsViewController.transactions",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
-      "line": 22,
-      "symbol": "TransactionsViewController.viewDidLoad()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
-      "line": 53,
-      "symbol": "TransactionsViewController.getTransactionData()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
-      "line": 63,
-      "symbol": "TransactionsViewController.transactionDataReceived()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
-      "line": 89,
+      "line": 101,
       "symbol": "TransactionsViewController.deinit",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
-      "line": 95,
-      "symbol": "TransactionsViewController.tableView(_:numberOfRowsInSection:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
-      "line": 105,
-      "symbol": "TransactionsViewController.tableView(_:cellForRowAt:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
-      "line": 114,
-      "symbol": "TransactionsViewController.numberOfSections(in:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
-      "line": 122,
-      "symbol": "TransactionsViewController.tableView(_:titleForHeaderInSection:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
-      "line": 134,
-      "symbol": "TransactionsViewController.tableView(_:heightForRowAt:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
-      "line": 138,
+      "line": 182,
       "symbol": "TransactionsViewController.didReceiveMemoryWarning()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

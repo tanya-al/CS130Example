@@ -254,357 +254,161 @@
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
-      "line": 13,
-      "symbol": "PhotoViewController",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
-      "line": 16,
+      "line": 17,
       "symbol": "PhotoViewController.imageView",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
-      "line": 17,
+      "line": 18,
       "symbol": "PhotoViewController.categories",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
-      "line": 18,
+      "line": 19,
       "symbol": "PhotoViewController.categoryTextField",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
-      "line": 19,
+      "line": 20,
       "symbol": "PhotoViewController.descriptionTextField",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
-      "line": 21,
-      "symbol": "PhotoViewController.init(capturedImage:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
-      "line": 26,
+      "line": 30,
       "symbol": "PhotoViewController.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
-      "line": 30,
+      "line": 34,
       "symbol": "PhotoViewController.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
-      "line": 34,
-      "symbol": "PhotoViewController.viewDidAppear(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
-      "line": 39,
-      "symbol": "PhotoViewController.viewDidLoad()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
-      "line": 52,
-      "symbol": "PhotoViewController.displaySaveButton()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
-      "line": 67,
-      "symbol": "PhotoViewController.textFieldShouldReturn(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
-      "line": 74,
-      "symbol": "PhotoViewController.displayTextFields()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
-      "line": 101,
-      "symbol": "PhotoViewController.numberOfComponents(in:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
-      "line": 106,
-      "symbol": "PhotoViewController.pickerView(_:numberOfRowsInComponent:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
-      "line": 111,
-      "symbol": "PhotoViewController.pickerView(_:titleForRow:forComponent:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
-      "line": 117,
-      "symbol": "PhotoViewController.pickerView(_:didSelectRow:inComponent:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
-      "line": 122,
-      "symbol": "PhotoViewController.displayDropdown()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
-      "line": 130,
-      "symbol": "PhotoViewController.saveImage()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
-      "line": 182,
+      "line": 222,
       "symbol": "PhotoViewController.didReceiveMemoryWarning()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptDetailViewController.swift",
-      "line": 11,
-      "symbol": "ReceiptDetailViewController",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptDetailViewController.swift",
-      "line": 13,
+      "line": 14,
       "symbol": "ReceiptDetailViewController.receipt",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptDetailViewController.swift",
-      "line": 14,
+      "line": 15,
       "symbol": "ReceiptDetailViewController.imageView",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptDetailViewController.swift",
-      "line": 16,
-      "symbol": "ReceiptDetailViewController.init(receipt:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptDetailViewController.swift",
-      "line": 21,
+      "line": 25,
       "symbol": "ReceiptDetailViewController.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptDetailViewController.swift",
-      "line": 25,
-      "symbol": "ReceiptDetailViewController.viewDidLoad()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptDetailViewController.swift",
-      "line": 46,
-      "symbol": "ReceiptDetailViewController.setupReceiptImage()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptDetailViewController.swift",
-      "line": 58,
-      "symbol": "ReceiptDetailViewController.getReceiptImageData()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptDetailViewController.swift",
-      "line": 69,
+      "line": 79,
       "symbol": "ReceiptDetailViewController.didReceiveMemoryWarning()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
-      "line": 11,
-      "symbol": "ReceiptsViewController",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
-      "line": 13,
+      "line": 14,
       "symbol": "ReceiptsViewController.cellId",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
-      "line": 14,
+      "line": 15,
       "symbol": "ReceiptsViewController.RECEIPT_DATA_NOTIFICATION",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
-      "line": 15,
+      "line": 16,
       "symbol": "ReceiptsViewController.DEFAULT_RECEIPT_COUNT",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
-      "line": 16,
+      "line": 17,
       "symbol": "ReceiptsViewController.RECEIPT_PER_ROW",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
-      "line": 17,
+      "line": 18,
       "symbol": "ReceiptsViewController.EDGE_INSETS",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
-      "line": 18,
+      "line": 19,
       "symbol": "ReceiptsViewController.RECEIPT_THUMBNAIL_MARGIN",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
-      "line": 19,
+      "line": 20,
       "symbol": "ReceiptsViewController.SEGUE_IDENTIFIER",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
-      "line": 22,
+      "line": 23,
       "symbol": "ReceiptsViewController.mainNavigationBar",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
-      "line": 23,
+      "line": 24,
       "symbol": "ReceiptsViewController.receipts",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
-      "line": 25,
-      "symbol": "ReceiptsViewController.viewDidLoad()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
-      "line": 47,
-      "symbol": "ReceiptsViewController.setupCollectionView()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
-      "line": 66,
-      "symbol": "ReceiptsViewController.getReceiptData()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
-      "line": 76,
-      "symbol": "ReceiptsViewController.receiptDataReceived()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
-      "line": 102,
+      "line": 114,
       "symbol": "ReceiptsViewController.deinit",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
-      "line": 106,
+      "line": 118,
       "symbol": "ReceiptsViewController.didReceiveMemoryWarning()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
-      "line": 113,
-      "symbol": "ReceiptsViewController.collectionView(_:numberOfItemsInSection:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
-      "line": 119,
-      "symbol": "ReceiptsViewController.collectionView(_:cellForItemAt:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
-      "line": 127,
-      "symbol": "ReceiptsViewController.collectionView(_:didSelectItemAt:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/SettingsViewController.swift",
-      "line": 11,
-      "symbol": "SettingsViewController",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/SettingsViewController.swift",
-      "line": 13,
-      "symbol": "SettingsViewController.viewDidLoad()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/SettingsViewController.swift",
-      "line": 24,
+      "line": 27,
       "symbol": "SettingsViewController.didReceiveMemoryWarning()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
