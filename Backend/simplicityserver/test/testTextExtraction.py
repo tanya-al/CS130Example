@@ -14,7 +14,10 @@ class TestTextExtraction(unittest.TestCase):
 
 	def test_grab_amount(self):
 		"""
-		Test extracting the dollar amounts from the image
+		Tests whether all the numbers in the format of money(``XX.XX``) on the receipt are recognized by asserting that all the amounts appears in the receipt are in the list returned by grab_amount function.
+
+		* **Success:** returns all amounts of money on the receipt.
+		* **Failure:** some amounts ignored by the script
 		"""
 		s = extractSpending.read_image_text(self.image)
 		num_list = extractSpending.grab_amount(s)
@@ -24,7 +27,10 @@ class TestTextExtraction(unittest.TestCase):
 
 	def test_process_text(self):
 		"""
-		Test getting the maximum amount from the image
+		Tests whether the function returns the maximum amount of money given an receipt image by asserting that it equals to the total amount of spending on the receipt.
+
+		* **Success:** returns the total amount of spending
+		* **Failure:** returns some other amount (might recognize the phone number as a larger number than the total spending)
 		"""
 		s = extractSpending.read_image_text(self.image)
 		max_amount = extractSpending.process_text(s)
@@ -32,7 +38,10 @@ class TestTextExtraction(unittest.TestCase):
 
 	def test_corrupted_image(self):
 		"""
-		Test that passing in a corrupted image causes an ``OSError``
+		Tests whether the function handles a corrupted image elegantly, which is the case where exception occurs.
+
+		* **Success:** the function runs smoothly, returns an empty string
+		* **Failure:** the program aborts because of exception.
 		"""
 		with self.assertRaises(OSError):
 			s = extractSpending.read_image_text(CORRUPTIMGPATH)
