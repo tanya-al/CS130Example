@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// ReceiptsViewController: display receipt images in photo library format
 class ReceiptsViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     let cellId = "cellId"
@@ -22,6 +23,8 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
     var mainNavigationBar: MainNavigationBar?
     var receipts: [Receipt]?
     
+    /// viewDidLoad
+    /// - Description: get receipt data from backend and display on screen
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -44,6 +47,8 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
         collectionView?.refreshControl = refreshControl
     }
     
+    /// setupCollectionView
+    /// - Description: display images in collection view layout
     func setupCollectionView() {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: EDGE_INSETS, left: EDGE_INSETS, bottom: EDGE_INSETS, right: EDGE_INSETS)
@@ -63,6 +68,8 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
         collectionView!.backgroundColor = UIColor.white
     }
     
+    /// getReceiptData
+    /// - Description: get receipt image from backend
     func getReceiptData() {
         print("[ReceiptsVC][getReceiptData] Getting receipts data...")
         DataManager.sharedInstance.getReceiptsAsync(onSuccess: { (receipts) in
@@ -73,6 +80,8 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
         })
     }
 
+    /// receiptDataReceived
+    /// - Description: reload the screen when data is received from backend
     @objc func receiptDataReceived() {
         print("[ReceiptsVC][receiptDataReceived] Called")
         DispatchQueue.main.async {
@@ -80,6 +89,9 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
         }
     }
     
+    /// refreshReceiptsData
+    ///
+    /// - Parameter sender: when user refreshes page call backend and reload data
     @objc private func refreshReceiptsData(_ sender: Any) {
         print("[ReceiptsVC][refreshReceiptsData]")
         DataManager.sharedInstance.getReceiptsAsync(onSuccess: { (receipts) in
@@ -110,12 +122,24 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
     
     // MARK: UICollectionViewDataSource
     
+    /// - Description: return the number of items in the collection
+    ///
+    /// - Parameters:
+    ///   - collectionView: the collection view to count from
+    ///   - section: the section we're looking at
+    /// - Returns: the number of items in a section
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let count = receipts != nil ? receipts!.count : DEFAULT_RECEIPT_COUNT
         print("[ReceiptsVC][numberOfItemsInSection] Count = \(count)")
         return count
     }
 
+    /// - Description: allows user to pick one image cell to display
+    ///
+    /// - Parameters:
+    ///   - collectionView: the collection view
+    ///   - indexPath: the index of the image requested
+    /// - Returns: the cell selected
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ReceiptCell
         cell.imageView.image = receipts != nil ? receipts![indexPath.row].thumbnailImage : UIImage.init(named: "default_receipt")
@@ -124,6 +148,11 @@ class ReceiptsViewController: UICollectionViewController, UICollectionViewDelega
     
     // MARK: UICollectionViewDelegate
     
+    /// - Description: present new screen when image selected
+    ///
+    /// - Parameters:
+    ///   - collectionView: the collection view
+    ///   - indexPath: the index of the image to present on a new screen as ReceiptDetailViewController
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("[ReceiptsVC][didSelectItemAt] User tapped on item \(indexPath.row)")
         if receipts != nil {

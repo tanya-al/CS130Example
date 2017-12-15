@@ -8,11 +8,15 @@
 
 import UIKit
 
+/// ReceiptDetailViewController: displays a specific receipt image that the user requested
 class ReceiptDetailViewController: UIViewController {
 
     var receipt: Receipt?
     var imageView: UIImageView?
     
+    /// init
+    ///
+    /// - Parameter receipt: pass in the receipt to inspect
     init(receipt: Receipt) {
         super.init(nibName: nil, bundle: nil)
         self.receipt = receipt
@@ -22,6 +26,8 @@ class ReceiptDetailViewController: UIViewController {
         super.init(coder: coder)
     }
     
+    /// viewDidLoad
+    /// - Description: display image with back button to previous screen
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -43,6 +49,8 @@ class ReceiptDetailViewController: UIViewController {
         setupReceiptImage()
     }
     
+    /// setupReceiptImage
+    /// - Description: display image or get receipt image data
     func setupReceiptImage() {
         if receipt?.fullScreenImage != nil {
             print("[ReceiptDetailVC][setupReceiptImage] Setting image")
@@ -55,6 +63,8 @@ class ReceiptDetailViewController: UIViewController {
         }
     }
     
+    /// getReceiptImageData
+    /// - Description: call backend to get image data
     func getReceiptImageData() {
         DataManager.sharedInstance.getReceiptImageAsync(transactionId: receipt!.trancationId,
                                                         onSuccess:

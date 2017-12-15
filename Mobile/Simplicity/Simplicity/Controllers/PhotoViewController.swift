@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import AVFoundation
 
+/// PhotoViewController: displays the image the user uploaded/captured and sends it to the backend, along with updating the transaction amount if needed and returning to the Overview Screen
 class PhotoViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource
 {
     
@@ -18,6 +19,9 @@ class PhotoViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
     var categoryTextField : UITextField!
     var descriptionTextField : UITextField!
     
+    /// init
+    ///
+    /// - Parameter capturedImage: the receipt image to be sent to the backend
     init(capturedImage : UIImageView?) {
         super.init(nibName: nil, bundle: nil)
         self.imageView = capturedImage
@@ -31,11 +35,18 @@ class PhotoViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
         fatalError("init(coder:) has not been implemented")
     }
     
+    /// viewDidAppear
+    ///
+    /// - Description: displays the text fields and dropdown menu for categories only after the image has loaded
+    ///
+    /// - Parameter animated: pass true indicating screen has loaded image
     override func viewDidAppear(_ animated: Bool) {
         displayTextFields()
         displayDropdown()
     }
     
+    /// viewDidLoad
+    /// - Description: display the image and a save button
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -49,6 +60,8 @@ class PhotoViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
         displaySaveButton()
     }
     
+    /// displaySaveButton
+    /// - Description: add a save image button that triggers the saveImage function when pressed
     func displaySaveButton() {
         view.backgroundColor = UIColor.white
         let verticalBottom: CGFloat = UIScreen.main.bounds.maxY
@@ -64,6 +77,10 @@ class PhotoViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
         self.view.addSubview(saveButton)
     }
     
+    /// textFieldShouldReturn
+    ///
+    /// - Parameter textField: the text field that had data entered
+    /// - Returns: true
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // called when 'return' key pressed. return NO to ignore.
         print("TextField should return method called")
@@ -71,6 +88,8 @@ class PhotoViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
         return true
     }
     
+    /// displayTextFields
+    /// - Description: creates boxes to enter description and category of expense
     func displayTextFields() {
         descriptionTextField =  UITextField(frame: CGRect(x: 0, y: 64, width: UIScreen.main.bounds.size.width, height: 40))
         descriptionTextField.placeholder = "Enter receipt description here"
@@ -97,28 +116,47 @@ class PhotoViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
         self.view.addSubview(categoryTextField)
     }
     
-    // Sets number of columns in picker view
+    /// numberOfComponents
+    /// - Description: Sets number of columns in picker view
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
 
-    // Sets the number of rows in the picker view
+    /// - Description: Sets the number of rows in the picker view
+    ///
+    /// - Parameters:
+    ///   - pickerView: the picker view
+    ///   - component: the component to count rows for
+    /// - Returns: number of rows as Int
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return categories.count
     }
     
-    // This function sets the text of the picker view to the content of the "salutations" array
+    /// - Description: This function sets the text of the picker view to the content of the "salutations" array
+    ///
+    /// - Parameters:
+    ///   - pickerView: the picker view
+    ///   - row: the row number
+    ///   - component: the component in that row
+    /// - Returns: the category to set as the title
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return categories[row]
     }
     
     // When user selects an option, this function will set the text of the text field to reflect
     // the selected option.
+    ///
+    /// - Parameters:
+    ///   - pickerView: the picker view
+    ///   - row: the row selected
+    ///   - component: the component selected from
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         categoryTextField.text = categories[row]
         self.view.endEditing(true)
     }
     
+    /// displayDropdown
+    /// - Description: load the selected item from the dropdown into the categoryTextField to pass to the backend
     func displayDropdown() {
         let pickerView = UIPickerView()
         pickerView.delegate = self
@@ -127,6 +165,8 @@ class PhotoViewController: UIViewController, UITextFieldDelegate, UIPickerViewDe
         categoryTextField.inputView = pickerView
     }
 
+    /// saveImage
+    /// - Description: send image to backend and return pop up alert with parsed cost, call updateTransaction if necessary else return to Overview Screen
     @objc func saveImage() {
         print("Current description \(String(describing: descriptionTextField.text))")
         let description = descriptionTextField.text
