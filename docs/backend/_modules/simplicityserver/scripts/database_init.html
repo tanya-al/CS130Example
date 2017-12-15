@@ -1,0 +1,531 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>simplicityserver.scripts.database_init &mdash; Simplicity Backend 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Simplicity Backend 1.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Simplicity Backend
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Simplicity Backend</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>simplicityserver.scripts.database_init</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for simplicityserver.scripts.database_init</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">PIL</span> <span class="k">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">ImageOps</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+<span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">cStringIO</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="c1"># DBPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), &quot;../app/server/transactions.db&quot;)</span>
+<span class="n">RECEIPTSPATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)),</span> <span class="s2">&quot;receipts&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="encode_b64"><a class="viewcode-back" href="../../../simplicityserver.scripts.html#simplicityserver.scripts.database_init.encode_b64">[docs]</a><span class="k">def</span> <span class="nf">encode_b64</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper function for encoding an image into base64 format</span>
+
+<span class="sd">    :param img: image to encode in PIL Image format</span>
+<span class="sd">    :returns: String containing the base64 encoding of the image</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">jpeg_image_buffer</span> <span class="o">=</span> <span class="n">cStringIO</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+    <span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">jpeg_image_buffer</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;JPEG&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">jpeg_image_buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="decode_b64"><a class="viewcode-back" href="../../../simplicityserver.scripts.html#simplicityserver.scripts.database_init.decode_b64">[docs]</a><span class="k">def</span> <span class="nf">decode_b64</span><span class="p">(</span><span class="n">b64string</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper function for decoding a base64 string into an image</span>
+
+<span class="sd">    :param b64string: String containing the image encoded in base64 format</span>
+<span class="sd">    :returns: decoded image in PIL Image format</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">cStringIO</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">b64string</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="get_thumbnail"><a class="viewcode-back" href="../../../simplicityserver.scripts.html#simplicityserver.scripts.database_init.get_thumbnail">[docs]</a><span class="k">def</span> <span class="nf">get_thumbnail</span><span class="p">(</span><span class="n">b64string</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper function for generating a thumbnail from an image encoded in base64</span>
+
+<span class="sd">    :param b64string: the full-sized image that the thumbnail should be created from</span>
+<span class="sd">    :returns: a string containing the thumbnail-sized version of the image in base64 format</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">decode_b64</span><span class="p">(</span><span class="n">b64string</span><span class="p">)</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">ImageOps</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">Image</span><span class="o">.</span><span class="n">ANTIALIAS</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">img</span><span class="p">)</span></div>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">dbpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dbpath: &quot;</span> <span class="o">+</span> <span class="n">dbpath</span><span class="p">)</span>
+    <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">dbpath</span><span class="p">)</span>
+    <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+    <span class="c1"># clear table</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;DROP TABLE IF EXISTS transactions&#39;</span><span class="p">)</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;CREATE TABLE transactions (</span>
+<span class="s1">                        transaction_id integer PRIMARY KEY,</span>
+<span class="s1">                        user_id integer NOT NULL,</span>
+<span class="s1">                        category text NOT NULL,</span>
+<span class="s1">                        amount real NOT NULL,</span>
+<span class="s1">                        date text NOT NULL,</span>
+<span class="s1">                        description text NOT NULL,</span>
+<span class="s1">                        image text NOT NULL,</span>
+<span class="s1">                        thumbnail text NOT NULL)&#39;&#39;&#39;</span><span class="p">)</span>
+
+    <span class="c1"># insert values</span>
+    <span class="n">transaction_id</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1001-1.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 1, &quot;grocery&quot;, 722.52, &quot;2017-10-15 12:30:45&quot;, &quot;Ralphs&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1001-2.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 1, &quot;retail&quot;, 43.59, &quot;2017-10-16 10:15:30&quot;, &quot;Ross&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1001-3.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 1, &quot;grocery&quot;, 45.05, &quot;2017-10-18 15:45:15&quot;, &quot;Vons&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1002-1.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 2, &quot;grocery&quot;, 8.84, &quot;2017-10-17 09:10:42&quot;, &quot;Sprouts&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1002-2.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 2, &quot;transportation&quot;, 53.80, &quot;2017-10-20 11:23:56&quot;, &quot;Train&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1002-3.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 2, &quot;food&quot;, 54.50, &quot;2017-10-21 06:12:42&quot;, &quot;Mr. Noodle&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1002-4.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 2, &quot;food&quot;, 64.60, &quot;2017-10-23 16:36:38&quot;, &quot;Fat Sal&#39;s&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1003-1.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 3, &quot;food&quot;, 89.42, &quot;2017-10-08 19:29:53&quot;, &quot;Starbucks&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1003-2.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 3, &quot;transportation&quot;, 60.00, &quot;2017-10-12 21:20:39&quot;, &quot;Uber&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="c1">#====================== overview dummy data ======================#</span>
+        <span class="c1"># week 0 #</span>
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1001-1.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Restaurant&quot;, 50.00, &quot;2017-12-05 19:29:00&quot;, &quot;Mr. Noodle&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1001-2.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Transportation&quot;, 15.00, &quot;2017-12-05 19:30:00&quot;, &quot;Taxi&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1001-3.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Textbook&quot;, 70.00, &quot;2017-12-05 19:31:00&quot;, &quot;CS 130&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1002-1.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Grocery&quot;, 42.00, &quot;2017-12-05 19:32:00&quot;, &quot;Ralphs&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1002-2.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Other&quot;, 19.00, &quot;2017-12-05 19:33:00&quot;, &quot;Target&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># week 1 #</span>
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1002-3.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Restaurant&quot;, 20.00, &quot;2017-11-28 19:29:00&quot;, &quot;CPK&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1002-4.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Transportation&quot;, 52.00, &quot;2017-11-28 19:30:00&quot;, &quot;Amtrack&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1003-1.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Textbook&quot;, 30.00, &quot;2017-11-28 19:31:00&quot;, &quot;STATS 100A&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1003-2.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Grocery&quot;, 37.00, &quot;2017-11-28 19:32:00&quot;, &quot;Sprouts&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;test1.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Other&quot;, 23.00, &quot;2017-11-28 19:33:00&quot;, &quot;Parking Structure&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># week 2 #</span>
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;test2.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Restaurant&quot;, 40.00, &quot;2017-11-21 19:29:00&quot;, &quot;TLT&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;test3.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Transportation&quot;, 19.00, &quot;2017-11-21 19:30:00&quot;, &quot;Uber&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;test4.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Textbook&quot;, 10.00, &quot;2017-11-21 19:31:00&quot;, &quot;Chem 20A&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;test5.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Grocery&quot;, 55.00, &quot;2017-11-21 19:32:00&quot;, &quot;Trader Joes&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;test16.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Other&quot;, 43.00, &quot;2017-11-21 19:33:00&quot;, &quot;Target&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># week 3 #</span>
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;test7.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Restaurant&quot;, 60.00, &quot;2017-11-14 19:29:00&quot;, &quot;In N Out&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;test8.png&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Transportation&quot;, 44.00, &quot;2017-11-14 19:30:00&quot;, &quot;Bus&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;test9.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Textbook&quot;, 10.00, &quot;2017-11-14 19:31:00&quot;, &quot;Math 32B&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;test10.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Grocery&quot;, 39.00, &quot;2017-11-14 19:32:00&quot;, &quot;Whole Foods&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;test11.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Other&quot;, 26.00, &quot;2017-11-14 19:33:00&quot;, &quot;Parking&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># week 4 #</span>
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;test12.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Restaurant&quot;, 45.00, &quot;2017-11-07 19:29:00&quot;, &quot;Chick-fil-A&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;test13.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Transportation&quot;, 33.00, &quot;2017-11-07 19:30:00&quot;, &quot;Lyft&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;test14.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Textbook&quot;, 10.00, &quot;2017-11-07 19:31:00&quot;, &quot;ENGR 111&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;test15.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Grocery&quot;, 44.00, &quot;2017-11-07 19:32:00&quot;, &quot;Ralphs&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;test16.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 42069, &quot;Other&quot;, 33.00, &quot;2017-11-07 19:33:00&quot;, &quot;Notebook&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="c1">#==================== end overview dummy data ====================#</span>
+
+    <span class="c1">#===================== breakdown dummy data ======================#</span>
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1001-1.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 99, &quot;restaurant&quot;, 10.00, &quot;2017-11-24 19:29:00&quot;, &quot;Mr. Noodle&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1001-2.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 99, &quot;restaurant&quot;, 15.00, &quot;2017-11-23 19:29:00&quot;, &quot;Diddy Riese&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1001-3.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 99, &quot;grocery&quot;, 5.00, &quot;2017-11-23 19:29:00&quot;, &quot;Ralphs&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1002-1.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 99, &quot;other&quot;, 5.00, &quot;2017-11-23 19:29:00&quot;, &quot;Parking Structure&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1002-2.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 99, &quot;grocery&quot;, 30.00, &quot;2017-11-15 19:30:00&quot;, &quot;Whole Foods&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1002-3.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 99, &quot;other&quot;, 20.00, &quot;2017-11-16 19:31:00&quot;, &quot;Phone charger&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1002-4.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 99, &quot;restaurant&quot;, 10.00, &quot;2017-11-08 19:32:00&quot;, &quot;Fat Sal&#39;s&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1003-1.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 99, &quot;other&quot;, 20.00, &quot;2017-11-09 19:33:00&quot;, &quot;Whale watching&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">b64</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RECEIPTSPATH</span><span class="p">,</span> <span class="s2">&quot;1003-2.jpg&quot;</span><span class="p">)))</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                    VALUES (?, 99, &quot;other&quot;, 25.00, &quot;2017-11-08 19:33:00&quot;, &quot;Phone repair&quot;, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">b64</span><span class="p">,</span> <span class="n">get_thumbnail</span><span class="p">(</span><span class="n">b64</span><span class="p">)))</span>
+    <span class="n">transaction_id</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="c1">#=================== end breakdown dummy data ====================#</span>
+
+    <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+    <span class="c1"># cur.execute(&#39;SELECT transaction_id, user_id, date FROM transactions WHERE user_id=1001 ORDER BY date DESC LIMIT 3;&#39;)</span>
+    <span class="c1"># res = cur.fetchall()</span>
+
+    <span class="c1"># print(json.dumps(OrderedDict([</span>
+    <span class="c1">#   (&#39;transactionId&#39;, res[0]),</span>
+    <span class="c1">#   (&#39;userId&#39;, res[1]),</span>
+    <span class="c1">#   (&#39;date&#39;, res[2])</span>
+    <span class="c1"># ]), sort_keys=False, indent=4))</span>
+
+    <span class="c1"># dict_list = []</span>
+    <span class="c1"># for row in cur.fetchall():</span>
+    <span class="c1">#   ordered_dict = OrderedDict([</span>
+    <span class="c1">#           (&#39;transactionId&#39;, row[0]),</span>
+    <span class="c1">#           (&#39;userId&#39;, row[1]),</span>
+    <span class="c1">#           (&#39;date&#39;, row[2])</span>
+    <span class="c1">#       ])</span>
+    <span class="c1">#   dict_list.append(ordered_dict)</span>
+
+    <span class="c1"># print(json.dumps(dict_list, indent=4))</span>
+
+    <span class="c1"># print(cur.fetchall())</span>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Lake Mossman, Scott Shi, Hao Wang, Haozhuo Huang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

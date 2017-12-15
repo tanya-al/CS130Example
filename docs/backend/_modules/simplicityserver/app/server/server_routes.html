@@ -1,0 +1,421 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>simplicityserver.app.server.server_routes &mdash; Simplicity Backend 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="Simplicity Backend 1.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> Simplicity Backend
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Simplicity Backend</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>simplicityserver.app.server.server_routes</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for simplicityserver.app.server.server_routes</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">endpoints</span> <span class="k">import</span> <span class="n">Endpoints</span>
+
+<span class="kn">from</span> <span class="nn">flask</span> <span class="k">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">jsonify</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">abort</span>
+<span class="kn">from</span> <span class="nn">werkzeug</span> <span class="k">import</span> <span class="n">secure_filename</span>
+<span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+<span class="n">DBPATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)),</span> <span class="s2">&quot;transactions.db&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="get_db"><a class="viewcode-back" href="../../../../simplicityserver.app.server.html#simplicityserver.app.server.server_routes.get_db">[docs]</a><span class="k">def</span> <span class="nf">get_db</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the connection to the database if one already exists, otherwise create one and save it</span>
+
+<span class="sd">    :returns: connection to the database</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="s1">&#39;_database&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">db</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># print(DBPATH)</span>
+        <span class="n">db</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">_database</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">DBPATH</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">db</span></div>
+
+<div class="viewcode-block" id="get_endpoints"><a class="viewcode-back" href="../../../../simplicityserver.app.server.html#simplicityserver.app.server.server_routes.get_endpoints">[docs]</a><span class="k">def</span> <span class="nf">get_endpoints</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the Endpoints class object if one already exists, otherwise create one and save it</span>
+
+<span class="sd">    :returns: the Endpoints class object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ep</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="s1">&#39;endpoints&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ep</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ep</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">endpoints</span> <span class="o">=</span> <span class="n">Endpoints</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">ep</span></div>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="index"><a class="viewcode-back" href="../../../../simplicityserver.app.server.html#simplicityserver.app.server.server_routes.index">[docs]</a><span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Server route for the root directory of the server, which just returns some sample text</span>
+
+<span class="sd">    :returns: a String with sample text</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot;Let&#39;s go CS130!&quot;</span></div>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/transactions&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">])</span>
+<div class="viewcode-block" id="transactions"><a class="viewcode-back" href="../../../../simplicityserver.app.server.html#simplicityserver.app.server.server_routes.transactions">[docs]</a><span class="k">def</span> <span class="nf">transactions</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Server route for the GET /transactions path of the server, which performs checks on the url parameters before passing them to the endpoint code</span>
+
+<span class="sd">    :returns: a json object containing the transactions data for the user</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">user_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;userId&quot;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">max_num</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;max&quot;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">user_id</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;Must specify a user id&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">user_id</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;The parameter &#39;userId&#39; must be an integer&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">max_num</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="n">max_num</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">max_num</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;The parameter &#39;max&#39; must be an integer&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">offset</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">offset</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;The parameter &#39;offset&#39; must be an integer&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">get_endpoints</span><span class="p">()</span><span class="o">.</span><span class="n">get_transactions</span><span class="p">(</span><span class="n">get_db</span><span class="p">(),</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">max_num</span><span class="p">,</span> <span class="n">offset</span><span class="p">))</span></div>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/receipt_img&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">])</span>
+<div class="viewcode-block" id="receipt_img"><a class="viewcode-back" href="../../../../simplicityserver.app.server.html#simplicityserver.app.server.server_routes.receipt_img">[docs]</a><span class="k">def</span> <span class="nf">receipt_img</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Server route for the GET /receipt_img path of the server, which performs checks on the url parameters before passing them to the endpoint code</span>
+
+<span class="sd">    :returns: a json object containing the receipt image data for the user</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">transaction_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;transactionId&quot;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">transaction_id</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;Must specify a transaction id&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">transaction_id</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;The parameter &#39;transactionId&#39; must be an integer&quot;</span><span class="p">)</span>
+   
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">get_endpoints</span><span class="p">()</span><span class="o">.</span><span class="n">get_receipt_img</span><span class="p">(</span><span class="n">get_db</span><span class="p">(),</span> <span class="n">transaction_id</span><span class="p">))</span></div>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/receipts&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">])</span>
+<div class="viewcode-block" id="receipts"><a class="viewcode-back" href="../../../../simplicityserver.app.server.html#simplicityserver.app.server.server_routes.receipts">[docs]</a><span class="k">def</span> <span class="nf">receipts</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Server route for the GET /receipts path of the server, which performs checks on the url parameters before passing them to the endpoint code</span>
+
+<span class="sd">    :returns: a json object containing the receipts data for the user</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">user_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;userId&quot;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">max_num</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;max&quot;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;offset&quot;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">user_id</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;Must specify a user id&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">user_id</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;The parameter &#39;userId&#39; must be an integer&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">max_num</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="n">max_num</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">max_num</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;The parameter &#39;max&#39; must be an integer&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">offset</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">offset</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;The parameter &#39;offset&#39; must be an integer&quot;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">get_endpoints</span><span class="p">()</span><span class="o">.</span><span class="n">get_receipts</span><span class="p">(</span><span class="n">get_db</span><span class="p">(),</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">max_num</span><span class="p">,</span> <span class="n">offset</span><span class="p">))</span></div>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/overview&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">])</span>
+<div class="viewcode-block" id="overview"><a class="viewcode-back" href="../../../../simplicityserver.app.server.html#simplicityserver.app.server.server_routes.overview">[docs]</a><span class="k">def</span> <span class="nf">overview</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Server route for the GET /overview path of the server, which performs checks on the url parameters before passing them to the endpoint code</span>
+
+<span class="sd">    :returns: a json object containing the overview data for the user</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">user_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;userId&quot;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">weeks</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;weeks&quot;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">user_id</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;Must specify a user id&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">user_id</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;The parameter &#39;userId&#39; must be an integer&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">weeks</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;Must specify the number of weeks&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">weeks</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;The parameter &#39;weeks&#39; must be an integer&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">get_endpoints</span><span class="p">()</span><span class="o">.</span><span class="n">get_overview</span><span class="p">(</span><span class="n">get_db</span><span class="p">(),</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">weeks</span><span class="p">))</span></div>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/breakdown&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">])</span>
+<div class="viewcode-block" id="breakdown"><a class="viewcode-back" href="../../../../simplicityserver.app.server.html#simplicityserver.app.server.server_routes.breakdown">[docs]</a><span class="k">def</span> <span class="nf">breakdown</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Server route for the GET /breakdown path of the server, which performs checks on the url parameters before passing them to the endpoint code</span>
+
+<span class="sd">    :returns: a json object containing the breakdown data for the user</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">user_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;userId&quot;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">weeks</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;weeks&quot;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">user_id</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;Must specify a user id&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">user_id</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;The parameter &#39;userId&#39; must be an integer&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">weeks</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;Must specify the number of weeks&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">weeks</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;The parameter &#39;weeks&#39; must be an integer&quot;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">get_endpoints</span><span class="p">()</span><span class="o">.</span><span class="n">get_breakdown</span><span class="p">(</span><span class="n">get_db</span><span class="p">(),</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">weeks</span><span class="p">))</span></div>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/receipt&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;POST&quot;</span><span class="p">])</span>
+<div class="viewcode-block" id="receive_image"><a class="viewcode-back" href="../../../../simplicityserver.app.server.html#simplicityserver.app.server.server_routes.receive_image">[docs]</a><span class="k">def</span> <span class="nf">receive_image</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Server route for the POST /receipt path of the server, which performs checks on the json data from the user before passing it to the endpoint code</span>
+
+<span class="sd">    :returns: a json object containing the transactionId and guessed amount for the user</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">json_data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;userId&#39;</span> <span class="ow">in</span> <span class="n">json_data</span><span class="p">:</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;Must specify user id&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;category&#39;</span> <span class="ow">in</span> <span class="n">json_data</span><span class="p">:</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;Must specify category&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;description&#39;</span> <span class="ow">in</span> <span class="n">json_data</span><span class="p">:</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;Must include description&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;data&#39;</span> <span class="ow">in</span> <span class="n">json_data</span><span class="p">:</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;Must include image data&quot;</span><span class="p">)</span> 
+
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">get_endpoints</span><span class="p">()</span><span class="o">.</span><span class="n">post_receipt</span><span class="p">(</span><span class="n">get_db</span><span class="p">(),</span> <span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;userId&#39;</span><span class="p">],</span> <span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">],</span> <span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">],</span> <span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]))</span></div>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/update_transaction&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;POST&quot;</span><span class="p">])</span>
+<div class="viewcode-block" id="update_transaction"><a class="viewcode-back" href="../../../../simplicityserver.app.server.html#simplicityserver.app.server.server_routes.update_transaction">[docs]</a><span class="k">def</span> <span class="nf">update_transaction</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Server route for the POST /update_transaction path of the server, which performs checks on the json data from the user before passing it to the endpoint code</span>
+
+<span class="sd">    :returns: a json object containing the message string</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">json_data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;transactionId&#39;</span> <span class="ow">in</span> <span class="n">json_data</span><span class="p">:</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;Must specify transaction id&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;amount&#39;</span> <span class="ow">in</span> <span class="n">json_data</span><span class="p">:</span>
+        <span class="n">abort</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;Must specify amount&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">get_endpoints</span><span class="p">()</span><span class="o">.</span><span class="n">update_transaction</span><span class="p">(</span><span class="n">get_db</span><span class="p">(),</span> <span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;transactionId&#39;</span><span class="p">],</span> <span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">])</span></div>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">teardown_appcontext</span>
+<div class="viewcode-block" id="close_connection"><a class="viewcode-back" href="../../../../simplicityserver.app.server.html#simplicityserver.app.server.server_routes.close_connection">[docs]</a><span class="k">def</span> <span class="nf">close_connection</span><span class="p">(</span><span class="n">exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Teardown method that runs when the server is stopped, closes database connection</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="s1">&#39;_database&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">db</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+   <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Lake Mossman, Scott Shi, Hao Wang, Haozhuo Huang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

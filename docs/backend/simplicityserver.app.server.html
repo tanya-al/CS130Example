@@ -1,0 +1,608 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>simplicityserver.app.server package &mdash; Simplicity Backend 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Simplicity Backend 1.0 documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Simplicity Backend
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">simplicityserver.app.server package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-simplicityserver.app.server.endpoints">simplicityserver.app.server.endpoints module</a></li>
+<li><a class="reference internal" href="#module-simplicityserver.app.server.server_routes">simplicityserver.app.server.server_routes module</a></li>
+<li><a class="reference internal" href="#module-simplicityserver.app.server.utils">simplicityserver.app.server.utils module</a></li>
+<li><a class="reference internal" href="#module-simplicityserver.app.server">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Simplicity Backend</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>simplicityserver.app.server package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/simplicityserver.app.server.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="simplicityserver-app-server-package">
+<h1>simplicityserver.app.server package<a class="headerlink" href="#simplicityserver-app-server-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-simplicityserver.app.server.endpoints">
+<span id="simplicityserver-app-server-endpoints-module"></span><h2>simplicityserver.app.server.endpoints module<a class="headerlink" href="#module-simplicityserver.app.server.endpoints" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="simplicityserver.app.server.endpoints.Endpoints">
+<em class="property">class </em><code class="descclassname">simplicityserver.app.server.endpoints.</code><code class="descname">Endpoints</code><a class="reference internal" href="_modules/simplicityserver/app/server/endpoints.html#Endpoints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.server.endpoints.Endpoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contains all of the backend server endpoints</p>
+<dl class="method">
+<dt id="simplicityserver.app.server.endpoints.Endpoints.get_breakdown">
+<code class="descname">get_breakdown</code><span class="sig-paren">(</span><em>db</em>, <em>user_id</em>, <em>weeks</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/server/endpoints.html#Endpoints.get_breakdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.server.endpoints.Endpoints.get_breakdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the weekly breakdown by category for past <code class="docutils literal"><span class="pre">weeks</span></code> for <code class="docutils literal"><span class="pre">userId</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>db</strong> &#8211; database connection</li>
+<li><strong>user_id</strong> &#8211; the id of the user we want to query fields for</li>
+<li><strong>weeks</strong> &#8211; weeks ago we want to look back in the database</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dict containing list of breakdown for each category, containing category name and list of amounts per week</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simplicityserver.app.server.endpoints.Endpoints.get_overview">
+<code class="descname">get_overview</code><span class="sig-paren">(</span><em>db</em>, <em>user_id</em>, <em>weeks</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/server/endpoints.html#Endpoints.get_overview"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.server.endpoints.Endpoints.get_overview" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an overview describing how much the user with <code class="docutils literal"><span class="pre">userId</span></code> spent on each category over the past <code class="docutils literal"><span class="pre">weeks</span></code>, by both amount and percentage of total spending.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>db</strong> &#8211; database connection</li>
+<li><strong>user_id</strong> &#8211; the id of the user we want to query fields for</li>
+<li><strong>weeks</strong> &#8211; weeks ago we want to look back in the database</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">list of <code class="docutils literal"><span class="pre">{‘category’,</span> <span class="pre">‘amount’,</span> <span class="pre">‘percentage’}</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simplicityserver.app.server.endpoints.Endpoints.get_receipt_img">
+<code class="descname">get_receipt_img</code><span class="sig-paren">(</span><em>db</em>, <em>transaction_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/server/endpoints.html#Endpoints.get_receipt_img"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.server.endpoints.Endpoints.get_receipt_img" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the receipt image associated with the <code class="docutils literal"><span class="pre">transaction_id</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>db</strong> &#8211; database connection</li>
+<li><strong>transaction_id</strong> &#8211; id of the transaction we want to retrieve the image of</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">base64 encoded image associated with the <code class="docutils literal"><span class="pre">transaction_id</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simplicityserver.app.server.endpoints.Endpoints.get_receipts">
+<code class="descname">get_receipts</code><span class="sig-paren">(</span><em>db</em>, <em>user_id</em>, <em>limit</em>, <em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/server/endpoints.html#Endpoints.get_receipts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.server.endpoints.Endpoints.get_receipts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an array of receipts sorted by date (most recent first), with the specified <code class="docutils literal"><span class="pre">userId</span></code>, and receipt images compressed into thumbnail versions</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>db</strong> &#8211; database connection</li>
+<li><strong>user_id</strong> &#8211; the id of the user we want to query fields for</li>
+<li><strong>limit</strong> &#8211; max number of rows we want to return</li>
+<li><strong>offset</strong> &#8211; offset of the rows we want to return</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">list of <code class="docutils literal"><span class="pre">{‘transactionId’,</span> <span class="pre">‘userId’,</span> <span class="pre">date,</span> <span class="pre">‘thumbnailImageData’}</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simplicityserver.app.server.endpoints.Endpoints.get_transactions">
+<code class="descname">get_transactions</code><span class="sig-paren">(</span><em>db</em>, <em>user_id</em>, <em>limit</em>, <em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/server/endpoints.html#Endpoints.get_transactions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.server.endpoints.Endpoints.get_transactions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an array of transactions sorted by date (most recent first), with the specified <code class="docutils literal"><span class="pre">userId</span></code> and a maximum of <code class="docutils literal"><span class="pre">max</span></code> transactions in the array, with an offset of <code class="docutils literal"><span class="pre">offset</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>db</strong> &#8211; database connection</li>
+<li><strong>user_id</strong> &#8211; the id of the user we want to query fields for</li>
+<li><strong>limit</strong> &#8211; max number of rows we want to return</li>
+<li><strong>offset</strong> &#8211; offset of the rows we want to return</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dict of <code class="docutils literal"><span class="pre">{‘transactionId’,</span> <span class="pre">‘userId’,</span> <span class="pre">‘category’,</span> <span class="pre">‘amount’,</span> <span class="pre">‘date’,</span> <span class="pre">'description'}</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simplicityserver.app.server.endpoints.Endpoints.post_receipt">
+<code class="descname">post_receipt</code><span class="sig-paren">(</span><em>db</em>, <em>user_id</em>, <em>category</em>, <em>description</em>, <em>image_data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/server/endpoints.html#Endpoints.post_receipt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.server.endpoints.Endpoints.post_receipt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use pytesseract to find the amount, and create a transaction for this purchase in the database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>db</strong> &#8211; database connection</li>
+<li><strong>user_id</strong> &#8211; the id of the user we want to query fields for</li>
+<li><strong>category</strong> &#8211; name of the category this transaction belongs in</li>
+<li><strong>image_data</strong> &#8211; base64 encoded string containing the image</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dict of <code class="docutils literal"><span class="pre">{'transactionId',</span> <span class="pre">'amount'}</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simplicityserver.app.server.endpoints.Endpoints.update_transaction">
+<code class="descname">update_transaction</code><span class="sig-paren">(</span><em>db</em>, <em>transaction_id</em>, <em>amount</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/server/endpoints.html#Endpoints.update_transaction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.server.endpoints.Endpoints.update_transaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the transaction exists in the database, and if so then store the amount into that transaction&#8217;s database entry.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>db</strong> &#8211; database connection</li>
+<li><strong>transaction_id</strong> &#8211; the id of the transaction the user wants to update the amount of</li>
+<li><strong>amount</strong> &#8211; the new amount that the user wants to store into the transaction</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a string saying that the transaction does not exist, or if it does exist then a string saying &#8216;updated transaction&#8217;</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-simplicityserver.app.server.server_routes">
+<span id="simplicityserver-app-server-server-routes-module"></span><h2>simplicityserver.app.server.server_routes module<a class="headerlink" href="#module-simplicityserver.app.server.server_routes" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="simplicityserver.app.server.server_routes.breakdown">
+<code class="descclassname">simplicityserver.app.server.server_routes.</code><code class="descname">breakdown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/server/server_routes.html#breakdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.server.server_routes.breakdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Server route for the GET /breakdown path of the server, which performs checks on the url parameters before passing them to the endpoint code</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a json object containing the breakdown data for the user</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="simplicityserver.app.server.server_routes.close_connection">
+<code class="descclassname">simplicityserver.app.server.server_routes.</code><code class="descname">close_connection</code><span class="sig-paren">(</span><em>exception</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/server/server_routes.html#close_connection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.server.server_routes.close_connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Teardown method that runs when the server is stopped, closes database connection</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="simplicityserver.app.server.server_routes.get_db">
+<code class="descclassname">simplicityserver.app.server.server_routes.</code><code class="descname">get_db</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/server/server_routes.html#get_db"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.server.server_routes.get_db" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the connection to the database if one already exists, otherwise create one and save it</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">connection to the database</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="simplicityserver.app.server.server_routes.get_endpoints">
+<code class="descclassname">simplicityserver.app.server.server_routes.</code><code class="descname">get_endpoints</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/server/server_routes.html#get_endpoints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.server.server_routes.get_endpoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the Endpoints class object if one already exists, otherwise create one and save it</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the Endpoints class object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="simplicityserver.app.server.server_routes.index">
+<code class="descclassname">simplicityserver.app.server.server_routes.</code><code class="descname">index</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/server/server_routes.html#index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.server.server_routes.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Server route for the root directory of the server, which just returns some sample text</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a String with sample text</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="simplicityserver.app.server.server_routes.overview">
+<code class="descclassname">simplicityserver.app.server.server_routes.</code><code class="descname">overview</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/server/server_routes.html#overview"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.server.server_routes.overview" title="Permalink to this definition">¶</a></dt>
+<dd><p>Server route for the GET /overview path of the server, which performs checks on the url parameters before passing them to the endpoint code</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a json object containing the overview data for the user</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="simplicityserver.app.server.server_routes.receipt_img">
+<code class="descclassname">simplicityserver.app.server.server_routes.</code><code class="descname">receipt_img</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/server/server_routes.html#receipt_img"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.server.server_routes.receipt_img" title="Permalink to this definition">¶</a></dt>
+<dd><p>Server route for the GET /receipt_img path of the server, which performs checks on the url parameters before passing them to the endpoint code</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a json object containing the receipt image data for the user</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="simplicityserver.app.server.server_routes.receipts">
+<code class="descclassname">simplicityserver.app.server.server_routes.</code><code class="descname">receipts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/server/server_routes.html#receipts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.server.server_routes.receipts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Server route for the GET /receipts path of the server, which performs checks on the url parameters before passing them to the endpoint code</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a json object containing the receipts data for the user</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="simplicityserver.app.server.server_routes.receive_image">
+<code class="descclassname">simplicityserver.app.server.server_routes.</code><code class="descname">receive_image</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/server/server_routes.html#receive_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.server.server_routes.receive_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Server route for the POST /receipt path of the server, which performs checks on the json data from the user before passing it to the endpoint code</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a json object containing the transactionId and guessed amount for the user</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="simplicityserver.app.server.server_routes.transactions">
+<code class="descclassname">simplicityserver.app.server.server_routes.</code><code class="descname">transactions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/server/server_routes.html#transactions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.server.server_routes.transactions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Server route for the GET /transactions path of the server, which performs checks on the url parameters before passing them to the endpoint code</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a json object containing the transactions data for the user</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="simplicityserver.app.server.server_routes.update_transaction">
+<code class="descclassname">simplicityserver.app.server.server_routes.</code><code class="descname">update_transaction</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/server/server_routes.html#update_transaction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.server.server_routes.update_transaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Server route for the POST /update_transaction path of the server, which performs checks on the json data from the user before passing it to the endpoint code</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a json object containing the message string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-simplicityserver.app.server.utils">
+<span id="simplicityserver-app-server-utils-module"></span><h2>simplicityserver.app.server.utils module<a class="headerlink" href="#module-simplicityserver.app.server.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="simplicityserver.app.server.utils.Utils">
+<em class="property">class </em><code class="descclassname">simplicityserver.app.server.utils.</code><code class="descname">Utils</code><a class="reference internal" href="_modules/simplicityserver/app/server/utils.html#Utils"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.server.utils.Utils" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contains helper functions for the server endpoints</p>
+<dl class="method">
+<dt id="simplicityserver.app.server.utils.Utils.decode_b64">
+<code class="descname">decode_b64</code><span class="sig-paren">(</span><em>b64string</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/server/utils.html#Utils.decode_b64"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.server.utils.Utils.decode_b64" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decodes a base64 image into PIL Image format</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>b64string</strong> &#8211; the string containing the image in base64 format to decode</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a PIL Image decoded from the base64 string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simplicityserver.app.server.utils.Utils.encode_b64">
+<code class="descname">encode_b64</code><span class="sig-paren">(</span><em>img</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/server/utils.html#Utils.encode_b64"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.server.utils.Utils.encode_b64" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encodes an image into base 64 format</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>img</strong> &#8211; the PIL Image to convert to base 64</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a string containing the image encoded into base64 text</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="simplicityserver.app.server.utils.Utils.get_thumbnail">
+<code class="descname">get_thumbnail</code><span class="sig-paren">(</span><em>b64string</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/server/utils.html#Utils.get_thumbnail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.server.utils.Utils.get_thumbnail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a thumbnail from an image encoded in base64</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>b64string</strong> &#8211; the full-sized image that the thumbnail should be created from</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a string containing the thumbnail-sized version of the image in base64 format</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-simplicityserver.app.server">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-simplicityserver.app.server" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Lake Mossman, Scott Shi, Hao Wang, Haozhuo Huang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

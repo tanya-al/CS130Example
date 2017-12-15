@@ -1,0 +1,441 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>simplicityserver.app.server.endpoints &mdash; Simplicity Backend 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="Simplicity Backend 1.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> Simplicity Backend
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Simplicity Backend</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>simplicityserver.app.server.endpoints</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for simplicityserver.app.server.endpoints</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">simplicityserver.app.tesseract.extractSpending</span> <span class="k">as</span> <span class="nn">extract_spending</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="k">import</span> <span class="n">Utils</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<div class="viewcode-block" id="Endpoints"><a class="viewcode-back" href="../../../../simplicityserver.app.server.html#simplicityserver.app.server.endpoints.Endpoints">[docs]</a><span class="k">class</span> <span class="nc">Endpoints</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Contains all of the backend server endpoints</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Endpoints.get_transactions"><a class="viewcode-back" href="../../../../simplicityserver.app.server.html#simplicityserver.app.server.endpoints.Endpoints.get_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">get_transactions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get an array of transactions sorted by date (most recent first), with the specified ``userId`` and a maximum of ``max`` transactions in the array, with an offset of ``offset``</span>
+
+<span class="sd">        :param db: database connection</span>
+<span class="sd">        :param user_id: the id of the user we want to query fields for</span>
+<span class="sd">        :param limit: max number of rows we want to return</span>
+<span class="sd">        :param offset: offset of the rows we want to return</span>
+<span class="sd">        :returns: dict of ``{‘transactionId’, ‘userId’, ‘category’, ‘amount’, ‘date’, &#39;description&#39;}``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; SELECT transaction_id, user_id, category, amount, date, description FROM transactions </span>
+<span class="s1">                        WHERE user_id=? </span>
+<span class="s1">                        ORDER BY date DESC </span>
+<span class="s1">                        LIMIT ? OFFSET ?;&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">offset</span><span class="p">))</span>
+        <span class="n">dict_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">():</span>
+            <span class="n">dict_list</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                    <span class="s1">&#39;transactionId&#39;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="s1">&#39;userId&#39;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                    <span class="s1">&#39;category&#39;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                    <span class="s1">&#39;amount&#39;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+                    <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+                    <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span>
+                <span class="p">})</span>
+        <span class="k">return</span> <span class="n">dict_list</span></div>
+
+<div class="viewcode-block" id="Endpoints.get_receipt_img"><a class="viewcode-back" href="../../../../simplicityserver.app.server.html#simplicityserver.app.server.endpoints.Endpoints.get_receipt_img">[docs]</a>    <span class="k">def</span> <span class="nf">get_receipt_img</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">transaction_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the receipt image associated with the ``transaction_id``</span>
+<span class="sd">        </span>
+<span class="sd">        :param db: database connection</span>
+<span class="sd">        :param transaction_id: id of the transaction we want to retrieve the image of</span>
+<span class="sd">        :returns: base64 encoded image associated with the ``transaction_id``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;SELECT image FROM transactions WHERE transaction_id=?&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,))</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">ret</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;img&#39;</span><span class="p">:</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">]}</span></div>
+
+<div class="viewcode-block" id="Endpoints.get_receipts"><a class="viewcode-back" href="../../../../simplicityserver.app.server.html#simplicityserver.app.server.endpoints.Endpoints.get_receipts">[docs]</a>    <span class="k">def</span> <span class="nf">get_receipts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get an array of receipts sorted by date (most recent first), with the specified ``userId``, and receipt images compressed into thumbnail versions</span>
+
+<span class="sd">        :param db: database connection</span>
+<span class="sd">        :param user_id: the id of the user we want to query fields for</span>
+<span class="sd">        :param limit: max number of rows we want to return</span>
+<span class="sd">        :param offset: offset of the rows we want to return</span>
+<span class="sd">        :returns: list of ``{‘transactionId’, ‘userId’, date, ‘thumbnailImageData’}``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; SELECT transaction_id, user_id, date, thumbnail FROM transactions </span>
+<span class="s1">                        WHERE user_id=? </span>
+<span class="s1">                        ORDER BY date DESC </span>
+<span class="s1">                        LIMIT ? OFFSET ?;&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">offset</span><span class="p">))</span>
+        <span class="n">dict_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">():</span>
+            <span class="n">dict_list</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                    <span class="s1">&#39;transactionId&#39;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="s1">&#39;userId&#39;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                    <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                    <span class="s1">&#39;thumbnailImageData&#39;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+                <span class="p">})</span>
+        <span class="k">return</span> <span class="n">dict_list</span></div>
+
+<div class="viewcode-block" id="Endpoints.get_overview"><a class="viewcode-back" href="../../../../simplicityserver.app.server.html#simplicityserver.app.server.endpoints.Endpoints.get_overview">[docs]</a>    <span class="k">def</span> <span class="nf">get_overview</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">weeks</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get an overview describing how much the user with ``userId`` spent on each category over the past ``weeks``, by both amount and percentage of total spending.</span>
+<span class="sd">        </span>
+<span class="sd">        :param db: database connection</span>
+<span class="sd">        :param user_id: the id of the user we want to query fields for</span>
+<span class="sd">        :param weeks: weeks ago we want to look back in the database</span>
+<span class="sd">        :returns: list of ``{‘category’, ‘amount’, ‘percentage’}``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">days</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">weeks</span><span class="p">)</span> <span class="o">*</span> <span class="mi">7</span>
+        <span class="n">target_date</span> <span class="o">=</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">days</span><span class="p">))</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;SELECT category, amount FROM transactions</span>
+<span class="s1">                     WHERE user_id=? </span>
+<span class="s1">                     AND CAST(strftime(&#39;</span><span class="si">%s</span><span class="s1">&#39;, date) AS integer) </span>
+<span class="s1">                         &gt; CAST(strftime(&#39;</span><span class="si">%s</span><span class="s1">&#39;, ?) AS integer);&#39;&#39;&#39;</span>
+                     <span class="p">,</span> <span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">target_date</span><span class="p">))</span>
+        <span class="n">dict_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">():</span>
+            <span class="c1"># check if this category already exists</span>
+            <span class="n">existed</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dict_list</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;category&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                    <span class="n">existed</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">d</span><span class="p">[</span><span class="s2">&quot;amount&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;amount&quot;</span><span class="p">],</span><span class="mi">2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">existed</span><span class="p">:</span>
+                <span class="n">dict_list</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                        <span class="s1">&#39;category&#39;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                        <span class="s1">&#39;amount&#39;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                    <span class="p">})</span>
+        
+        <span class="c1"># calculate total</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">for</span> <span class="n">transaction</span> <span class="ow">in</span> <span class="n">dict_list</span><span class="p">:</span>
+            <span class="c1"># print(transaction)</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">transaction</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span>
+
+        <span class="c1"># append percentage</span>
+        <span class="k">for</span> <span class="n">transaction</span> <span class="ow">in</span> <span class="n">dict_list</span><span class="p">:</span>
+            <span class="n">transaction</span><span class="p">[</span><span class="s1">&#39;percentage&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">transaction</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">]</span><span class="o">/</span><span class="n">total</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># print(dict_list)</span>
+        <span class="k">return</span> <span class="n">dict_list</span></div>
+
+<div class="viewcode-block" id="Endpoints.get_breakdown"><a class="viewcode-back" href="../../../../simplicityserver.app.server.html#simplicityserver.app.server.endpoints.Endpoints.get_breakdown">[docs]</a>    <span class="k">def</span> <span class="nf">get_breakdown</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">weeks</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the weekly breakdown by category for past ``weeks`` for ``userId``</span>
+<span class="sd">        </span>
+<span class="sd">        :param db: database connection</span>
+<span class="sd">        :param user_id: the id of the user we want to query fields for</span>
+<span class="sd">        :param weeks: weeks ago we want to look back in the database</span>
+<span class="sd">        :returns: dict containing list of breakdown for each category, containing category name and list of amounts per week</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">weeklist</span> <span class="o">=</span> <span class="p">[</span><span class="mi">7</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">weeks</span><span class="p">))]</span>
+        <span class="n">target_dates</span> <span class="o">=</span> <span class="p">[(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">d</span><span class="p">))</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">weeklist</span><span class="p">]</span>
+        <span class="n">target_dates</span> <span class="o">=</span> <span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)]</span> <span class="o">+</span> <span class="n">target_dates</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">weekdicts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">target_dates</span><span class="p">)):</span>
+            <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;SELECT category, amount FROM transactions</span>
+<span class="s1">                         WHERE user_id=? </span>
+<span class="s1">                         AND date &lt;= ?</span>
+<span class="s1">                         AND date &gt; ?;&#39;&#39;&#39;</span>
+                         <span class="p">,</span> <span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">target_dates</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">target_dates</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+            <span class="n">transactions</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+            <span class="n">categories</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">transactions</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">:</span>
+                    <span class="n">categories</span><span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">categories</span><span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">weekdicts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">categories</span><span class="p">)</span>
+
+        <span class="n">breakdown</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">weekdicts</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">weekdicts</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">breakdown</span><span class="p">:</span>
+                    <span class="n">breakdown</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">weekdicts</span><span class="p">)</span>
+                <span class="n">breakdown</span><span class="p">[</span><span class="n">category</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">weekdicts</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">category</span><span class="p">]</span>
+
+        <span class="n">breakdown_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">breakdown</span><span class="p">:</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="n">category</span><span class="p">,</span>
+                <span class="s2">&quot;amounts&quot;</span><span class="p">:</span> <span class="n">breakdown</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>
+            <span class="p">}</span>
+            <span class="n">breakdown_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;userId&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">user_id</span><span class="p">),</span>
+            <span class="s2">&quot;weeks&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">weeks</span><span class="p">),</span>
+            <span class="s2">&quot;breakdowns&quot;</span><span class="p">:</span> <span class="n">breakdown_list</span>
+        <span class="p">}</span></div>
+
+<div class="viewcode-block" id="Endpoints.post_receipt"><a class="viewcode-back" href="../../../../simplicityserver.app.server.html#simplicityserver.app.server.endpoints.Endpoints.post_receipt">[docs]</a>    <span class="k">def</span> <span class="nf">post_receipt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">image_data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Use pytesseract to find the amount, and create a transaction for this purchase in the database.</span>
+<span class="sd">        </span>
+<span class="sd">        :param db: database connection</span>
+<span class="sd">        :param user_id: the id of the user we want to query fields for</span>
+<span class="sd">        :param category: name of the category this transaction belongs in</span>
+<span class="sd">        :param image_data: base64 encoded string containing the image</span>
+<span class="sd">        :returns: dict of ``{&#39;transactionId&#39;, &#39;amount&#39;}``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;SELECT MAX(transaction_id) FROM transactions&#39;</span><span class="p">)</span>
+        <span class="n">maxtransaction</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">maxtransaction</span> <span class="o">==</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="n">transaction_id</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">transaction_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">maxtransaction</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">amount</span> <span class="o">=</span> <span class="n">extract_spending</span><span class="o">.</span><span class="n">extract_receipt_total</span><span class="p">(</span><span class="n">Utils</span><span class="p">()</span><span class="o">.</span><span class="n">decode_b64</span><span class="p">(</span><span class="n">image_data</span><span class="p">))</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>
+
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">amount</span><span class="p">,</span> <span class="n">date</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">image_data</span><span class="p">,</span> <span class="n">Utils</span><span class="p">()</span><span class="o">.</span><span class="n">get_thumbnail</span><span class="p">(</span><span class="n">image_data</span><span class="p">)))</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;transactionId&#39;</span><span class="p">:</span> <span class="n">transaction_id</span><span class="p">,</span> <span class="s1">&#39;amount&#39;</span><span class="p">:</span> <span class="n">amount</span><span class="p">}</span></div>
+
+<div class="viewcode-block" id="Endpoints.update_transaction"><a class="viewcode-back" href="../../../../simplicityserver.app.server.html#simplicityserver.app.server.endpoints.Endpoints.update_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">update_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">transaction_id</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if the transaction exists in the database, and if so then store the amount into that transaction&#39;s database entry.</span>
+
+<span class="sd">        :param db: database connection</span>
+<span class="sd">        :param transaction_id: the id of the transaction the user wants to update the amount of</span>
+<span class="sd">        :param amount: the new amount that the user wants to store into the transaction</span>
+<span class="sd">        :returns: a string saying that the transaction does not exist, or if it does exist then a string saying &#39;updated transaction&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; SELECT transaction_id FROM transactions</span>
+<span class="s1">                        WHERE transaction_id=?;&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">transaction_id</span><span class="p">,))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;transaction with id </span><span class="si">%d</span><span class="s1"> does not exist&#39;</span> <span class="o">%</span> <span class="n">transaction_id</span>
+
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; UPDATE transactions </span>
+<span class="s1">                        SET amount=? </span>
+<span class="s1">                        WHERE transaction_id=?; &#39;&#39;&#39;</span>
+                        <span class="p">,</span> <span class="p">(</span><span class="n">amount</span><span class="p">,</span> <span class="n">transaction_id</span><span class="p">))</span>
+        
+        <span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="k">return</span> <span class="s1">&#39;updated transaction&#39;</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Lake Mossman, Scott Shi, Hao Wang, Haozhuo Huang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

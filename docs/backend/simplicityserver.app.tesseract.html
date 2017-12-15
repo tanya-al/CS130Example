@@ -1,0 +1,414 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>simplicityserver.app.tesseract package &mdash; Simplicity Backend 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Simplicity Backend 1.0 documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Simplicity Backend
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">simplicityserver.app.tesseract package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-simplicityserver.app.tesseract.extractSpending">simplicityserver.app.tesseract.extractSpending module</a></li>
+<li><a class="reference internal" href="#module-simplicityserver.app.tesseract.testTextExtraction">simplicityserver.app.tesseract.testTextExtraction module</a></li>
+<li><a class="reference internal" href="#module-simplicityserver.app.tesseract">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Simplicity Backend</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>simplicityserver.app.tesseract package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/simplicityserver.app.tesseract.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="simplicityserver-app-tesseract-package">
+<h1>simplicityserver.app.tesseract package<a class="headerlink" href="#simplicityserver-app-tesseract-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-simplicityserver.app.tesseract.extractSpending">
+<span id="simplicityserver-app-tesseract-extractspending-module"></span><h2>simplicityserver.app.tesseract.extractSpending module<a class="headerlink" href="#module-simplicityserver.app.tesseract.extractSpending" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="simplicityserver.app.tesseract.extractSpending.extract_receipt_total">
+<code class="descclassname">simplicityserver.app.tesseract.extractSpending.</code><code class="descname">extract_receipt_total</code><span class="sig-paren">(</span><em>pil_image</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/tesseract/extractSpending.html#extract_receipt_total"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.tesseract.extractSpending.extract_receipt_total" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracts the total amount from the receipt</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pil_image</strong> &#8211; the receipt image in PIL Image format</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the total money amount on the receipt</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="simplicityserver.app.tesseract.extractSpending.grab_amount">
+<code class="descclassname">simplicityserver.app.tesseract.extractSpending.</code><code class="descname">grab_amount</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/tesseract/extractSpending.html#grab_amount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.tesseract.extractSpending.grab_amount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract all valid amount of money (number of the form <code class="docutils literal"><span class="pre">$xx.xx</span></code>) in the given string</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>row</strong> &#8211; the string from which it extract money</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a list containing all valid money</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="simplicityserver.app.tesseract.extractSpending.is_digit">
+<code class="descclassname">simplicityserver.app.tesseract.extractSpending.</code><code class="descname">is_digit</code><span class="sig-paren">(</span><em>s</em>, <em>index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/tesseract/extractSpending.html#is_digit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.tesseract.extractSpending.is_digit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the char is valid to appear in amount</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>s</strong> &#8211; the string containing the char that is checked</li>
+<li><strong>index</strong> &#8211; the index of char that is checked</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">True if the char is valid. i.e number, or <code class="docutils literal"><span class="pre">.</span></code>, or space right next to <code class="docutils literal"><span class="pre">.</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="simplicityserver.app.tesseract.extractSpending.is_number">
+<code class="descclassname">simplicityserver.app.tesseract.extractSpending.</code><code class="descname">is_number</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/tesseract/extractSpending.html#is_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.tesseract.extractSpending.is_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the whole string is a number</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>s</strong> &#8211; the variable to be checked</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the variable is a number, false otherwise</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><strong>ValueError</strong> &#8211; if the variable is not a number</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="simplicityserver.app.tesseract.extractSpending.parse_arg">
+<code class="descclassname">simplicityserver.app.tesseract.extractSpending.</code><code class="descname">parse_arg</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/tesseract/extractSpending.html#parse_arg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.tesseract.extractSpending.parse_arg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses commandline arguments</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">parsed list of arguments to the program</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="simplicityserver.app.tesseract.extractSpending.preprocess_img">
+<code class="descclassname">simplicityserver.app.tesseract.extractSpending.</code><code class="descname">preprocess_img</code><span class="sig-paren">(</span><em>pil_img</em>, <em>ppmethod</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/tesseract/extractSpending.html#preprocess_img"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.tesseract.extractSpending.preprocess_img" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies preproccesing method <code class="docutils literal"><span class="pre">ppmethod</span></code> to the <code class="docutils literal"><span class="pre">pil_img</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pil_img</strong> &#8211; the image to preprocess in PIL Image format</li>
+<li><strong>ppmethod</strong> &#8211; String denoting which preprocessing method to use, e.g. &#8220;thresh&#8221;, &#8220;blur&#8221;, or &#8220;greyscale&#8221;</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">image after applying preprocessing method in PIL Image format</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="simplicityserver.app.tesseract.extractSpending.process_text">
+<code class="descclassname">simplicityserver.app.tesseract.extractSpending.</code><code class="descname">process_text</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/tesseract/extractSpending.html#process_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.tesseract.extractSpending.process_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the maximum amount of money in the given string</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string</strong> &#8211; the text to extract money from</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the maximum amount of money if there is any valid money, -1 if there is no valid amount</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><strong>ValueError</strong> &#8211; if there is no valid amount of money in the string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="simplicityserver.app.tesseract.extractSpending.read_image_text">
+<code class="descclassname">simplicityserver.app.tesseract.extractSpending.</code><code class="descname">read_image_text</code><span class="sig-paren">(</span><em>image</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/tesseract/extractSpending.html#read_image_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.tesseract.extractSpending.read_image_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the text on the image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image</strong> &#8211; the whole path to the image, including the image name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a string that has all words on the image processed by tesseract</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><strong>OSError</strong> &#8211; if the file is not found or cannot be opened, and return empty string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-simplicityserver.app.tesseract.testTextExtraction">
+<span id="simplicityserver-app-tesseract-testtextextraction-module"></span><h2>simplicityserver.app.tesseract.testTextExtraction module<a class="headerlink" href="#module-simplicityserver.app.tesseract.testTextExtraction" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="simplicityserver.app.tesseract.testTextExtraction.TestTextExtraction">
+<em class="property">class </em><code class="descclassname">simplicityserver.app.tesseract.testTextExtraction.</code><code class="descname">TestTextExtraction</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/tesseract/testTextExtraction.html#TestTextExtraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.tesseract.testTextExtraction.TestTextExtraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></code></p>
+<dl class="method">
+<dt id="simplicityserver.app.tesseract.testTextExtraction.TestTextExtraction.setUp">
+<code class="descname">setUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/tesseract/testTextExtraction.html#TestTextExtraction.setUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.tesseract.testTextExtraction.TestTextExtraction.setUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up method that runs before each test, sets the image to the test image</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simplicityserver.app.tesseract.testTextExtraction.TestTextExtraction.test_corrupted_image">
+<code class="descname">test_corrupted_image</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/tesseract/testTextExtraction.html#TestTextExtraction.test_corrupted_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.tesseract.testTextExtraction.TestTextExtraction.test_corrupted_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test that passing in a corrupted image causes an <code class="docutils literal"><span class="pre">OSError</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simplicityserver.app.tesseract.testTextExtraction.TestTextExtraction.test_grab_amount">
+<code class="descname">test_grab_amount</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/tesseract/testTextExtraction.html#TestTextExtraction.test_grab_amount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.tesseract.testTextExtraction.TestTextExtraction.test_grab_amount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test extracting the dollar amounts from the image</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simplicityserver.app.tesseract.testTextExtraction.TestTextExtraction.test_process_text">
+<code class="descname">test_process_text</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/tesseract/testTextExtraction.html#TestTextExtraction.test_process_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.tesseract.testTextExtraction.TestTextExtraction.test_process_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test getting the maximum amount from the image</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-simplicityserver.app.tesseract">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-simplicityserver.app.tesseract" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Lake Mossman, Scott Shi, Hao Wang, Haozhuo Huang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

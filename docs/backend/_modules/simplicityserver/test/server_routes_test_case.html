@@ -1,0 +1,792 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>simplicityserver.test.server_routes_test_case &mdash; Simplicity Backend 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Simplicity Backend 1.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Simplicity Backend
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Simplicity Backend</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>simplicityserver.test.server_routes_test_case</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for simplicityserver.test.server_routes_test_case</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">simplicityserver.app.server.server_routes</span> <span class="k">as</span> <span class="nn">server_routes</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">,</span> <span class="n">date</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="k">import</span> <span class="n">itemgetter</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="k">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">cStringIO</span>
+
+<span class="c1"># Before running: export PYTHONPATH=${PYTHONPATH}:&lt;path to Backend directory&gt;</span>
+<span class="c1"># To run (from the Backend directory): python2 simplicityserver/test/server_routes_test_case.py</span>
+
+<span class="n">TESTDBPATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)),</span> <span class="s2">&quot;test.db&quot;</span><span class="p">)</span>
+<span class="n">TESTIMGPATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)),</span> <span class="s2">&quot;test_img.jpg&quot;</span><span class="p">)</span>
+<span class="n">TESTTHUMBPATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)),</span> <span class="s2">&quot;test_thumb.jpg&quot;</span><span class="p">)</span>
+<span class="n">TEMPTHUMBPATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)),</span> <span class="s2">&quot;temp_thumb.jpg&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="encode_b64"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.encode_b64">[docs]</a><span class="k">def</span> <span class="nf">encode_b64</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper function for encoding an image into base64 format</span>
+
+<span class="sd">    :param img: image to encode in PIL Image format</span>
+<span class="sd">    :returns: String containing the base64 encoding of the image</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">jpeg_image_buffer</span> <span class="o">=</span> <span class="n">cStringIO</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+    <span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">jpeg_image_buffer</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;JPEG&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">jpeg_image_buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="decode_b64"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.decode_b64">[docs]</a><span class="k">def</span> <span class="nf">decode_b64</span><span class="p">(</span><span class="n">b64string</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper function for decoding a base64 string into an image</span>
+
+<span class="sd">    :param b64string: String containing the image encoded in base64 format</span>
+<span class="sd">    :returns: decoded image in PIL Image format</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">cStringIO</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">b64string</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="ServerRoutesTestCase"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase">[docs]</a><span class="k">class</span> <span class="nc">ServerRoutesTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="c1">#===================== set up and tear down =====================#</span>
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="ServerRoutesTestCase.setUpClass"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.setUpClass">[docs]</a>    <span class="k">def</span> <span class="nf">setUpClass</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set up method that is executed before all of the tests run. Creates an empty transactions database for testing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">server_routes</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">testing</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">server_routes</span><span class="o">.</span><span class="n">DBPATH</span> <span class="o">=</span> <span class="n">TESTDBPATH</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">_app</span> <span class="o">=</span> <span class="n">server_routes</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">test_client</span><span class="p">()</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">_conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">TESTDBPATH</span><span class="p">)</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;DROP TABLE IF EXISTS transactions&#39;</span><span class="p">)</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;CREATE TABLE transactions (</span>
+<span class="s1">                        transaction_id integer PRIMARY KEY,</span>
+<span class="s1">                        user_id integer NOT NULL,</span>
+<span class="s1">                        category text NOT NULL,</span>
+<span class="s1">                        amount real NOT NULL,</span>
+<span class="s1">                        date text NOT NULL,</span>
+<span class="s1">                        description text NOT NULL,</span>
+<span class="s1">                        image text NOT NULL,</span>
+<span class="s1">                        thumbnail text NOT NULL)&#39;&#39;&#39;</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="ServerRoutesTestCase.tearDownClass"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.tearDownClass">[docs]</a>    <span class="k">def</span> <span class="nf">tearDownClass</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tear down method that is executed after all of the tests run. Removes the temporary database and thumbnail files.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">TESTDBPATH</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">TESTDBPATH</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">TEMPTHUMBPATH</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">TEMPTHUMBPATH</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerRoutesTestCase.tearDown"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.tearDown">[docs]</a>    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tear down method that executes after each test. Deletes all entries from the transactions database.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;DELETE FROM transactions&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></div>
+
+    <span class="c1">#====================== transactions tests ======================#</span>
+<div class="viewcode-block" id="ServerRoutesTestCase.test_transactions_existing_user"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.test_transactions_existing_user">[docs]</a>    <span class="k">def</span> <span class="nf">test_transactions_existing_user</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the transaction data stored on the database is returned by the transactions server endpoint in the correct format when it is requested for an existing user with valid request parameters</span>
+<span class="sd">        </span>
+<span class="sd">        * **Success:** the transactions endpoint returns a correctly sorted and formatted json object containing the transaction data of the specified user with the specified limit and offset</span>
+<span class="sd">        * **Failure:** the transactions endpoint returns a json object with missing or not properly sorted data, or including data from another user</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                        VALUES  (1, 1, &quot;cat1&quot;, 10.01, &quot;2000-01-01 00:00:00&quot;, &quot;desc1&quot;, &quot;img1&quot;, &quot;thumb1&quot;),</span>
+<span class="s1">                                (2, 1, &quot;cat2&quot;, 20.02, &quot;2000-01-02 00:00:00&quot;, &quot;desc2&quot;, &quot;img2&quot;, &quot;thumb2&quot;),</span>
+<span class="s1">                                (3, 1, &quot;cat3&quot;, 30.03, &quot;2000-01-03 00:00:00&quot;, &quot;desc3&quot;, &quot;img3&quot;, &quot;thumb3&quot;)&#39;&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/transactions?userId=1&amp;max=2&amp;offset=1&#39;</span><span class="p">)</span>
+        <span class="n">rvdata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rvdata</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;transactionId&#39;</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;userId&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;category&#39;</span><span class="p">],</span> <span class="s2">&quot;cat2&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;amount&#39;</span><span class="p">],</span> <span class="mf">20.02</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;date&#39;</span><span class="p">],</span> <span class="s2">&quot;2000-01-02 00:00:00&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;description&#39;</span><span class="p">],</span> <span class="s2">&quot;desc2&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;transactionId&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;userId&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;category&#39;</span><span class="p">],</span> <span class="s2">&quot;cat1&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;amount&#39;</span><span class="p">],</span> <span class="mf">10.01</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;date&#39;</span><span class="p">],</span> <span class="s2">&quot;2000-01-01 00:00:00&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;description&#39;</span><span class="p">],</span> <span class="s2">&quot;desc1&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerRoutesTestCase.test_transactions_non_existing_user"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.test_transactions_non_existing_user">[docs]</a>    <span class="k">def</span> <span class="nf">test_transactions_non_existing_user</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the transactions server endpoint returns an empty json object when the client requests transaction data for a user that does not exist in the database</span>
+
+<span class="sd">        * **Success:** the transactions endpoint returns an empty list</span>
+<span class="sd">        * **Failure:** the transactions endpoint returns a json object with data in it (non-empty)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/transactions?userId=1&#39;</span><span class="p">)</span>
+        <span class="n">rvdata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rvdata</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerRoutesTestCase.test_transactions_invalid_parameters"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.test_transactions_invalid_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">test_transactions_invalid_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the transactions server endpoint returns error code 400 (Bad Request) when the client passes bad input parameters in the url, such as a letter for userId, which should be an integer</span>
+
+<span class="sd">        * **Success:** the transactions endpoint returns error code 400 for each of the bad requests</span>
+<span class="sd">        * **Failure:** the transactions endpoint returns anything besides the 400 error code for any of the bad requests, such as a 200 success code</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/transactions&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">_status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/transactions?userId=a&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">_status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/transactions?userId=1&amp;max=b&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">_status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/transactions?userId=1&amp;max=1&amp;offset=c&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">_status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span></div>
+
+    <span class="c1">#====================== receipt_img tests =======================#</span>
+<div class="viewcode-block" id="ServerRoutesTestCase.test_receipt_img_existing_transactions"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.test_receipt_img_existing_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">test_receipt_img_existing_transactions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the receipt_img server endpoint returns the correct receipt image data for the transaction specified by the client that exists in the database</span>
+
+<span class="sd">        * **Success:** the receipt_img endpoint returns a json object containing the image data corresponding to the transaction id specified by the client</span>
+<span class="sd">        * **Failure:** the receipt_img endpoint returns anything other than the json object containing the correct image data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                        VALUES  (1, 1, &quot;cat1&quot;, 10.01, &quot;2000-01-01 00:00:00&quot;, &quot;desc1&quot;, &quot;img1&quot;, &quot;thumb1&quot;),</span>
+<span class="s1">                                (2, 1, &quot;cat2&quot;, 20.02, &quot;2000-01-02 00:00:00&quot;, &quot;desc2&quot;, &quot;img2&quot;, &quot;thumb2&quot;)&#39;&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/receipt_img?transactionId=1&#39;</span><span class="p">)</span>
+        <span class="n">rvdata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="s1">&#39;img&#39;</span><span class="p">],</span> <span class="s2">&quot;img1&quot;</span><span class="p">)</span>
+
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/receipt_img?transactionId=2&#39;</span><span class="p">)</span>
+        <span class="n">rvdata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="s1">&#39;img&#39;</span><span class="p">],</span> <span class="s2">&quot;img2&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerRoutesTestCase.test_receipt_img_non_existing_transaction"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.test_receipt_img_non_existing_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">test_receipt_img_non_existing_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the receipt_img server endpoint returns None when the client requests the receipt image for a transaction that does not exist in the database</span>
+
+<span class="sd">        * **Success:** the receipt_img endpoint returns None</span>
+<span class="sd">        * **Failure:** the receipt_img endpoint returns anything other than None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/receipt_img?transactionId=1&#39;</span><span class="p">)</span>
+        <span class="n">rvdata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerRoutesTestCase.test_receipt_img_invalid_parameters"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.test_receipt_img_invalid_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">test_receipt_img_invalid_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the receipt_img server endpoint returns error code 400 (Bad Request) when the client passes bad input parameters in the url, such as a letter for transactionId, which should be an integer</span>
+
+<span class="sd">        * **Success:** the receipt_img endpoint returns error code 400 for each of the bad requests</span>
+<span class="sd">        * **Failure:** the receipt_img endpoint returns anything besides the 400 error code for any of the bad requests, such as a 200 success code</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/receipt_img&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">_status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/receipt_img?transactionId=a&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">_status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span></div>
+
+    <span class="c1">#======================= receipts tests =========================#</span>
+<div class="viewcode-block" id="ServerRoutesTestCase.test_receipts_existing_transactions"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.test_receipts_existing_transactions">[docs]</a>    <span class="k">def</span> <span class="nf">test_receipts_existing_transactions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the receipts server endpoint returns the correct set of receipt information when it is requested for transactions for a user that exists in the database</span>
+
+<span class="sd">        * **Success:** the receipts endpoint returns a correctly sorted and formatted json object containing the receipt data of the specified user with the specified limit and offset</span>
+<span class="sd">        * **Failure:** the receipts endpoint returns a json object with missing or not properly sorted data, or including data from another user</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                        VALUES  (1, 1, &quot;cat1&quot;, 10.01, &quot;2000-01-01 00:00:00&quot;, &quot;desc1&quot;, &quot;img1&quot;, &quot;thumb1&quot;),</span>
+<span class="s1">                                (2, 1, &quot;cat2&quot;, 20.02, &quot;2000-01-02 00:00:00&quot;, &quot;desc2&quot;, &quot;img2&quot;, &quot;thumb2&quot;),</span>
+<span class="s1">                                (3, 1, &quot;cat3&quot;, 30.03, &quot;2000-01-03 00:00:00&quot;, &quot;desc3&quot;, &quot;img3&quot;, &quot;thumb3&quot;)&#39;&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/receipts?userId=1&amp;max=2&amp;offset=1&#39;</span><span class="p">)</span>
+        <span class="n">rvdata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rvdata</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;transactionId&#39;</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;userId&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;date&#39;</span><span class="p">],</span> <span class="s2">&quot;2000-01-02 00:00:00&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;thumbnailImageData&#39;</span><span class="p">],</span> <span class="s2">&quot;thumb2&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;transactionId&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;userId&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;date&#39;</span><span class="p">],</span> <span class="s2">&quot;2000-01-01 00:00:00&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;thumbnailImageData&#39;</span><span class="p">],</span> <span class="s2">&quot;thumb1&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerRoutesTestCase.test_receipts_non_existing_user"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.test_receipts_non_existing_user">[docs]</a>    <span class="k">def</span> <span class="nf">test_receipts_non_existing_user</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the receipts server endpoint returns an empty json object when the client requests receipt data for a user that does not exist in the database</span>
+
+<span class="sd">        * **Success:** the receipts endpoint returns an empty list</span>
+<span class="sd">        * **Failure:** the receipts endpoint returns a json object with data in it (non-empty)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/receipts?userId=1&#39;</span><span class="p">)</span>
+        <span class="n">rvdata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rvdata</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerRoutesTestCase.test_receipts_invalid_parameters"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.test_receipts_invalid_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">test_receipts_invalid_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the receipts server endpoint returns error code 400 (Bad Request) when the client passes bad input parameters in the url, such as a letter for userId, which should be an integer</span>
+
+<span class="sd">        * **Success:** the receipts endpoint returns error code 400 for each of the bad requests</span>
+<span class="sd">        * **Failure:** the receipts endpoint returns anything besides the 400 error code for any of the bad requests, such as a 200 success code</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/receipts&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">_status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/receipts?userId=a&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">_status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/receipts?userId=1&amp;max=b&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">_status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/receipts?userId=1&amp;max=1&amp;offset=c&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">_status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span></div>
+
+    <span class="c1">#======================== overview tests ========================#</span>
+<div class="viewcode-block" id="ServerRoutesTestCase.test_overview_existing_user"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.test_overview_existing_user">[docs]</a>    <span class="k">def</span> <span class="nf">test_overview_existing_user</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the overview server endpoint returns the correct overview data for the user and weeks specified by the client that exists in the database</span>
+
+<span class="sd">        * **Success:** the overview endpoint returns a json object containing the overview data corresponding to the user id and weeks specified by the client</span>
+<span class="sd">        * **Failure:** the overview endpoint returns anything other than the json object containing the correct overview data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                        VALUES  (1, 1, &quot;cat1&quot;, 10.00, ?, &quot;desc1&quot;, &quot;img1&quot;, &quot;thumb1&quot;),</span>
+<span class="s1">                                (2, 1, &quot;cat2&quot;, 15.00, ?, &quot;desc2&quot;, &quot;img2&quot;, &quot;thumb2&quot;),</span>
+<span class="s1">                                (3, 1, &quot;cat2&quot;, 25.00, ?, &quot;desc3&quot;, &quot;img3&quot;, &quot;thumb3&quot;)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">date</span><span class="p">,</span> <span class="n">date</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/overview?userId=1&amp;weeks=1&#39;</span><span class="p">)</span>
+        <span class="n">rvdata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">sorteddata</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">rvdata</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">itemgetter</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sorteddata</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">sorteddata</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;category&#39;</span><span class="p">],</span> <span class="s2">&quot;cat1&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">sorteddata</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;amount&#39;</span><span class="p">],</span> <span class="mf">10.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">sorteddata</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;percentage&#39;</span><span class="p">],</span> <span class="mf">20.0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">sorteddata</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;category&#39;</span><span class="p">],</span> <span class="s2">&quot;cat2&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">sorteddata</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;amount&#39;</span><span class="p">],</span> <span class="mf">40.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">sorteddata</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;percentage&#39;</span><span class="p">],</span> <span class="mf">80.0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerRoutesTestCase.test_overview_weeks"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.test_overview_weeks">[docs]</a>    <span class="k">def</span> <span class="nf">test_overview_weeks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the overview server endpoint returns the correct overview data for the specified number of weeks, specifically if the data is older than x weeks, then that data is not returned when only x weeks are requested</span>
+
+<span class="sd">        * **Success:** the overview endpoint returns an empty json object when the data is older than the number of weeks specified by the client, and returns the correct json object when it is within that number of weeks</span>
+<span class="sd">        * **Failure:** the overview endpoint returns data despite it being older than the number of weeks specified</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">today</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+        <span class="n">ninedaysago</span> <span class="o">=</span> <span class="n">today</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                        VALUES  (1, 1, &quot;cat1&quot;, 10.01, ?, &quot;desc1&quot;, &quot;img1&quot;, &quot;thumb1&quot;)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">ninedaysago</span><span class="p">,))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/overview?userId=1&amp;weeks=1&#39;</span><span class="p">)</span>
+        <span class="n">rvdata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rvdata</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/overview?userId=1&amp;weeks=2&#39;</span><span class="p">)</span>
+        <span class="n">rvdata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rvdata</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerRoutesTestCase.test_overview_non_existing_user"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.test_overview_non_existing_user">[docs]</a>    <span class="k">def</span> <span class="nf">test_overview_non_existing_user</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the overview server endpoint returns an empty json object when the client requests overview data for a user that does not exist in the database</span>
+
+<span class="sd">        * **Success:** the overview endpoint returns an empty list</span>
+<span class="sd">        * **Failure:** the overview endpoint returns a json object with data in it (non-empty)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/overview?userId=1&amp;weeks=1&#39;</span><span class="p">)</span>
+        <span class="n">rvdata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rvdata</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerRoutesTestCase.test_overview_invalid_parameters"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.test_overview_invalid_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">test_overview_invalid_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the overview server endpoint returns error code 400 (Bad Request) when the client passes bad input parameters in the url, such as a letter for userId or weeks, which should be an integer</span>
+
+<span class="sd">        * **Success:** the overview endpoint returns error code 400 for each of the bad requests</span>
+<span class="sd">        * **Failure:** the overview endpoint returns anything besides the 400 error code for any of the bad requests, such as a 200 success code</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/overview&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">_status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/overview?userId=1&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">_status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/overview?userId=1&amp;weeks=a&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">_status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span></div>
+
+    <span class="c1">#======================= breakdown tests ========================#</span>
+<div class="viewcode-block" id="ServerRoutesTestCase.test_breakdown_existing_user"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.test_breakdown_existing_user">[docs]</a>    <span class="k">def</span> <span class="nf">test_breakdown_existing_user</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the breakdown server endpoint returns the correct breakdown data for the user and weeks specified by the client that exists in the database</span>
+
+<span class="sd">        * **Success:** the breakdown endpoint returns a json object containing the overview data corresponding to the user id and weeks specified by the client</span>
+<span class="sd">        * **Failure:** the breakdown endpoint returns anything other than the json object containing the correct overview data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">today</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+        <span class="n">today_formatted</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>
+        <span class="n">ninedaysago</span> <span class="o">=</span> <span class="n">today</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                        VALUES  (1, 1, &quot;cat1&quot;, 10.00, ?, &quot;desc1&quot;, &quot;img1&quot;, &quot;thumb1&quot;),</span>
+<span class="s1">                                (2, 1, &quot;cat2&quot;, 15.00, ?, &quot;desc2&quot;, &quot;img2&quot;, &quot;thumb2&quot;),</span>
+<span class="s1">                                (3, 1, &quot;cat2&quot;, 25.00, ?, &quot;desc3&quot;, &quot;img3&quot;, &quot;thumb3&quot;)&#39;&#39;&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">today_formatted</span><span class="p">,</span> <span class="n">today_formatted</span><span class="p">,</span> <span class="n">ninedaysago</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/breakdown?userId=1&amp;weeks=2&#39;</span><span class="p">)</span>
+        <span class="n">rvdata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="s1">&#39;userId&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="s1">&#39;weeks&#39;</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">sortedbreakdowns</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="s1">&#39;breakdowns&#39;</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="n">itemgetter</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sortedbreakdowns</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">sortedbreakdowns</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;category&#39;</span><span class="p">],</span> <span class="s2">&quot;cat1&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">sortedbreakdowns</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;amounts&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mf">10.00</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">sortedbreakdowns</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;category&#39;</span><span class="p">],</span> <span class="s2">&quot;cat2&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">sortedbreakdowns</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;amounts&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mf">15.00</span><span class="p">,</span> <span class="mf">25.00</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="ServerRoutesTestCase.test_breakdown_non_existing_user"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.test_breakdown_non_existing_user">[docs]</a>    <span class="k">def</span> <span class="nf">test_breakdown_non_existing_user</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the breakdown server endpoint returns an empty json object when the client requests breakdown data for a user that does not exist in the database</span>
+
+<span class="sd">        * **Success:** the breakdown endpoint returns an empty list for the ``breakdowns`` attribute of the json</span>
+<span class="sd">        * **Failure:** the breakdown endpoint returns a json object with data in it (non-empty)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/breakdown?userId=1&amp;weeks=1&#39;</span><span class="p">)</span>
+        <span class="n">rvdata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="s1">&#39;breakdowns&#39;</span><span class="p">]),</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerRoutesTestCase.test_breakdown_invalid_parameters"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.test_breakdown_invalid_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">test_breakdown_invalid_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the breakdown server endpoint returns error code 400 (Bad Request) when the client passes bad input parameters in the url, such as a letter for userId or weeks, which should be an integer</span>
+
+<span class="sd">        * **Success:** the breakdown endpoint returns error code 400 for each of the bad requests</span>
+<span class="sd">        * **Failure:** the breakdown endpoint returns anything besides the 400 error code for any of the bad requests, such as a 200 success code</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/breakdown&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">_status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/breakdown?userId=1&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">_status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/breakdown?userId=1&amp;weeks=a&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">_status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span></div>
+
+    <span class="c1">#======================== receipt tests ========================#</span>
+<div class="viewcode-block" id="ServerRoutesTestCase.test_receipt_post_non_existing_user"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.test_receipt_post_non_existing_user">[docs]</a>    <span class="k">def</span> <span class="nf">test_receipt_post_non_existing_user</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the post receipt server endpoint correctly inserts a receipt into the database as a new transaction with the correct category, amount, date, description, image, and thumbnail for a user that does not yet exist, and returns a json with transactionId and amount</span>
+
+<span class="sd">        * **Success:** the post receipt endpoint updates the database with the correct data and returns json with correct amount and transactionId</span>
+<span class="sd">        * **Failure:** the post receipt endpoint does not put the right data into the database or does not return a json with the correct amount or transactionID</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">imgData</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">TESTIMGPATH</span><span class="p">))</span>
+        <span class="n">thumbData</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">TESTTHUMBPATH</span><span class="p">))</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;userId&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s1">&#39;category&#39;</span><span class="p">:</span> <span class="s1">&#39;cat1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;desc1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">imgData</span>
+        <span class="p">}</span>
+
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;/receipt&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+        <span class="n">rvdata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="s1">&#39;transactionId&#39;</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">],</span> <span class="mf">54.50</span><span class="p">)</span>
+
+        <span class="n">cur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; SELECT transaction_id, user_id, category, amount, description, image, thumbnail FROM transactions </span>
+<span class="s1">                        WHERE transaction_id=1&#39;&#39;&#39;</span><span class="p">)</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;cat1&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="mf">54.50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="s1">&#39;desc1&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">imgData</span><span class="p">)</span>
+
+        <span class="c1"># save and load thumbnail to turn it into exactly same format as test thumbnail</span>
+        <span class="n">decode_b64</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">6</span><span class="p">])</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">TEMPTHUMBPATH</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;JPEG&quot;</span><span class="p">)</span>
+        <span class="n">returned_thumb</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">TEMPTHUMBPATH</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">returned_thumb</span><span class="p">,</span> <span class="n">thumbData</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerRoutesTestCase.test_receipt_post_existing_user"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.test_receipt_post_existing_user">[docs]</a>    <span class="k">def</span> <span class="nf">test_receipt_post_existing_user</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the post receipt server endpoint correctly inserts a receipt into the database as a new transaction with the correct category, amount, date, description, image, and thumbnail for a user that already exists, and returns a json with transactionId and amount</span>
+
+<span class="sd">        * **Success:** the post receipt endpoint updates the database with the correct data and returns json with correct amount and transactionId</span>
+<span class="sd">        * **Failure:** the post receipt endpoint does not put the right data into the database or does not return a json with the correct amount or transactionID</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                        VALUES  (1, 1, &quot;cat1&quot;, 10.01, &quot;2000-01-01 00:00:00&quot;, &quot;desc1&quot;, &quot;img1&quot;, &quot;thumb1&quot;)&#39;&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+        <span class="n">imgData</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">TESTIMGPATH</span><span class="p">))</span>
+        <span class="n">thumbData</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">TESTTHUMBPATH</span><span class="p">))</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;userId&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s1">&#39;category&#39;</span><span class="p">:</span> <span class="s1">&#39;cat2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;desc2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">imgData</span>
+        <span class="p">}</span>
+
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;/receipt&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+        <span class="n">rvdata</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="s1">&#39;transactionId&#39;</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rvdata</span><span class="p">[</span><span class="s1">&#39;amount&#39;</span><span class="p">],</span> <span class="mf">54.50</span><span class="p">)</span>
+
+        <span class="n">cur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; SELECT transaction_id, user_id, category, amount, description, image, thumbnail FROM transactions </span>
+<span class="s1">                        WHERE transaction_id=2&#39;&#39;&#39;</span><span class="p">)</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;cat2&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="mf">54.50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="s1">&#39;desc2&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">imgData</span><span class="p">)</span>
+
+        <span class="c1"># save and load thumbnail to turn it into exactly same format as test thumbnail</span>
+        <span class="n">decode_b64</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">6</span><span class="p">])</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">TEMPTHUMBPATH</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;JPEG&quot;</span><span class="p">)</span>
+        <span class="n">returned_thumb</span> <span class="o">=</span> <span class="n">encode_b64</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">TEMPTHUMBPATH</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">returned_thumb</span><span class="p">,</span> <span class="n">thumbData</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerRoutesTestCase.test_receipt_post_invalid_json"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.test_receipt_post_invalid_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_receipt_post_invalid_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the receipt post server endpoint returns error code 400 (Bad Request) when the client passes in an incorrectly formatted json object, such as one that is missing an attribute</span>
+
+<span class="sd">        * **Success:** the breakdown endpoint returns error code 400 for each of the bad requests</span>
+<span class="sd">        * **Failure:** the breakdown endpoint returns anything besides the 400 error code for any of the bad requests, such as a 200 success code</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;/receipt&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">_status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;userId&#39;</span><span class="p">:</span> <span class="mi">1</span>
+        <span class="p">}</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;/receipt&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">_status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;userId&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s1">&#39;category&#39;</span><span class="p">:</span> <span class="s1">&#39;cat1&#39;</span>
+        <span class="p">}</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;/receipt&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">_status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;userId&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s1">&#39;category&#39;</span><span class="p">:</span> <span class="s1">&#39;cat1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;desc1&#39;</span>
+        <span class="p">}</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;/receipt&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">_status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span></div>
+
+    <span class="c1">#=================== update_transaction tests ===================#</span>
+<div class="viewcode-block" id="ServerRoutesTestCase.test_update_transaction_existing_transaction"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.test_update_transaction_existing_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">test_update_transaction_existing_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the update_transaction server endpoint changes the amount of the corresponding transaction to the correct new amount, for a transaction that exists in the database</span>
+
+<span class="sd">        * **Success:** the post receipt endpoint updates the correct transaction with the correct new amount</span>
+<span class="sd">        * **Failure:** the post receipt endpoint does not update the corresponding transaction to the correct new amount</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; INSERT INTO transactions (transaction_id, user_id, category, amount, date, description, image, thumbnail)</span>
+<span class="s1">                        VALUES  (1, 1, &quot;cat1&quot;, 10.01, &quot;2000-01-01 00:00:00&quot;, &quot;desc1&quot;, &quot;img1&quot;, &quot;thumb1&quot;)&#39;&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;transactionId&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s1">&#39;amount&#39;</span><span class="p">:</span> <span class="mf">20.02</span>
+        <span class="p">}</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;/update_transaction&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;updated transaction&quot;</span><span class="p">)</span>
+
+        <span class="n">cur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;&#39;&#39; SELECT amount FROM transactions </span>
+<span class="s1">                        WHERE transaction_id=1&#39;&#39;&#39;</span><span class="p">)</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="mf">20.02</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerRoutesTestCase.test_update_transaction_non_existing_transaction"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.test_update_transaction_non_existing_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">test_update_transaction_non_existing_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the update_transaction server endpoint returns a message saying that the transaction does not exist when the user tries to update a non-existant transaction</span>
+
+<span class="sd">        * **Success:** the update_transaction endpoint returns a message saying the transaction does not exist</span>
+<span class="sd">        * **Failure:** the update_transaction endpoint returns anything besides that message</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;transactionId&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s1">&#39;amount&#39;</span><span class="p">:</span> <span class="mf">20.02</span>
+        <span class="p">}</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;/update_transaction&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;transaction with id 1 does not exist&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerRoutesTestCase.test_update_transaction_invalid_json"><a class="viewcode-back" href="../../../simplicityserver.test.html#simplicityserver.test.server_routes_test_case.ServerRoutesTestCase.test_update_transaction_invalid_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_update_transaction_invalid_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the update_transaction server endpoint returns error code 400 (Bad Request) when the client passes in an incorrectly formatted json object, such as one that is missing an attribute</span>
+
+<span class="sd">        * **Success:** the update_transaction endpoint returns error code 400 for each of the bad requests</span>
+<span class="sd">        * **Failure:** the update_transaction endpoint returns anything besides the 400 error code for any of the bad requests, such as a 200 success code</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;/update_transaction&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">_status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;transactionId&#39;</span><span class="p">:</span> <span class="mi">1</span>
+        <span class="p">}</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;/update_transaction&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">_status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;amount&#39;</span><span class="p">:</span> <span class="mf">20.02</span>
+        <span class="p">}</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;/update_transaction&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rv</span><span class="o">.</span><span class="n">_status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span></div></div>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Lake Mossman, Scott Shi, Hao Wang, Haozhuo Huang.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
