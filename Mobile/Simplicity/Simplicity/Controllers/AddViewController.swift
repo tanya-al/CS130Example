@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// AddViewController: segues to take or upload photo screens
 class AddViewController: UIViewController, UIImagePickerControllerDelegate,
 UINavigationControllerDelegate {
     
@@ -24,12 +25,18 @@ UINavigationControllerDelegate {
 //        fatalError("init(coder:) has not been implemented")
 //    }
     
+    /// transitionToCamera
+    ///
+    /// - Parameter sender: when this button is clicked, present the CameraViewController
     @objc func transitionToCamera(sender: UIButton!) {
         let secondViewController:CameraViewController = CameraViewController()
         self.present(secondViewController, animated: true, completion: nil)
 
     }
     
+    /// transitionToUpload
+    ///
+    /// - Parameter sender: when this button is clicked, transition to the Photos Library image picker
     @objc func transitionToUpload(sender: UIButton!) {
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             let imagePicker = UIImagePickerController()
@@ -40,6 +47,13 @@ UINavigationControllerDelegate {
         }
     }
     
+    /// imagePickerController
+    ///
+    /// - Description: segue to PhotoViewController upon image selection
+    ///
+    /// - Parameters:
+    ///   - picker: the controller handling image selection from Photos Llibrary
+    ///   - info: the picture chosen by the user
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage
         let imageView = UIImageView(image: image)
@@ -48,6 +62,8 @@ UINavigationControllerDelegate {
         self.present(photoVC, animated: true, completion: nil)
     }
         
+    /// viewDidLoad
+    /// - Description: display upload and take photo options
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
