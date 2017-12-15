@@ -11,17 +11,25 @@ pya.pytesseract.tesseract_cmdtesseract_cmd = '/usr/local/Cellar/tesseract/3.05.0
 PREPROCESS_METHOD = "thresh"
 
 def extract_receipt_total(pil_image):
+	"""
+	Extracts the total amount from the receipt
+
+	:param pil_image: the receipt image in PIL Image format
+	:returns: the total money amount on the receipt
+	"""
 	preprocessed_img = preprocess_img(pil_image.convert('RGB'), PREPROCESS_METHOD)
 	string = pya.image_to_string(preprocessed_img)
 	total_spending = process_text(string)
 	return total_spending
 
 def read_image_text(image):
-	'''Reads the text on the image
-	@param image 	the whole path to the image, including the image name
-	@return     	a string that has all words on the image processed by tesseract
-	@throws			OSError if the file is not found or cannot be opened, and return empty string
-	'''
+	"""
+	Reads the text on the image
+
+	:param image: the whole path to the image, including the image name
+	:returns: a string that has all words on the image processed by tesseract
+	:raises	OSError: if the file is not found or cannot be opened, and return empty string
+	"""
 	try:
 		im = Image.open(image)
 	except cv2.error as e:
@@ -32,11 +40,13 @@ def read_image_text(image):
 	return string
 
 def is_number(s):
-	'''Check if the whole string is a number
-	@param s 		the variable to be checked
-	@return 		True if the variable is a number, false otherwise
-	@throws			ValueError if the variable is not a number
-	'''
+	"""
+	Check if the whole string is a number
+
+	:param s: the variable to be checked
+	:returns: True if the variable is a number, false otherwise
+	:raises	ValueError: if the variable is not a number
+	"""
 	try:
 		float(s)
 		return True
@@ -45,11 +55,13 @@ def is_number(s):
 
 
 def is_digit(s, index):
-	'''Check if the char is valid to appear in amount
-	@param s 		the string containing the char that is checked
-	@param index 	the index of char that is checked
-	@return			True if the char is valid. i.e,: number, or '.', or ' ' right next to '.'
-	'''
+	"""
+	Check if the char is valid to appear in amount
+
+	:param s: the string containing the char that is checked
+	:param index: the index of char that is checked
+	:returns: True if the char is valid. i.e number, or ``.``, or space right next to ``.``
+	"""
 	if s[index].isdigit() or s[index] == ' ' or s[index] == '.':
 		if s[index] == ' ' and ((index < len(s)-1 and s[index+1] == '.') or (index > 0 and s[index-1] == '.')):
 			return True
@@ -61,10 +73,12 @@ def is_digit(s, index):
 
 
 def grab_amount(row):
-	'''Extract all valid amount of money(number of the form $xx.xx) in the given string
-	@param row		the string from which it extract money
-	@return 		a list containing all valid money
-	'''
+	"""
+	Extract all valid amount of money (number of the form ``$xx.xx``) in the given string
+
+	:param row: the string from which it extract money
+	:returns: a list containing all valid money
+	"""
 	size = len(row)
 	num_list = []
 	i = 0
@@ -93,11 +107,13 @@ def grab_amount(row):
 	return num_list
 
 def process_text(string):
-	'''Extract the maximum amount of money in the given string
-	@param string 	the text to extract money from
-	@return			the maximum amount of money if there is any valid money, -1 if there is no valid amount
-	@throws			ValueError if there is no valid amount of money in the string
-	'''
+	"""
+	Extract the maximum amount of money in the given string
+
+	:param string: the text to extract money from
+	:returns: the maximum amount of money if there is any valid money, -1 if there is no valid amount
+	:raises ValueError: if there is no valid amount of money in the string
+	"""
 	num_list = []
 
 	# add all amounts into the valid spending list
@@ -117,6 +133,11 @@ def process_text(string):
 
 # functions below might be modified according to the input of the script
 def parse_arg():
+	"""
+	Parses commandline arguments
+
+	:returns: parsed list of arguments to the program
+	"""
 	ap = argparse.ArgumentParser()
 	ap.add_argument("-i", "--image", required=True,
 	help="path to input image to be OCR'd")
@@ -126,6 +147,13 @@ def parse_arg():
 	return args
 
 def preprocess_img(pil_img, ppmethod):
+	"""
+	Applies preproccesing method ``ppmethod`` to the ``pil_img``
+
+	:param pil_img: the image to preprocess in PIL Image format
+	:param ppmethod: String denoting which preprocessing method to use, e.g. "thresh", "blur", or "greyscale"
+	:returns: image after applying preprocessing method in PIL Image format
+	"""
 	# convert pil image to open cv image
 	image = cv2.cvtColor(numpy.array(pil_img), cv2.COLOR_RGB2BGR)
 

@@ -10,6 +10,11 @@ app = Flask(__name__)
 DBPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transactions.db")
 
 def get_db():
+    """
+    Get the connection to the database if one already exists, otherwise create one and save it
+
+    :returns: connection to the database
+    """
     db = getattr(g, '_database', None)
     if db is None:
         # print(DBPATH)
@@ -17,6 +22,11 @@ def get_db():
     return db
 
 def get_endpoints():
+    """
+    Get the Endpoints class object if one already exists, otherwise create one and save it
+
+    :returns: the Endpoints class object
+    """
     ep = getattr(g, 'endpoints', None)
     if ep is None:
         ep = g.endpoints = Endpoints()
@@ -24,10 +34,20 @@ def get_endpoints():
 
 @app.route('/')
 def index():
-   return "Let's go CS130!"
+    """
+    Server route for the root directory of the server, which just returns some sample text
+
+    :returns: a String with sample text
+    """
+    return "Let's go CS130!"
 
 @app.route('/transactions',methods=["GET"])
 def transactions():
+    """
+    Server route for the GET /transactions path of the server, which performs checks on the url parameters before passing them to the endpoint code
+
+    :returns: a json object containing the transactions data for the user
+    """
     user_id = request.args.get("userId",'')
     max_num = request.args.get("max",'')
     offset = request.args.get("offset",'')
@@ -49,6 +69,11 @@ def transactions():
 
 @app.route('/receipt_img',methods=["GET"])
 def receipt_img():
+    """
+    Server route for the GET /receipt_img path of the server, which performs checks on the url parameters before passing them to the endpoint code
+
+    :returns: a json object containing the receipt image data for the user
+    """
     transaction_id = request.args.get("transactionId",'')
 
     if transaction_id == '':
@@ -60,6 +85,11 @@ def receipt_img():
 
 @app.route('/receipts',methods=["GET"])
 def receipts():
+    """
+    Server route for the GET /receipts path of the server, which performs checks on the url parameters before passing them to the endpoint code
+
+    :returns: a json object containing the receipts data for the user
+    """
     user_id = request.args.get("userId",'')
     max_num = request.args.get("max",'')
     offset = request.args.get("offset",'')
@@ -82,6 +112,11 @@ def receipts():
 
 @app.route('/overview',methods=["GET"])
 def overview():
+    """
+    Server route for the GET /overview path of the server, which performs checks on the url parameters before passing them to the endpoint code
+
+    :returns: a json object containing the overview data for the user
+    """
     user_id = request.args.get("userId",'')
     weeks = request.args.get("weeks",'')
 
@@ -98,6 +133,11 @@ def overview():
 
 @app.route('/breakdown',methods=["GET"])
 def breakdown():
+    """
+    Server route for the GET /breakdown path of the server, which performs checks on the url parameters before passing them to the endpoint code
+
+    :returns: a json object containing the breakdown data for the user
+    """
     user_id = request.args.get("userId",'')
     weeks = request.args.get("weeks",'')
 
@@ -114,6 +154,11 @@ def breakdown():
 
 @app.route('/receipt',methods=["POST"])
 def receive_image():
+    """
+    Server route for the POST /receipt path of the server, which performs checks on the json data from the user before passing it to the endpoint code
+
+    :returns: a json object containing the transactionId and guessed amount for the user
+    """
     json_data = request.get_json()
 
     if not 'userId' in json_data:
@@ -129,6 +174,11 @@ def receive_image():
 
 @app.route('/update_transaction',methods=["POST"])
 def update_transaction():
+    """
+    Server route for the POST /update_transaction path of the server, which performs checks on the json data from the user before passing it to the endpoint code
+
+    :returns: a json object containing the message string
+    """
     json_data = request.get_json()
 
     if not 'transactionId' in json_data:
@@ -140,6 +190,9 @@ def update_transaction():
 
 @app.teardown_appcontext
 def close_connection(exception):
+    """
+    Teardown method that runs when the server is stopped, closes database connection
+    """
     db = getattr(g, '_database', None)
     if db is not None:
         db.close()

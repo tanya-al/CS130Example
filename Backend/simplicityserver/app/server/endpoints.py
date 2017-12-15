@@ -1,10 +1,25 @@
+# -*- coding: utf-8 -*-
+
 import simplicityserver.app.tesseract.extractSpending as extract_spending
 from utils import Utils
 from datetime import datetime, timedelta
 import math
 
 class Endpoints():
+    """
+    Contains all of the backend server endpoints
+    """
+
     def get_transactions(self, db, user_id, limit, offset):
+        """
+        Get an array of transactions sorted by date (most recent first), with the specified ``userId`` and a maximum of ``max`` transactions in the array, with an offset of ``offset``
+
+        :param db: database connection
+        :param user_id: the id of the user we want to query fields for
+        :param limit: max number of rows we want to return
+        :param offset: offset of the rows we want to return
+        :returns: dict of ``{‘transactionId’, ‘userId’, ‘category’, ‘amount’, ‘date’, 'description'}``
+        """
         cur = db.cursor()
         cur.execute(''' SELECT transaction_id, user_id, category, amount, date, description FROM transactions 
                         WHERE user_id=? 
@@ -23,6 +38,13 @@ class Endpoints():
         return dict_list
 
     def get_receipt_img(self, db, transaction_id):
+        """
+        Get the receipt image associated with the ``transaction_id``
+        
+        :param db: database connection
+        :param transaction_id: id of the transaction we want to retrieve the image of
+        :returns: base64 encoded image associated with the ``transaction_id``
+        """
         cur = db.cursor()
         cur.execute('SELECT image FROM transactions WHERE transaction_id=?', (transaction_id,))
         ret = cur.fetchone()
@@ -32,6 +54,15 @@ class Endpoints():
             return {'img': ret[0]}
 
     def get_receipts(self, db, user_id, limit, offset):
+        """
+        Get an array of receipts sorted by date (most recent first), with the specified ``userId``, and receipt images compressed into thumbnail versions
+
+        :param db: database connection
+        :param user_id: the id of the user we want to query fields for
+        :param limit: max number of rows we want to return
+        :param offset: offset of the rows we want to return
+        :returns: list of ``{‘transactionId’, ‘userId’, date, ‘thumbnailImageData’}``
+        """
         cur = db.cursor()
         cur.execute(''' SELECT transaction_id, user_id, date, thumbnail FROM transactions 
                         WHERE user_id=? 
@@ -48,6 +79,14 @@ class Endpoints():
         return dict_list
 
     def get_overview(self, db, user_id, weeks):
+        """
+        Get an overview describing how much the user with ``userId`` spent on each category over the past ``weeks``, by both amount and percentage of total spending.
+        
+        :param db: database connection
+        :param user_id: the id of the user we want to query fields for
+        :param weeks: weeks ago we want to look back in the database
+        :returns: list of ``{‘category’, ‘amount’, ‘percentage’}``
+        """
         days = int(weeks) * 7
         target_date = (datetime.now() - timedelta(days=days)).strftime('%Y-%m-%d %H:%M:%S')
         cur = db.cursor()
@@ -84,6 +123,14 @@ class Endpoints():
         return dict_list
 
     def get_breakdown(self, db, user_id, weeks):
+        """
+        Get the weekly breakdown by category for past ``weeks`` for ``userId``
+        
+        :param db: database connection
+        :param user_id: the id of the user we want to query fields for
+        :param weeks: weeks ago we want to look back in the database
+        :returns: dict containing list of breakdown for each category, containing category name and list of amounts per week
+        """
         weeklist = [7 * (i+1) for i in range(int(weeks))]
         target_dates = [(datetime.now() - timedelta(days=d)).strftime('%Y-%m-%d %H:%M:%S') for d in weeklist]
         target_dates = [datetime.now().strftime('%Y-%m-%d %H:%M:%S')] + target_dates
@@ -126,6 +173,15 @@ class Endpoints():
         }
 
     def post_receipt(self, db, user_id, category, description, image_data):
+        """
+        Use pytesseract to find the amount, and create a transaction for this purchase in the database.
+        
+        :param db: database connection
+        :param user_id: the id of the user we want to query fields for
+        :param category: name of the category this transaction belongs in
+        :param image_data: base64 encoded string containing the image
+        :returns: dict of ``{'transactionId', 'amount'}``
+        """
         cur = db.cursor()
         cur.execute('SELECT MAX(transaction_id) FROM transactions')
         maxtransaction = cur.fetchone()[0]
@@ -142,6 +198,14 @@ class Endpoints():
         return {'transactionId': transaction_id, 'amount': amount}
 
     def update_transaction(self, db, transaction_id, amount):
+        """
+        Check if the transaction exists in the database, and if so then store the amount into that transaction's database entry.
+
+        :param db: database connection
+        :param transaction_id: the id of the transaction the user wants to update the amount of
+        :param amount: the new amount that the user wants to store into the transaction
+        :returns: a string saying that the transaction does not exist, or if it does exist then a string saying 'updated transaction'
+        """
         cur = db.cursor()
         cur.execute(''' SELECT transaction_id FROM transactions
                         WHERE transaction_id=?;''', (transaction_id,))
