@@ -1,0 +1,1426 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/AddViewController.swift",
+      "line": 122,
+      "symbol": "AddViewController.didReceiveMemoryWarning()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
+      "line": 16,
+      "symbol": "CameraViewController.captureSession",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
+      "line": 17,
+      "symbol": "CameraViewController.videoPreviewLayer",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
+      "line": 18,
+      "symbol": "CameraViewController.takePhotoVar",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
+      "line": 19,
+      "symbol": "CameraViewController.dataOutput",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
+      "line": 20,
+      "symbol": "CameraViewController.stillCameraOutput",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
+      "line": 21,
+      "symbol": "CameraViewController.queue",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
+      "line": 22,
+      "symbol": "CameraViewController.imageView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
+      "line": 24,
+      "symbol": "CameraViewController.errors",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
+      "line": 25,
+      "symbol": "CameraViewController.errors.captureSessionMissing",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
+      "line": 81,
+      "symbol": "CameraViewController.takePhoto(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/CameraViewController.swift",
+      "line": 132,
+      "symbol": "CameraViewController.didReceiveMemoryWarning()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/OverviewViewController.swift",
+      "line": 12,
+      "symbol": "OverviewViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/OverviewViewController.swift",
+      "line": 14,
+      "symbol": "OverviewViewController.VIEW_CARD_MARGIN",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/OverviewViewController.swift",
+      "line": 15,
+      "symbol": "OverviewViewController.OVERVIEW_VIEW_CARD_HEIGHT",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/OverviewViewController.swift",
+      "line": 16,
+      "symbol": "OverviewViewController.BREAKDOWN_VIEW_CARD_HEIGHT",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/OverviewViewController.swift",
+      "line": 17,
+      "symbol": "OverviewViewController.TEST_CHART_VIEW_CARD_HEIGHT",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/OverviewViewController.swift",
+      "line": 19,
+      "symbol": "OverviewViewController.VIEW_CARD_LABEL_MARGIN",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/OverviewViewController.swift",
+      "line": 21,
+      "symbol": "OverviewViewController.PIE_CHART_HEIGHT",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/OverviewViewController.swift",
+      "line": 22,
+      "symbol": "OverviewViewController.PIE_CHART_MARGIN",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/OverviewViewController.swift",
+      "line": 24,
+      "symbol": "OverviewViewController.LINE_CHART_MARGIN",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/OverviewViewController.swift",
+      "line": 26,
+      "symbol": "OverviewViewController.VIEW_CARD_TITLE_FONT",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/OverviewViewController.swift",
+      "line": 29,
+      "symbol": "OverviewViewController.scrollView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/OverviewViewController.swift",
+      "line": 30,
+      "symbol": "OverviewViewController.overviewViewCard",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/OverviewViewController.swift",
+      "line": 31,
+      "symbol": "OverviewViewController.breakdownViewCard",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/OverviewViewController.swift",
+      "line": 32,
+      "symbol": "OverviewViewController.testViewCard",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/OverviewViewController.swift",
+      "line": 34,
+      "symbol": "OverviewViewController.pieChartView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/OverviewViewController.swift",
+      "line": 35,
+      "symbol": "OverviewViewController.dataEntries",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/OverviewViewController.swift",
+      "line": 36,
+      "symbol": "OverviewViewController.pieChartDataSet",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/OverviewViewController.swift",
+      "line": 38,
+      "symbol": "OverviewViewController.lineChartView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/OverviewViewController.swift",
+      "line": 40,
+      "symbol": "OverviewViewController.pieChartColors",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/OverviewViewController.swift",
+      "line": 42,
+      "symbol": "OverviewViewController.overviewTitleHeight",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/OverviewViewController.swift",
+      "line": 45,
+      "symbol": "OverviewViewController.init(nibName:bundle:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/OverviewViewController.swift",
+      "line": 56,
+      "symbol": "OverviewViewController.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/OverviewViewController.swift",
+      "line": 60,
+      "symbol": "OverviewViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/OverviewViewController.swift",
+      "line": 107,
+      "symbol": "OverviewViewController.didReceiveMemoryWarning()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
+      "line": 13,
+      "symbol": "PhotoViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
+      "line": 16,
+      "symbol": "PhotoViewController.imageView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
+      "line": 17,
+      "symbol": "PhotoViewController.categories",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
+      "line": 18,
+      "symbol": "PhotoViewController.categoryTextField",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
+      "line": 19,
+      "symbol": "PhotoViewController.descriptionTextField",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
+      "line": 21,
+      "symbol": "PhotoViewController.init(capturedImage:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
+      "line": 26,
+      "symbol": "PhotoViewController.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
+      "line": 30,
+      "symbol": "PhotoViewController.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
+      "line": 34,
+      "symbol": "PhotoViewController.viewDidAppear(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
+      "line": 39,
+      "symbol": "PhotoViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
+      "line": 52,
+      "symbol": "PhotoViewController.displaySaveButton()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
+      "line": 67,
+      "symbol": "PhotoViewController.textFieldShouldReturn(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
+      "line": 74,
+      "symbol": "PhotoViewController.displayTextFields()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
+      "line": 101,
+      "symbol": "PhotoViewController.numberOfComponents(in:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
+      "line": 106,
+      "symbol": "PhotoViewController.pickerView(_:numberOfRowsInComponent:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
+      "line": 111,
+      "symbol": "PhotoViewController.pickerView(_:titleForRow:forComponent:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
+      "line": 117,
+      "symbol": "PhotoViewController.pickerView(_:didSelectRow:inComponent:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
+      "line": 122,
+      "symbol": "PhotoViewController.displayDropdown()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
+      "line": 130,
+      "symbol": "PhotoViewController.saveImage()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/PhotoViewController.swift",
+      "line": 182,
+      "symbol": "PhotoViewController.didReceiveMemoryWarning()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptDetailViewController.swift",
+      "line": 11,
+      "symbol": "ReceiptDetailViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptDetailViewController.swift",
+      "line": 13,
+      "symbol": "ReceiptDetailViewController.receipt",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptDetailViewController.swift",
+      "line": 14,
+      "symbol": "ReceiptDetailViewController.imageView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptDetailViewController.swift",
+      "line": 16,
+      "symbol": "ReceiptDetailViewController.init(receipt:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptDetailViewController.swift",
+      "line": 21,
+      "symbol": "ReceiptDetailViewController.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptDetailViewController.swift",
+      "line": 25,
+      "symbol": "ReceiptDetailViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptDetailViewController.swift",
+      "line": 46,
+      "symbol": "ReceiptDetailViewController.setupReceiptImage()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptDetailViewController.swift",
+      "line": 58,
+      "symbol": "ReceiptDetailViewController.getReceiptImageData()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptDetailViewController.swift",
+      "line": 69,
+      "symbol": "ReceiptDetailViewController.didReceiveMemoryWarning()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
+      "line": 11,
+      "symbol": "ReceiptsViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
+      "line": 13,
+      "symbol": "ReceiptsViewController.cellId",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
+      "line": 14,
+      "symbol": "ReceiptsViewController.RECEIPT_DATA_NOTIFICATION",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
+      "line": 15,
+      "symbol": "ReceiptsViewController.DEFAULT_RECEIPT_COUNT",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
+      "line": 16,
+      "symbol": "ReceiptsViewController.RECEIPT_PER_ROW",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
+      "line": 17,
+      "symbol": "ReceiptsViewController.EDGE_INSETS",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
+      "line": 18,
+      "symbol": "ReceiptsViewController.RECEIPT_THUMBNAIL_MARGIN",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
+      "line": 19,
+      "symbol": "ReceiptsViewController.SEGUE_IDENTIFIER",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
+      "line": 22,
+      "symbol": "ReceiptsViewController.mainNavigationBar",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
+      "line": 23,
+      "symbol": "ReceiptsViewController.receipts",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
+      "line": 25,
+      "symbol": "ReceiptsViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
+      "line": 47,
+      "symbol": "ReceiptsViewController.setupCollectionView()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
+      "line": 66,
+      "symbol": "ReceiptsViewController.getReceiptData()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
+      "line": 76,
+      "symbol": "ReceiptsViewController.receiptDataReceived()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
+      "line": 102,
+      "symbol": "ReceiptsViewController.deinit",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
+      "line": 106,
+      "symbol": "ReceiptsViewController.didReceiveMemoryWarning()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
+      "line": 113,
+      "symbol": "ReceiptsViewController.collectionView(_:numberOfItemsInSection:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
+      "line": 119,
+      "symbol": "ReceiptsViewController.collectionView(_:cellForItemAt:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/ReceiptsViewController.swift",
+      "line": 127,
+      "symbol": "ReceiptsViewController.collectionView(_:didSelectItemAt:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/SettingsViewController.swift",
+      "line": 11,
+      "symbol": "SettingsViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/SettingsViewController.swift",
+      "line": 13,
+      "symbol": "SettingsViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/SettingsViewController.swift",
+      "line": 24,
+      "symbol": "SettingsViewController.didReceiveMemoryWarning()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TabBarController.swift",
+      "line": 47,
+      "symbol": "TabBarController.didReceiveMemoryWarning()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
+      "line": 14,
+      "symbol": "TransactionsViewController.CELL_ID",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
+      "line": 15,
+      "symbol": "TransactionsViewController.TRANSACTION_DATA_NOTIFICATION",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
+      "line": 16,
+      "symbol": "TransactionsViewController.CELL_HEIGHT",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
+      "line": 17,
+      "symbol": "TransactionsViewController.NUMBER_OF_ROW_FIRST_SECTION",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
+      "line": 20,
+      "symbol": "TransactionsViewController.tableView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
+      "line": 21,
+      "symbol": "TransactionsViewController.transactions",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
+      "line": 101,
+      "symbol": "TransactionsViewController.deinit",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Controllers/TransactionsViewController.swift",
+      "line": 182,
+      "symbol": "TransactionsViewController.didReceiveMemoryWarning()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/DataManager.swift",
+      "line": 12,
+      "symbol": "DataManager",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/DataManager.swift",
+      "line": 14,
+      "symbol": "DataManager.sharedInstance",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/DataManager.swift",
+      "line": 16,
+      "symbol": "DataManager.DUMMY_USER_ID",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/DataManager.swift",
+      "line": 17,
+      "symbol": "DataManager.DUMMY_USER_ID2",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/DataManager.swift",
+      "line": 18,
+      "symbol": "DataManager.DUMMY_NUMBER_OF_WEEKS",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/DataManager.swift",
+      "line": 20,
+      "symbol": "DataManager.AMOUNT_JSON_KEY",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/DataManager.swift",
+      "line": 21,
+      "symbol": "DataManager.AMOUNTS_JSON_KEY",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/DataManager.swift",
+      "line": 22,
+      "symbol": "DataManager.CATEGORY_JSON_KEY",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/DataManager.swift",
+      "line": 23,
+      "symbol": "DataManager.DESCRIPTION_JSON_KEY",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/DataManager.swift",
+      "line": 24,
+      "symbol": "DataManager.PERCENTAGE_JSON_KEY",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/DataManager.swift",
+      "line": 25,
+      "symbol": "DataManager.BREAKDOWNS_JSON_KEY",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/DataManager.swift",
+      "line": 26,
+      "symbol": "DataManager.DATE_JSON_KEY",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/DataManager.swift",
+      "line": 27,
+      "symbol": "DataManager.THUMBNAIL_IMAGE_DATA_JSON_KEY",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/DataManager.swift",
+      "line": 28,
+      "symbol": "DataManager.TRANSACTION_ID_JSON_KEY",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/DataManager.swift",
+      "line": 29,
+      "symbol": "DataManager.USER_ID_JSON_KEY",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/DataManager.swift",
+      "line": 30,
+      "symbol": "DataManager.IMAGE_JSON_KEY",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/DataManager.swift",
+      "line": 31,
+      "symbol": "DataManager.IMAGE_DATA_JSON_KEY",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/DataManager.swift",
+      "line": 33,
+      "symbol": "DataManager.DATE_FORMATTER",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/DataManager.swift",
+      "line": 45,
+      "symbol": "DataManager.getTransactions()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/DataManager.swift",
+      "line": 73,
+      "symbol": "DataManager.getTempBreakdowns()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/RequestManager.swift",
+      "line": 11,
+      "symbol": "RequestManager",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/RequestManager.swift",
+      "line": 13,
+      "symbol": "RequestManager.baseURL",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/RequestManager.swift",
+      "line": 14,
+      "symbol": "RequestManager.sharedInstance",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/RequestManager.swift",
+      "line": 16,
+      "symbol": "RequestManager.getOverviewEndpoint",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/RequestManager.swift",
+      "line": 17,
+      "symbol": "RequestManager.getTransactionsEndpoint",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/RequestManager.swift",
+      "line": 18,
+      "symbol": "RequestManager.getBreakdownEndpoint",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/RequestManager.swift",
+      "line": 19,
+      "symbol": "RequestManager.getReceiptsEndpoint",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/RequestManager.swift",
+      "line": 20,
+      "symbol": "RequestManager.getReceiptImageEndpoint",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/RequestManager.swift",
+      "line": 21,
+      "symbol": "RequestManager.postReceiptsEndpoint",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/RequestManager.swift",
+      "line": 22,
+      "symbol": "RequestManager.postUpdateTransactionEndpoint",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/RequestManager.swift",
+      "line": 24,
+      "symbol": "RequestManager.userIdParam",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/RequestManager.swift",
+      "line": 25,
+      "symbol": "RequestManager.transactionIdParam",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/RequestManager.swift",
+      "line": 26,
+      "symbol": "RequestManager.numberOfWeeksParam",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/RequestManager.swift",
+      "line": 27,
+      "symbol": "RequestManager.maxNumberReceipts",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/RequestManager.swift",
+      "line": 28,
+      "symbol": "RequestManager.offsetNumberReceipts",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/RequestManager.swift",
+      "line": 29,
+      "symbol": "RequestManager.categoryParam",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/RequestManager.swift",
+      "line": 30,
+      "symbol": "RequestManager.descriptionParam",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/RequestManager.swift",
+      "line": 31,
+      "symbol": "RequestManager.imgDataParam",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Managers/RequestManager.swift",
+      "line": 32,
+      "symbol": "RequestManager.amountParam",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Breakdown.swift",
+      "line": 11,
+      "symbol": "Breakdown",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Breakdown.swift",
+      "line": 15,
+      "symbol": "Breakdown.category",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Breakdown.swift",
+      "line": 16,
+      "symbol": "Breakdown.amounts",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Breakdown.swift",
+      "line": 20,
+      "symbol": "Breakdown.init(category:amounts:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Overview.swift",
+      "line": 11,
+      "symbol": "Overview",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Overview.swift",
+      "line": 15,
+      "symbol": "Overview.category",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Overview.swift",
+      "line": 16,
+      "symbol": "Overview.amount",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Overview.swift",
+      "line": 17,
+      "symbol": "Overview.percentage",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Overview.swift",
+      "line": 21,
+      "symbol": "Overview.init(category:amount:percentage:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Receipt.swift",
+      "line": 11,
+      "symbol": "Receipt",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Receipt.swift",
+      "line": 15,
+      "symbol": "Receipt.trancationId",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Receipt.swift",
+      "line": 16,
+      "symbol": "Receipt.userId",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Receipt.swift",
+      "line": 17,
+      "symbol": "Receipt.date",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Receipt.swift",
+      "line": 18,
+      "symbol": "Receipt.thumbnailImage",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Receipt.swift",
+      "line": 19,
+      "symbol": "Receipt.fullScreenImage",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Receipt.swift",
+      "line": 22,
+      "symbol": "Receipt.init(transactionId:userId:date:thumbnailImage:fullScreenImage:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Receipt.swift",
+      "line": 36,
+      "symbol": "Receipt.init(transactionId:userId:date:thumbnailImageBase64String:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/ReceiptTransactionAmount.swift",
+      "line": 12,
+      "symbol": "ReceiptTransactionAmount",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/ReceiptTransactionAmount.swift",
+      "line": 16,
+      "symbol": "ReceiptTransactionAmount.transactionId",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/ReceiptTransactionAmount.swift",
+      "line": 17,
+      "symbol": "ReceiptTransactionAmount.amount",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/ReceiptTransactionAmount.swift",
+      "line": 20,
+      "symbol": "ReceiptTransactionAmount.init(transactionId:amount:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Transaction.swift",
+      "line": 11,
+      "symbol": "Transaction",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Transaction.swift",
+      "line": 15,
+      "symbol": "Transaction.trancationId",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Transaction.swift",
+      "line": 16,
+      "symbol": "Transaction.userId",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Transaction.swift",
+      "line": 17,
+      "symbol": "Transaction.category",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Transaction.swift",
+      "line": 18,
+      "symbol": "Transaction.description",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Transaction.swift",
+      "line": 19,
+      "symbol": "Transaction.amount",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Transaction.swift",
+      "line": 20,
+      "symbol": "Transaction.date",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Models/Transaction.swift",
+      "line": 24,
+      "symbol": "Transaction.init(transactionId:userId:category:description:amount:date:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/SupportFiles/AppDelegate.swift",
+      "line": 13,
+      "symbol": "AppDelegate",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/SupportFiles/AppDelegate.swift",
+      "line": 15,
+      "symbol": "AppDelegate.window",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/SupportFiles/AppDelegate.swift",
+      "line": 18,
+      "symbol": "AppDelegate.application(_:didFinishLaunchingWithOptions:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/SupportFiles/AppDelegate.swift",
+      "line": 37,
+      "symbol": "AppDelegate.applicationWillResignActive(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/SupportFiles/AppDelegate.swift",
+      "line": 42,
+      "symbol": "AppDelegate.applicationDidEnterBackground(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/SupportFiles/AppDelegate.swift",
+      "line": 47,
+      "symbol": "AppDelegate.applicationWillEnterForeground(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/SupportFiles/AppDelegate.swift",
+      "line": 51,
+      "symbol": "AppDelegate.applicationDidBecomeActive(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/SupportFiles/AppDelegate.swift",
+      "line": 55,
+      "symbol": "AppDelegate.applicationWillTerminate(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/LeftBackNavigationBar.swift",
+      "line": 11,
+      "symbol": "LeftBackNavigationBar",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/LeftBackNavigationBar.swift",
+      "line": 14,
+      "symbol": "LeftBackNavigationBar.parentVC",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/LeftBackNavigationBar.swift",
+      "line": 16,
+      "symbol": "LeftBackNavigationBar.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/LeftBackNavigationBar.swift",
+      "line": 20,
+      "symbol": "LeftBackNavigationBar.init(frame:title:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/LeftBackNavigationBar.swift",
+      "line": 39,
+      "symbol": "LeftBackNavigationBar.init(frame:title:parentVC:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/LeftBackNavigationBar.swift",
+      "line": 44,
+      "symbol": "LeftBackNavigationBar.backAction()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/MainNavigationBar.swift",
+      "line": 11,
+      "symbol": "MainNavigationBar",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/MainNavigationBar.swift",
+      "line": 14,
+      "symbol": "MainNavigationBar.init(frame:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/MainNavigationBar.swift",
+      "line": 18,
+      "symbol": "MainNavigationBar.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/MainNavigationBar.swift",
+      "line": 22,
+      "symbol": "MainNavigationBar.init(frame:title:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/ReceiptCell.swift",
+      "line": 11,
+      "symbol": "ReceiptCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/ReceiptCell.swift",
+      "line": 14,
+      "symbol": "ReceiptCell.imageView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/ReceiptCell.swift",
+      "line": 17,
+      "symbol": "ReceiptCell.init(frame:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/ReceiptCell.swift",
+      "line": 25,
+      "symbol": "ReceiptCell.layoutSubviews()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/ReceiptCell.swift",
+      "line": 35,
+      "symbol": "ReceiptCell.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/TransactionTableViewCell.swift",
+      "line": 11,
+      "symbol": "TransactionTableViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/TransactionTableViewCell.swift",
+      "line": 13,
+      "symbol": "TransactionTableViewCell.LEFT_GAP",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/TransactionTableViewCell.swift",
+      "line": 14,
+      "symbol": "TransactionTableViewCell.RIGHT_GAP",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/TransactionTableViewCell.swift",
+      "line": 15,
+      "symbol": "TransactionTableViewCell.LINE_GAP_1",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/TransactionTableViewCell.swift",
+      "line": 16,
+      "symbol": "TransactionTableViewCell.LINE_GAP_2",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/TransactionTableViewCell.swift",
+      "line": 17,
+      "symbol": "TransactionTableViewCell.EDGE_GAP",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/TransactionTableViewCell.swift",
+      "line": 18,
+      "symbol": "TransactionTableViewCell.DATE_FORMATTER",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/TransactionTableViewCell.swift",
+      "line": 21,
+      "symbol": "TransactionTableViewCell.descriptionLabel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/TransactionTableViewCell.swift",
+      "line": 22,
+      "symbol": "TransactionTableViewCell.categoryLabel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/TransactionTableViewCell.swift",
+      "line": 23,
+      "symbol": "TransactionTableViewCell.dateLabel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/TransactionTableViewCell.swift",
+      "line": 24,
+      "symbol": "TransactionTableViewCell.amountLabel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/TransactionTableViewCell.swift",
+      "line": 27,
+      "symbol": "TransactionTableViewCell.awakeFromNib()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/TransactionTableViewCell.swift",
+      "line": 32,
+      "symbol": "TransactionTableViewCell.init(style:reuseIdentifier:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/TransactionTableViewCell.swift",
+      "line": 36,
+      "symbol": "TransactionTableViewCell.init(style:reuseIdentifier:transaction:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/TransactionTableViewCell.swift",
+      "line": 76,
+      "symbol": "TransactionTableViewCell.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity/Simplicity/Views/TransactionTableViewCell.swift",
+      "line": 80,
+      "symbol": "TransactionTableViewCell.setSelected(_:animated:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/Tanya/Desktop/CS130/GroupProject/CS130/Mobile/Simplicity"
+}
