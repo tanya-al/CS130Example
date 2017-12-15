@@ -8,8 +8,11 @@
 
 import UIKit
 
+/// SettingsViewController: display user settings
 class SettingsViewController: UIViewController {
     
+    /// viewDidLoad()
+    /// - Description: show settings
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.

@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// TransactionViewController: displays a list of user transactions
 class TransactionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let CELL_ID = "CELL_ID"
@@ -19,6 +20,8 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
     var tableView: UITableView!
     var transactions: [Transaction]?
     
+    /// viewDidLoad
+    /// - Description: display transaction data in a list
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -50,6 +53,8 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
         tableView.refreshControl = refreshControl
     }
     
+    /// getTransactionData
+    /// - Description: Query transaction data from backend
     func getTransactionData() {
         print("[TransactionsVC][getTransactionData] Getting transactions data...")
         DataManager.sharedInstance.getTransactionsAsync(onSuccess: { (transactions) in
@@ -60,6 +65,8 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
         })
     }
     
+    /// transactionDataReceived
+    /// - Description: reload data when received from backend
     @objc func transactionDataReceived() {
         print("[TransactionsVC][getTransactionData] Called")
         DispatchQueue.main.async {
@@ -67,6 +74,11 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
+    /// refreshTransactionData
+    ///
+    /// - Description: calls reloadData() and the DataManager
+    ///
+    /// - Parameter sender: refresh when the user clicks the tab
     @objc private func refreshTransactionData(_ sender: Any) {
         print("[TransactionsVC][refreshTransactionData]")
         DataManager.sharedInstance.getTransactionsAsync(onSuccess: { (transactions) in
@@ -92,6 +104,14 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
     
     // MARK: UITableViewDataSource
     
+    /// tableView
+    ///
+    /// - Description: set number of rows in table
+    ///
+    /// - Parameters:
+    ///   - tableView: this screens table view
+    ///   - section: the number of rows we want
+    /// - Returns: number of rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if transactions == nil {
             return 0
@@ -102,6 +122,14 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
+    /// tableView
+    ///
+    /// - Description: return the cell at a specified row index
+    ///
+    /// - Parameters:
+    ///   - tableView: our table view
+    ///   - indexPath: the index we want
+    /// - Returns: return the cell at index
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if transactions != nil {
             let cell = TransactionTableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: CELL_ID, transaction: transactions![indexPath.row])
@@ -111,6 +139,10 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
         return TransactionTableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: CELL_ID)
     }
     
+    /// numberOfSections
+    ///
+    /// - Parameter tableView: this screen's table view
+    /// - Returns: returns the number of sections in the table
     func numberOfSections(in tableView: UITableView) -> Int {
         if transactions == nil || transactions!.count <= NUMBER_OF_ROW_FIRST_SECTION {
             return 1
@@ -119,6 +151,12 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
+    /// tableView
+    ///
+    /// - Parameters:
+    ///   - tableView: this screen's table view
+    ///   - section: the section number
+    /// - Returns: return title of given section
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if transactions == nil {
             return nil
@@ -131,6 +169,12 @@ class TransactionsViewController: UIViewController, UITableViewDelegate, UITable
     
     // MARK: UITableViewDelegate
     
+    /// tableView
+    ///
+    /// - Parameters:
+    ///   - tableView: this screen's table view
+    ///   - indexPath: the index
+    /// - Returns: cell height at that index
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CELL_HEIGHT
     }
