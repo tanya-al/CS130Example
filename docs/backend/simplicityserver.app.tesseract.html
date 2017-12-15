@@ -93,7 +93,6 @@
 <li><a class="reference internal" href="#">simplicityserver.app.tesseract package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-simplicityserver.app.tesseract.extractSpending">simplicityserver.app.tesseract.extractSpending module</a></li>
-<li><a class="reference internal" href="#module-simplicityserver.app.tesseract.testTextExtraction">simplicityserver.app.tesseract.testTextExtraction module</a></li>
 <li><a class="reference internal" href="#module-simplicityserver.app.tesseract">Module contents</a></li>
 </ul>
 </li>
@@ -283,7 +282,7 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string</strong> &#8211; the text to extract money from</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the maximum amount of money if there is any valid money, -1 if there is no valid amount</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the maximum amount of money if there is any valid money, 0 if there is no valid amount</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><strong>ValueError</strong> &#8211; if there is no valid amount of money in the string</td>
 </tr>
@@ -307,39 +306,6 @@
 </tr>
 </tbody>
 </table>
-</dd></dl>
-
-</div>
-<div class="section" id="module-simplicityserver.app.tesseract.testTextExtraction">
-<span id="simplicityserver-app-tesseract-testtextextraction-module"></span><h2>simplicityserver.app.tesseract.testTextExtraction module<a class="headerlink" href="#module-simplicityserver.app.tesseract.testTextExtraction" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="simplicityserver.app.tesseract.testTextExtraction.TestTextExtraction">
-<em class="property">class </em><code class="descclassname">simplicityserver.app.tesseract.testTextExtraction.</code><code class="descname">TestTextExtraction</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/tesseract/testTextExtraction.html#TestTextExtraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.tesseract.testTextExtraction.TestTextExtraction" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></code></p>
-<dl class="method">
-<dt id="simplicityserver.app.tesseract.testTextExtraction.TestTextExtraction.setUp">
-<code class="descname">setUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/tesseract/testTextExtraction.html#TestTextExtraction.setUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.tesseract.testTextExtraction.TestTextExtraction.setUp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set up method that runs before each test, sets the image to the test image</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="simplicityserver.app.tesseract.testTextExtraction.TestTextExtraction.test_corrupted_image">
-<code class="descname">test_corrupted_image</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/tesseract/testTextExtraction.html#TestTextExtraction.test_corrupted_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.tesseract.testTextExtraction.TestTextExtraction.test_corrupted_image" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test that passing in a corrupted image causes an <code class="docutils literal"><span class="pre">OSError</span></code></p>
-</dd></dl>
-
-<dl class="method">
-<dt id="simplicityserver.app.tesseract.testTextExtraction.TestTextExtraction.test_grab_amount">
-<code class="descname">test_grab_amount</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/tesseract/testTextExtraction.html#TestTextExtraction.test_grab_amount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.tesseract.testTextExtraction.TestTextExtraction.test_grab_amount" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test extracting the dollar amounts from the image</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="simplicityserver.app.tesseract.testTextExtraction.TestTextExtraction.test_process_text">
-<code class="descname">test_process_text</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/app/tesseract/testTextExtraction.html#TestTextExtraction.test_process_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.app.tesseract.testTextExtraction.TestTextExtraction.test_process_text" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test getting the maximum amount from the image</p>
-</dd></dl>
-
 </dd></dl>
 
 </div>

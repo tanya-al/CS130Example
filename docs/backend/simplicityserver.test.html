@@ -93,6 +93,7 @@
 <li><a class="reference internal" href="#">simplicityserver.test package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-simplicityserver.test.server_routes_test_case">simplicityserver.test.server_routes_test_case module</a></li>
+<li><a class="reference internal" href="#module-simplicityserver.test.testTextExtraction">simplicityserver.test.testTextExtraction module</a></li>
 <li><a class="reference internal" href="#module-simplicityserver.test">Module contents</a></li>
 </ul>
 </li>
@@ -440,6 +441,51 @@
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-simplicityserver.test.testTextExtraction">
+<span id="simplicityserver-test-testtextextraction-module"></span><h2>simplicityserver.test.testTextExtraction module<a class="headerlink" href="#module-simplicityserver.test.testTextExtraction" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="simplicityserver.test.testTextExtraction.TestTextExtraction">
+<em class="property">class </em><code class="descclassname">simplicityserver.test.testTextExtraction.</code><code class="descname">TestTextExtraction</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/test/testTextExtraction.html#TestTextExtraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.test.testTextExtraction.TestTextExtraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></code></p>
+<dl class="method">
+<dt id="simplicityserver.test.testTextExtraction.TestTextExtraction.setUp">
+<code class="descname">setUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/test/testTextExtraction.html#TestTextExtraction.setUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.test.testTextExtraction.TestTextExtraction.setUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up method that runs before each test, sets the image to the test image</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simplicityserver.test.testTextExtraction.TestTextExtraction.test_corrupted_image">
+<code class="descname">test_corrupted_image</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/test/testTextExtraction.html#TestTextExtraction.test_corrupted_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.test.testTextExtraction.TestTextExtraction.test_corrupted_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the function handles a corrupted image elegantly, which is the case where exception occurs.</p>
+<ul class="simple">
+<li><strong>Success:</strong> the function runs smoothly, returns an empty string</li>
+<li><strong>Failure:</strong> the program aborts because of exception.</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="simplicityserver.test.testTextExtraction.TestTextExtraction.test_grab_amount">
+<code class="descname">test_grab_amount</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/test/testTextExtraction.html#TestTextExtraction.test_grab_amount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.test.testTextExtraction.TestTextExtraction.test_grab_amount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether all the numbers in the format of money(<code class="docutils literal"><span class="pre">XX.XX</span></code>) on the receipt are recognized by asserting that all the amounts appears in the receipt are in the list returned by grab_amount function.</p>
+<ul class="simple">
+<li><strong>Success:</strong> returns all amounts of money on the receipt.</li>
+<li><strong>Failure:</strong> some amounts ignored by the script</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="simplicityserver.test.testTextExtraction.TestTextExtraction.test_process_text">
+<code class="descname">test_process_text</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/simplicityserver/test/testTextExtraction.html#TestTextExtraction.test_process_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#simplicityserver.test.testTextExtraction.TestTextExtraction.test_process_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the function returns the maximum amount of money given an receipt image by asserting that it equals to the total amount of spending on the receipt.</p>
+<ul class="simple">
+<li><strong>Success:</strong> returns the total amount of spending</li>
+<li><strong>Failure:</strong> returns some other amount (might recognize the phone number as a larger number than the total spending)</li>
+</ul>
+</dd></dl>
+
 </dd></dl>
 
 </div>

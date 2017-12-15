@@ -12,14 +12,6 @@ simplicityserver.app.tesseract.extractSpending module
     :undoc-members:
     :show-inheritance:
 
-simplicityserver.app.tesseract.testTextExtraction module
---------------------------------------------------------
-
-.. automodule:: simplicityserver.app.tesseract.testTextExtraction
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 
 Module contents
 ---------------

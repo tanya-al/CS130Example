@@ -12,6 +12,14 @@ simplicityserver.test.server_routes_test_case module
     :undoc-members:
     :show-inheritance:
 
+simplicityserver.test.testTextExtraction module
+-----------------------------------------------
+
+.. automodule:: simplicityserver.test.testTextExtraction
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------
