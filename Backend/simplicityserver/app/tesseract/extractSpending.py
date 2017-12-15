@@ -32,9 +32,9 @@ def read_image_text(image):
 	"""
 	try:
 		im = Image.open(image)
-	except cv2.error as e:
-		print("Cannot open file {0}".format(image))
-		return ""
+	except (IOError, cv2.error) as e:
+		# print("Cannot open file {0}".format(image))
+		raise OSError
 	# call to tesseract
 	string = pya.image_to_string(im)
 	return string
@@ -111,7 +111,7 @@ def process_text(string):
 	Extract the maximum amount of money in the given string
 
 	:param string: the text to extract money from
-	:returns: the maximum amount of money if there is any valid money, -1 if there is no valid amount
+	:returns: the maximum amount of money if there is any valid money, 0 if there is no valid amount
 	:raises ValueError: if there is no valid amount of money in the string
 	"""
 	num_list = []
@@ -122,10 +122,10 @@ def process_text(string):
 	# debugging info	
 	#print(num_list)
 
-	# find the maximum spending (total cost, when there is no valid spending, return -1
+	# find the maximum spending (total cost, when there is no valid spending, return 0
 	total = -1
 	if len(num_list) == 0:
-		total = -1
+		total = 0
 	else:
 		total = max(num_list)
 

@@ -1,12 +1,16 @@
-import extractSpending
+import simplicityserver.app.tesseract.extractSpending as extractSpending
 import unittest
+import os
+
+TESTIMGPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "testImage.png")
+CORRUPTIMGPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "corrupted_image.jpeg")
 
 class TestTextExtraction(unittest.TestCase):
 	def setUp(self):
 		"""
 		Set up method that runs before each test, sets the image to the test image
 		"""
-		self.image = "testImage.png";
+		self.image = TESTIMGPATH
 
 	def test_grab_amount(self):
 		"""
@@ -31,7 +35,7 @@ class TestTextExtraction(unittest.TestCase):
 		Test that passing in a corrupted image causes an ``OSError``
 		"""
 		with self.assertRaises(OSError):
-			s = extractSpending.read_image_text("corrupted_image.jpeg")
+			s = extractSpending.read_image_text(CORRUPTIMGPATH)
 			self.assertEqual("", s)
 
 if __name__ == '__main__':
